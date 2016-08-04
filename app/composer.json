@@ -1,0 +1,28 @@
+{
+    "name": "phact/default",
+    "version": "1.0",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Modules\\": "Modules"
+        }
+    },
+    "config": {
+        "cache-files-ttl": 0
+    },
+    "repositories": [
+        {
+            "url": "https://github.com/phact-cmf/phact.git",
+            "type": "git"
+        }
+    ],
+    "require": {
+        "phact-cmf/phact": "dev-master"
+    },
+    "authors": [{
+        "name": "Anton Okulov",
+        "email": "qantus@mail.ru",
+        "role": "Developer"
+    }]
+}

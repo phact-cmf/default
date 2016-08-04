@@ -1,0 +1,6 @@
+/app/runtime/*
+/app/vendor
+/app/composer.lock
+/app/config/local_settings.php
+.idea
+.DS_Store
