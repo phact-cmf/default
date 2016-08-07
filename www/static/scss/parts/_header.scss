@@ -1,0 +1,23 @@
+header {
+  height: $header-height;
+
+  .header-inner {
+    .header-block {
+      height: $header-height;
+    }
+  }
+
+  $logo-width: 50px;
+  $logo-height: 50px;
+
+  .logo {
+    height: $header-height;
+
+    img {
+      display: inline-block;
+      vertical-align: middle;
+      width: $logo-width;
+      height: $logo-height;
+    }
+  }
+}

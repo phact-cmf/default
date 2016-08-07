@@ -1,0 +1,23 @@
+$grid-columns: 12;
+$max-row-width: 1008;
+$grid: (
+  small: (
+    from: 0,
+    to: 977,
+    gutter: 12
+  ),
+  large: (
+    from: 978,
+    gutter: 30
+  )
+);
+
+$body-font-size: 14px;
+$font: Arial, sans-serif;
+$h-font: $font;
+
+$header-height: 60px;
+$footer-height: 60px;
+$menu-height: $header-height;
+
+$t: transparent;

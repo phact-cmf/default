@@ -1,6 +1,6 @@
 {extends 'base.tpl'}
 
-{block 'content'}
+{block 'wrapper'}
     <div class="error-page">
         <div class="error-code">
             {$code}

@@ -1,0 +1,7 @@
+{
+  "name": "phact-default-bower",
+  "dependencies": {
+    "underscore": ">=1.8.3"
+  },
+  "devDependencies": {}
+}

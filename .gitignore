@@ -2,5 +2,8 @@
 /app/vendor
 /app/composer.lock
 /app/config/local_settings.php
+/www/static/node_modules
+/www/static/bower_components
+/www/static/built/*
 .idea
 .DS_Store
