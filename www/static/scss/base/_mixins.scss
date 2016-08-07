@@ -39,6 +39,10 @@
   @include prefix(transform, $params);
 }
 
+@mixin transition($params...) {
+  @include prefix(transition, $params);
+}
+
 @mixin aal()
 {
   -webkit-font-smoothing: antialiased;

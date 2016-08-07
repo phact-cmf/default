@@ -43,7 +43,8 @@ table {
   border-spacing: 0; }
 
 * {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  outline: none; }
 
 img {
   max-width: 100%; }
@@ -80,6 +81,9 @@ img {
 
 .text-center {
   text-align: center; }
+
+.upper {
+  text-transform: uppercase; }
 
 /**
 
@@ -608,3 +612,56 @@ footer .footer-block {
     content: '';
     display: inline-block;
     width: 100%; }
+
+.button, button {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s;
+  display: inline-block;
+  border: none;
+  background: #01c767;
+  font-size: 16px;
+  cursor: pointer; }
+  .button.expand, .button.wide, button.expand, button.wide {
+    width: 100%; }
+  .button.height, button.height {
+    height: 37px; }
+
+form label {
+  font-size: 12px;
+  color: #9f9f9f;
+  margin-bottom: 2px;
+  display: block; }
+
+form ul.errors {
+  margin-top: 2px;
+  list-style: none;
+  color: #b50000;
+  font-size: 13px; }
+  form ul.errors li {
+    margin-bottom: 2px; }
+    form ul.errors li:last-child {
+      margin-bottom: 0; }
+
+form .form-field {
+  margin-bottom: 10px; }
+
+form input[type="text"], form input[type="search"], form input[type="password"], form textarea, form select {
+  border: 1px solid #c1c1c1;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 0 10px;
+  font-size: 14px;
+  width: 100%;
+  display: block; }
+
+form input[type="text"], form input[type="search"], form input[type="password"], form select {
+  height: 37px; }
+
+form textarea {
+  padding: 5px 10px; }
