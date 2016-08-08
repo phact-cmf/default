@@ -9,17 +9,17 @@ const hashsum = require('gulp-hashsum');
 const uglify = require('gulp-uglify');
 var config = require('./gulpconfig');
 
-for (var vendor in config.vendors) {
-    if (config.vendors.hasOwnProperty(vendor)) {
-        var vendorConfig = config.vendors[vendor];
+for (var vendor in config.frontend.vendors) {
+    if (config.frontend.vendors.hasOwnProperty(vendor)) {
+        var vendorConfig = config.frontend.vendors[vendor];
         for (var type in vendorConfig) {
             if (vendorConfig.hasOwnProperty(type)) {
                 var matches = vendorConfig[type];
-                if (config.paths.src.hasOwnProperty(type)) {
+                if (config.frontend.src.hasOwnProperty(type)) {
                     if (typeof matches == 'string') {
-                        config.paths.src[type].push(matches);
+                        config.frontend.src[type].push(matches);
                     } else {
-                        config.paths.src[type].push.apply(config.paths.src[type], matches);
+                        config.frontend.src[type].push.apply(config.frontend.src[type], matches);
                     }
                 }
             }
@@ -27,61 +27,61 @@ for (var vendor in config.vendors) {
     }
 }
 
-gulp.task('scss', function() {
-    return gulp.src(config.paths.src.scss)
+gulp.task('frontend_scss', function() {
+    return gulp.src(config.frontend.src.scss)
         .pipe(sass({}).on('error', sass.logError))
-        .pipe(gulp.dest(config.paths.dest.scss));
+        .pipe(gulp.dest(config.frontend.dest.scss));
 });
 
-gulp.task('css', ['scss'], function() {
-    var pipe = gulp.src(config.paths.src.css);
+gulp.task('frontend_css', ['frontend_scss'], function() {
+    var pipe = gulp.src(config.frontend.src.css);
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
     return pipe.pipe(concat(config.name + '.css')).
-        pipe(hashsum({filename: 'versions/css.yml', hash: 'md5'})).
-        pipe(gulp.dest(config.paths.dest.css)).
+        pipe(hashsum({filename: 'frontend/versions/css.yml', hash: 'md5'})).
+        pipe(gulp.dest(config.frontend.dest.css)).
         pipe(livereload());
 });
 
-gulp.task('js', function() {
-    var pipe = gulp.src(config.paths.src.js);
+gulp.task('frontend_js', function() {
+    var pipe = gulp.src(config.frontend.src.js);
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
     return pipe.pipe(concat(config.name + '.js')).
-        pipe(hashsum({filename: 'versions/js.yml', hash: 'md5'})).
-        pipe(gulp.dest(config.paths.dest.js)).
+        pipe(hashsum({filename: 'frontend/versions/js.yml', hash: 'md5'})).
+        pipe(gulp.dest(config.frontend.dest.js)).
         pipe(livereload());
 });
 
-gulp.task('images', function() {
-    var pipe = gulp.src(config.paths.src.images);
+gulp.task('frontend_images', function() {
+    var pipe = gulp.src(config.frontend.src.images);
     if (config.compress) {
         pipe = pipe.pipe(imagemin())
     }
-    return pipe.pipe(gulp.dest(config.paths.dest.images)).pipe(livereload());
+    return pipe.pipe(gulp.dest(config.frontend.dest.images)).pipe(livereload());
 });
 
-gulp.task('fonts', function() {
-    return gulp.src(config.paths.src.fonts)
-        .pipe(gulp.dest(config.paths.dest.fonts)).pipe(livereload());
+gulp.task('frontend_fonts', function() {
+    return gulp.src(config.frontend.src.fonts)
+        .pipe(gulp.dest(config.frontend.dest.fonts)).pipe(livereload());
 });
 
 gulp.task('watch', ['build'], function() {
     livereload({ start: true });
-    gulp.watch(config.paths.src.scss, ['css']);
-    gulp.watch(config.paths.src.images, ['images']);
-    gulp.watch(config.paths.src.fonts, ['fonts']);
+    gulp.watch(config.frontend.src.scss, ['frontend_css']);
+    gulp.watch(config.frontend.src.images, ['frontend_images']);
+    gulp.watch(config.frontend.src.fonts, ['frontend_fonts']);
 });
 
 
 gulp.task('clear', function() {
-    return gulp.src('built/*').pipe(rimraf());
+    return gulp.src(['frontend/*', 'backend/*']).pipe(rimraf());
 });
 
 gulp.task('build', ['clear'], function(){
-    gulp.start('css', 'js', 'images', 'fonts');
+    gulp.start('frontend_css', 'frontend_js', 'frontend_images', 'frontend_fonts');
 });
 
 gulp.task('default', function(){

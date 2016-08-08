@@ -1,6 +1,7 @@
 {
   "name": "phact-default-bower",
   "dependencies": {
+    "jquery": ">=2.0.0",
     "underscore": ">=1.8.3"
   },
   "devDependencies": {}

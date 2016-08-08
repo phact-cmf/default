@@ -12,10 +12,10 @@
  * @date 04/08/16 10:42
  */
 
-namespace Modules\Main;
+namespace Modules\Admin;
 
 use Phact\Module\Module;
 
-class MainModule extends Module
+class AdminModule extends Module
 {
 }
