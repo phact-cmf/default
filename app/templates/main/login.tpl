@@ -6,7 +6,7 @@
 
 {block 'content'}
     <form action="" method="post">
-        {$form->render()}
+        {raw $form->render()}
 
         <button type="submit" class="button height expand">
             Login

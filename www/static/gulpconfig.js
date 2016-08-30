@@ -12,6 +12,8 @@ module.exports.frontend = {
     },
     src: {
         js: [
+            'js/js_validation.js',
+            'js/utils.js',
             'js/main.js'
         ],
         scss: [
@@ -28,9 +30,42 @@ module.exports.frontend = {
         ]
     },
     vendors: {
+        fancybox: {
+            js: [
+                'bower_components/fancybox/source/jquery.fancybox.pack.js',
+                'bower_components/fancybox/source/jquery.fancybox-buttons.js',
+                'bower_components/fancybox/source/jquery.fancybox-media.js',
+                'bower_components/fancybox/source/jquery.fancybox-thumbs.js'
+            ]
+        },
+        slick: {
+            js: [
+                'bower_components/slick-carousel/slick/slick.min.js'
+            ]
+        },
         underscore: {
             js: [
                 'bower_components/underscore/underscore.js'
+            ]
+        },
+        modal: {
+            js: [
+                'components/modal/modal.js'
+            ]
+        },
+        smart_tabs: {
+            js: [
+                'components/smart-tabs/smart-tabs.js'
+            ]
+        },
+        sticky: {
+            js: [
+                'components/sticky/sticky.js'
+            ]
+        },
+        jquery: {
+            js: [
+                'bower_components/jquery/dist/jquery.min.js'
             ]
         }
     }

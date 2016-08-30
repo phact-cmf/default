@@ -1,0 +1,20 @@
+.smart-tabs {
+  list-style: none;
+  @include clearfix();
+
+  li {
+    display: inline-block;
+
+    a {
+      display: block;
+    }
+  }
+}
+
+.smart-content {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}

@@ -1,0 +1,39 @@
+.psticky-transparent {
+  position: static !important;
+}
+
+.psticky-parent {
+  position: relative;
+}
+
+.psticky-dimension-top {
+  &.psticky-sticky {
+    position: fixed;
+    top: 0;
+  }
+
+  &.psticky-bottom {
+    position: absolute;
+    bottom: 0;
+  }
+
+  &.psticky-top {
+    position: static;
+  }
+}
+
+.psticky-dimension-bottom {
+  &.psticky-sticky {
+    position: fixed;
+    bottom: 0;
+  }
+
+  &.psticky-top {
+    position: absolute;
+    top: 0;
+  }
+
+  &.psticky-bottom {
+    position: static;
+  }
+}

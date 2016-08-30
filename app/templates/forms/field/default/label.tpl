@@ -1,1 +1,1 @@
-<label for="{$id}" {$html}>{$label}</label>
+<label for="{$id}" {raw $html}>{raw $label}</label>

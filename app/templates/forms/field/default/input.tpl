@@ -1,1 +1,1 @@
-<input type="text" value="{$value}" id="{$id}" name="{$name}" {$html}>
+<input type="text" value="{$value}" id="{$id}" name="{$name}" {raw $html}>
