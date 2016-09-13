@@ -3,7 +3,8 @@
 return [
     'name' => 'First phact application',
     'paths' => [
-        'base' => implode(DIRECTORY_SEPARATOR, [__DIR__, '..'])
+        'base' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..'])),
+        'www' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www'])),
     ],
     'modules' => [
         'Main'
