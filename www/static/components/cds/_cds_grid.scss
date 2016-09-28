@@ -200,3 +200,53 @@ $grid: (
     @include grid-handle-visibility-from($name, map-get($data, gutter), map-get($data, from));
   }
 }
+
+@mixin respond($name)
+{
+  @if map-has-key($grid, $name) {
+    $point: map-get($grid, $name);
+    @if map-has-key($point, from) and map-has-key($point, to) {
+      @media (min-width: #{map-get($point, from)}px) and (max-width: #{map-get($point, to)}px) {
+        @content;
+      }
+    } @else if map-has-key($point, to) {
+      @media (max-width: #{map-get($point, to)}px) {
+        @content;
+      }
+    } @else if map-has-key($point, from) {
+      @media (min-width: #{map-get($point, from)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint '#{$name}'";
+  }
+}
+
+@mixin respond-up($name)
+{
+  @if map-has-key($grid, $name) {
+    $point: map-get($grid, $name);
+    @if map-has-key($point, from) {
+      @media (min-width: #{map-get($point, from)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint '#{$name}'";
+  }
+}
+
+@mixin respond-down($name)
+{
+  @if map-has-key($grid, $name) {
+    $point: map-get($grid, $name);
+    @if map-has-key($point, to) {
+      @media (max-width: #{map-get($point, to)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint '#{$name}'";
+  }
+}
