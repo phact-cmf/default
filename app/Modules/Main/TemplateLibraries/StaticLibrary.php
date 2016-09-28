@@ -24,6 +24,11 @@ class StaticLibrary extends TemplateLibrary
         return Paths::get('www.static.frontend.versions');
     }
 
+    protected static function getBackendVersionsDir()
+    {
+        return Paths::get('www.static.backend.versions');
+    }
+
     protected static function getVersionFromContent($content)
     {
         $space = strpos($content, ' ');
@@ -59,5 +64,25 @@ class StaticLibrary extends TemplateLibrary
     public static function getFrontendJsVersion()
     {
         return self::getVersion(self::getFrontendVersionsDir() . DIRECTORY_SEPARATOR . 'js.yml');
+    }
+
+    /**
+     * @kind function
+     * @name frontend_css_version
+     * @return int|void
+     */
+    public static function getBackendCssVersion()
+    {
+        return self::getVersion(self::getBackendVersionsDir() . DIRECTORY_SEPARATOR . 'css.yml');
+    }
+
+    /**
+     * @kind function
+     * @name frontend_js_version
+     * @return int|void
+     */
+    public static function getBackendJsVersion()
+    {
+        return self::getVersion(self::getBackendVersionsDir() . DIRECTORY_SEPARATOR . 'js.yml');
     }
 }

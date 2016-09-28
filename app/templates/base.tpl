@@ -8,8 +8,8 @@
     {* Another head information *}
     {block 'head'}{/block}
 
-    <link rel="stylesheet" href="/static/frontend/css/main.css?v={frontend_css_version}">
-    <script src="/static/frontend/js/main.js?v={frontend_js_version}"></script>
+    <link rel="stylesheet" href="/static/frontend/dist/css/main.css?v={frontend_css_version}">
+    <script src="/static/frontend/dist/js/main.js?v={frontend_js_version}"></script>
 </head>
 <body>
     <div id="wrapper">

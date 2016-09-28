@@ -3,33 +3,43 @@ module.exports.name = "main";
 module.exports.compress = false;
 
 module.exports.frontend = {
-    dest: {
-        js: 'frontend/js',
-        scss: 'css/frontend',
-        css: 'frontend/css',
-        images: 'frontend/images',
-        fonts: 'frontend/fonts'
+    dst: {
+        js: 'frontend/dist/js',
+        scss: 'frontend/temp/css',
+        css: 'frontend/dist/css',
+        images: 'frontend/dist/images',
+        fonts: 'frontend/dist/fonts'
     },
     src: {
         js: [
-            'js/js_validation.js',
-            'js/utils.js',
-            'js/main.js'
+            'frontend/js/js_validation.js',
+            'frontend/js/utils.js',
+            'frontend/js/main.js'
         ],
         scss: [
-            'scss/**/*.scss'
+            'frontend/scss/**/*.scss'
         ],
         css: [
-            'css/frontend/*'
+            'frontend/temp/css/*'
         ],
         images: [
-            'images/**/*.*'
+            'frontend/images/**/*.*'
         ],
         fonts: [
-            'fonts/**/*.*'
+            'frontend/fonts/**/*.*'
         ]
     },
     vendors: {
+        jquery: {
+            js: [
+                'bower_components/jquery/dist/jquery.min.js'
+            ]
+        },
+        underscore: {
+            js: [
+                'bower_components/underscore/underscore.js'
+            ]
+        },
         fancybox: {
             js: [
                 'bower_components/fancybox/source/jquery.fancybox.pack.js',
@@ -41,11 +51,6 @@ module.exports.frontend = {
         slick: {
             js: [
                 'bower_components/slick-carousel/slick/slick.min.js'
-            ]
-        },
-        underscore: {
-            js: [
-                'bower_components/underscore/underscore.js'
             ]
         },
         modal: {
@@ -63,37 +68,40 @@ module.exports.frontend = {
                 'components/sticky/sticky.js'
             ]
         },
-        jquery: {
-            js: [
-                'bower_components/jquery/dist/jquery.min.js'
+        cds: {
+            scss_include: [
+                'components/cds'
             ]
-        }
+        },
     }
 };
 
 module.exports.backend = {
-    dest: {
-        js: 'backend/js',
-        scss: 'css/backend',
-        css: 'backend/css',
-        images: 'backend/images',
-        fonts: 'backend/fonts'
+    dst: {
+        js: 'backend/dist/js',
+        scss: 'backend/temp/css',
+        css: 'backend/dist/css',
+        images: 'backend/dist/images',
+        fonts: 'backend/dist/fonts'
     },
     src: {
         js: [
-            'js/main.js'
+            '../../app/Modules/*/static/js/*',
+            'backend/js/main.js'
         ],
         scss: [
-            'scss/**/*.scss'
+            '../../app/Modules/*/static/scss/*',
+            'backend/scss/**/*.scss'
         ],
         css: [
-            'css/*'
+            '../../app/Modules/*/static/css/*',
+            'backend/temp/css/*'
         ],
         images: [
-            'images/**/*.*'
+            'backend/images/**/*.*'
         ],
         fonts: [
-            'fonts/**/*.*'
+            'backend/fonts/**/*.*'
         ]
     }
 };

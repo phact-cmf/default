@@ -4,7 +4,7 @@
 /app/config/local_settings.php
 /www/static/node_modules
 /www/static/bower_components
-/www/static/frontend/*
-/www/static/backend/*
+/www/static/frontend/dist/*
+/www/static/backend/dist/*
 .idea
 .DS_Store
