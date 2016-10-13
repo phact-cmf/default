@@ -71,7 +71,7 @@
             {block 'main'}
                 <div class="main-content">
                     {block 'before-content'}
-
+                        
                     {/block}
 
                     <div class="row">
@@ -120,10 +120,6 @@
             </div>
         </div>
     </footer>
-
-    {block 'wrapper'}
-
-    {/block}
 
     {block 'js'}
 

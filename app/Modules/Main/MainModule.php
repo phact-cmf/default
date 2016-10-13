@@ -14,8 +14,10 @@
 
 namespace Modules\Main;
 
+use Modules\Admin\Traits\AdminTrait;
 use Phact\Module\Module;
 
 class MainModule extends Module
 {
+    use AdminTrait;
 }

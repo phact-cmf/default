@@ -7,7 +7,8 @@ return [
         'www' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www'])),
     ],
     'modules' => [
-        'Main'
+        'Main',
+        'Admin'
     ],
     'components' => [
         'db' => [
@@ -51,6 +52,12 @@ return [
         ],
         'auth' => [
             'class' => \Modules\User\Components\Auth::class
+        ],
+        'breadcrumbs' => [
+            'class' => \Phact\Components\Breadcrumbs::class
+        ],
+        'seo' => [
+            'class' => \Phact\Components\Seo::class
         ]
     ],
     'autoloadComponents' => [

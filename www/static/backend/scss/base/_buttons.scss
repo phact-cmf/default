@@ -1,0 +1,18 @@
+.button {
+  color: #fff;
+  background-color: $primary-color;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-transform: uppercase;
+  height: $button-height;
+  line-height: $button-height;
+  font-weight: bold;
+  font-size: 15px;
+  display: inline-block;
+  text-decoration: none;
+
+  &.pad {
+    padding: 0 25px;
+  }
+}

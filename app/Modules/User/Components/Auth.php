@@ -169,7 +169,7 @@ class Auth implements AuthInterface
     
     public function setCookie($cookie)
     {
-        Phact::app()->request->cookie->add($this->authCookieName, $cookie, time() + $this->expire);
+        Phact::app()->request->cookie->add($this->authCookieName, $cookie, time() + $this->expire, '/');
     }
     
     public function getCookie()

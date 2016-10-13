@@ -15,6 +15,8 @@
 namespace Modules\Main\Models;
 
 use Phact\Orm\Fields\CharField;
+use Phact\Orm\Fields\ForeignField;
+use Phact\Orm\Fields\HasManyField;
 use Phact\Orm\Fields\TextField;
 use Phact\Orm\Model;
 
@@ -30,7 +32,22 @@ class Article extends Model
             'text' => [
                 'class' => TextField::class,
                 'label' => 'Text'
-            ]
+            ],
+            'article' => [
+                'class' => ForeignField::class,
+                'modelClass' => Article::className(),
+                'label' => "Article"
+            ],
+            'articles' => [
+                'class' => HasManyField::class,
+                'modelClass' => Article::className(),
+                'label' => "Articles"
+            ],
         ];
+    }
+
+    public function __toString()
+    {
+        return (string) $this->name;
     }
 }

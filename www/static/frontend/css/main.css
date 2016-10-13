@@ -64,6 +64,10 @@ img {
 
 .clearfix:before {
   content: "";
+  display: table; }
+
+.clearfix:after {
+  content: "";
   display: table;
   clear: both; }
 
@@ -1181,6 +1185,9 @@ body.modal-loading {
 .smart-tabs {
   list-style: none; }
   .smart-tabs:before {
+    content: "";
+    display: table; }
+  .smart-tabs:after {
     content: "";
     display: table;
     clear: both; }

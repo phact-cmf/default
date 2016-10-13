@@ -2,6 +2,11 @@
   &:before {
     content: "";
     display: table;
+  }
+
+  &:after {
+    content: "";
+    display: table;
     clear: both;
   }
 }
@@ -57,10 +62,10 @@
 }
 
 @mixin placeholder {
-  ::-webkit-input-placeholder {@content}
-  :-moz-placeholder           {@content}
-  ::-moz-placeholder          {@content}
-  :-ms-input-placeholder      {@content}
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
 }
 
 @mixin grad($angle, $color-stops...) {

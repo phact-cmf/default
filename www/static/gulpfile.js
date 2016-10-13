@@ -45,7 +45,7 @@ for (var vendorType in frontendVendorsData) {
     }
 }
 
-var backendVendorsData = buildVendorsData(frontend.vendors);
+var backendVendorsData = buildVendorsData(backend.vendors);
 for (var vendorType in backendVendorsData) {
     if (backendVendorsData.hasOwnProperty(vendorType)) {
         if (!backend.src.hasOwnProperty(vendorType)) {

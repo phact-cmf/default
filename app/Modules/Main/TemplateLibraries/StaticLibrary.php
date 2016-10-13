@@ -68,7 +68,7 @@ class StaticLibrary extends TemplateLibrary
 
     /**
      * @kind function
-     * @name frontend_css_version
+     * @name backend_css_version
      * @return int|void
      */
     public static function getBackendCssVersion()
@@ -78,7 +78,7 @@ class StaticLibrary extends TemplateLibrary
 
     /**
      * @kind function
-     * @name frontend_js_version
+     * @name backend_js_version
      * @return int|void
      */
     public static function getBackendJsVersion()

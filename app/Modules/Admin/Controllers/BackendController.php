@@ -12,7 +12,7 @@
  * @date 19/05/16 07:48
  */
 
-namespace Modules\Main\Controllers;
+namespace Modules\Admin\Controllers;
 
 use Modules\User\Forms\LoginForm;
 use Modules\User\Helpers\Password;
@@ -25,7 +25,7 @@ class BackendController extends Controller
     public function beforeAction($action, $params)
     {
         $user = Phact::app()->auth->getUser();
-        if (!$user) {
+        if (!$user || $user->is_guest) {
             $this->request->redirect('admin:login');
         } elseif (!$user->is_superuser) {
             $this->error(404);

@@ -5,7 +5,7 @@ module.exports.compress = false;
 module.exports.frontend = {
     dst: {
         js: 'frontend/dist/js',
-        scss: 'frontend/temp/css',
+        scss: 'frontend/css',
         css: 'frontend/dist/css',
         images: 'frontend/dist/images',
         fonts: 'frontend/dist/fonts'
@@ -20,13 +20,14 @@ module.exports.frontend = {
             'frontend/scss/**/*.scss'
         ],
         css: [
-            'frontend/temp/css/*'
+            'frontend/css/*',
+            'fonts/GothamPro/css/GothamPro.css'
         ],
         images: [
             'frontend/images/**/*.*'
         ],
         fonts: [
-            'frontend/fonts/**/*.*'
+            'fonts/GothamPro/fonts/**/*'
         ]
     },
     vendors: {
@@ -72,7 +73,7 @@ module.exports.frontend = {
             scss_include: [
                 'components/cds'
             ]
-        },
+        }
     }
 };
 
@@ -87,7 +88,7 @@ module.exports.backend = {
     src: {
         js: [
             '../../app/Modules/*/static/js/*',
-            'backend/js/main.js'
+            'backend/js/*.js'
         ],
         scss: [
             '../../app/Modules/*/static/scss/*',
@@ -95,13 +96,43 @@ module.exports.backend = {
         ],
         css: [
             '../../app/Modules/*/static/css/*',
-            'backend/temp/css/*'
+            'backend/temp/css/*',
+            'fonts/GothamPro/css/GothamPro.css',
+            'backend/fonts/icons/css/style.css'
         ],
         images: [
             'backend/images/**/*.*'
         ],
         fonts: [
-            'backend/fonts/**/*.*'
+            'fonts/GothamPro/fonts/**/*',
+            'backend/fonts/icons/fonts/*'
         ]
+    },
+    vendors: {
+        jquery: {
+            js: [
+                'bower_components/jquery/dist/jquery.min.js'
+            ]
+        },
+        modal: {
+            js: [
+                'components/modal/modal.js'
+            ]
+        },
+        underscore: {
+            js: [
+                'bower_components/underscore/underscore.js'
+            ]
+        },
+        confirm: {
+            js: [
+                'components/confirm/jquery.confirm.js'
+            ]
+        },
+        cds: {
+            scss_include: [
+                'components/cds'
+            ]
+        }
     }
 };

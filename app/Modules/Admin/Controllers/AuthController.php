@@ -12,9 +12,9 @@
  * @date 19/05/16 07:48
  */
 
-namespace Modules\Main\Controllers;
+namespace Modules\Admin\Controllers;
 
-use Modules\User\Forms\LoginForm;
+use Modules\Admin\Forms\LoginForm;
 use Modules\User\Models\User;
 use Phact\Controller\Controller;
 use Phact\Main\Phact;
