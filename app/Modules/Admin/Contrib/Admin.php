@@ -16,6 +16,7 @@ namespace Modules\Admin\Contrib;
 
 
 use Exception;
+use Phact\Exceptions\HttpException;
 use Phact\Form\ModelForm;
 use Phact\Helpers\ClassNames;
 use Phact\Helpers\SmartProperties;
@@ -41,7 +42,7 @@ abstract class Admin
 
     public $createTemplate = 'admin/create.tpl';
     public $updateTemplate = 'admin/update.tpl';
-    public $formTemplate = 'admin/_form.tpl';
+    public $formTemplate = 'admin/form/_form.tpl';
 
     public $pageSize = 20;
     public $pageSizes = [20, 50, 100];
@@ -307,25 +308,6 @@ abstract class Admin
         return $qs;
     }
 
-    public function all()
-    {
-        $qs = $this->getQuerySet();
-        $qs = $this->applyOrder($qs);
-
-        $pagination = new Pagination($qs, [
-            'defaultPageSize' => $this->pageSize,
-            'pageSizes' => $this->pageSizes
-        ]);
-
-        $this->render($this->allTemplate, [
-            'objects' => $pagination->getData(),
-            'pagination' => $pagination,
-            'order' => $this->getOrder(),
-            'search' => $this->getSearchColumns(),
-            'columns' => $this->buildListColumns()
-        ]);
-    }
-
     public function getCommonData()
     {
         return [
@@ -393,8 +375,102 @@ abstract class Admin
         return $value;
     }
 
+    public function all()
+    {
+        $qs = $this->getQuerySet();
+        $qs = $this->applyOrder($qs);
+
+        $pagination = new Pagination($qs, [
+            'defaultPageSize' => $this->pageSize,
+            'pageSizes' => $this->pageSizes
+        ]);
+
+        $this->render($this->allTemplate, [
+            'objects' => $pagination->getData(),
+            'pagination' => $pagination,
+            'order' => $this->getOrder(),
+            'search' => $this->getSearchColumns(),
+            'columns' => $this->buildListColumns()
+        ]);
+    }
+
+    public function remove($pk)
+    {
+        $object = $this->getModelOr404($pk);
+        $removed = $object->delete();
+        if ($removed) {
+            $data = ['success' => true];
+        } else {
+            $data = ['error' => 'При удалении объекта произошла ошибка'];
+        }
+        $this->jsonResponse($data);
+    }
+
     public function render($template, $data = [])
     {
         echo $this->renderTemplate($template, array_merge($data, $this->getCommonData()));
+    }
+
+    public function jsonResponse($data = [])
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
+    /**
+     * @param $pk
+     * @return null|Model
+     * @throws HttpException
+     */
+    public function getModelOr404($pk)
+    {
+        $object = $this->getModel()->objects()->filter(['pk' => $pk])->limit(1)->get();
+        if (!$object) {
+            throw new HttpException(404);
+        }
+        return $object;
+    }
+
+    public function getFormFieldsets()
+    {
+        return null;
+    }
+
+    public function create()
+    {
+        $this->update(null);
+    }
+
+    public function update($pk = null)
+    {
+        $new = false;
+        if (is_null($pk)) {
+            $new = true;
+            $model = $this->newModel();
+            $form = $this->getForm();
+        } else {
+            $model = $this->getModelOr404($pk);
+            $form = $this->getUpdateForm();
+        }
+
+        $form->setModel($model);
+        $form->setInstance($model);
+
+        $request = Phact::app()->request;
+        if ($request->getIsPost() && $form->fill($_POST, $_FILES) && $form->valid && $form->save()) {
+            d('SAVED');
+        }
+        $template = $new ? $this->createTemplate : $this->updateTemplate;
+        $this->render($template, [
+            'form' => $form,
+            'model' => $model,
+            'new' => $new
+        ]);
+    }
+
+    public function newModel()
+    {
+        $model = $this->getModel();
+        return new $model;
     }
 }

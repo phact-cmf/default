@@ -82,5 +82,11 @@ $(function () {
         var list = getList($this);
         list.setUrl(url);
         return false;
-    })
+    });
+
+    $(document).on('list-update', function (e, $element) {
+        console.log($element);
+        var list = getList($element);
+        list.update();
+    });
 });

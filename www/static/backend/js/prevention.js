@@ -21,7 +21,7 @@ $(function () {
                         if (data.success && trigger) {
                             $(document).trigger(trigger, [$this, data]);
                         }
-                        $('.mmodal-close').click();
+                        $('.modal-closer').click();
                     }
                 });
             }

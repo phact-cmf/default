@@ -40,6 +40,15 @@ class AdminController extends BackendController
         $admin->update($pk);
     }
 
+    public function remove($module, $admin, $pk)
+    {
+        if (!$this->request->getIsPost()) {
+            $this->error(404);
+        }
+        $admin = $this->getAdmin($module, $admin);
+        $admin->remove($pk);
+    }
+
     /**
      * @param $admin Admin
      */

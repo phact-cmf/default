@@ -1,0 +1,23 @@
+.main-block .form-page {
+  padding: 0 $main-block-padding-width 70px;
+
+  .actions-panel {
+    position: fixed;
+    left: $menu-width;
+    right: 0;
+    bottom: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 5px 15px 0px rgba(189,189,189,0.64);
+  }
+
+  fieldset {
+
+  }
+}
+
+.form-page {
+  fieldset {
+    background: #FFFFFF;
+    border: 1px solid #DFDFDF;
+  }
+}
