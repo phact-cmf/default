@@ -29,14 +29,14 @@ class AdminController extends BackendController
     public function create($module, $admin)
     {
         $admin = $this->getAdmin($module, $admin);
-        $this->setBreadcrumbs($admin);
+        $this->setBreadcrumbs($admin, 'Создание');
         $admin->create();
     }
 
     public function update($module, $admin, $pk)
     {
         $admin = $this->getAdmin($module, $admin);
-        $this->setBreadcrumbs($admin);
+        $this->setBreadcrumbs($admin, 'Редактирование');
         $admin->update($pk);
     }
 
@@ -52,12 +52,16 @@ class AdminController extends BackendController
     /**
      * @param $admin Admin
      */
-    public function setBreadcrumbs($admin)
+    public function setBreadcrumbs($admin, $last = null)
     {
         Phact::app()->breadcrumbs->add(
             $admin->getName(),
             $admin->getAllUrl()
         );
+
+        if ($last) {
+            Phact::app()->breadcrumbs->add($last);
+        }
     }
 
     /**

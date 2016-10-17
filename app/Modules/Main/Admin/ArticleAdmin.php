@@ -15,6 +15,7 @@
 namespace Modules\Main\Admin;
 
 use Modules\Admin\Contrib\Admin;
+use Modules\Main\Forms\ArticleForm;
 use Modules\Main\Models\Article;
 use Phact\Orm\Model;
 
@@ -23,6 +24,11 @@ class ArticleAdmin extends Admin
     public function getSearchColumns()
     {
         return ['name', 'text'];
+    }
+
+    public function getForm()
+    {
+        return new ArticleForm();
     }
 
     /**

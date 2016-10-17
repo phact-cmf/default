@@ -900,6 +900,40 @@ h1 {
         color: #9594A5;
         background-color: #fff; }
 
+.flash-messages-block {
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 278px;
+  z-index: 1000; }
+  .flash-messages-block .flash-list {
+    display: block; }
+    .flash-messages-block .flash-list li {
+      display: block;
+      height: 60px;
+      line-height: 60px;
+      padding-left: 80px;
+      padding-right: 20px;
+      font-size: 18px;
+      /* Rectangle 2 Copy 2: */ }
+      .flash-messages-block .flash-list li a {
+        text-decoration: none; }
+      .flash-messages-block .flash-list li a, .flash-messages-block .flash-list li span {
+        display: inline-block;
+        vertical-align: middle; }
+      .flash-messages-block .flash-list li.error {
+        background: #FDEAEA url("../images/flash/error-flash.png") 20px 50% no-repeat;
+        background-size: 40px 40px;
+        border-bottom: 1px solid #E3B7B7; }
+        .flash-messages-block .flash-list li.error span, .flash-messages-block .flash-list li.error i {
+          color: #955F5F; }
+      .flash-messages-block .flash-list li.success {
+        background: #D5F8AD url("../images/flash/success-flash.png") 20px 50% no-repeat;
+        background-size: 40px 40px;
+        border-bottom: 1px solid #A6D76E; }
+        .flash-messages-block .flash-list li.success span, .flash-messages-block .flash-list li.success i {
+          color: #698D3F; }
+
 .login-page {
   position: absolute;
   top: 0;
@@ -958,8 +992,76 @@ h1 {
     right: 0;
     bottom: 0;
     background: #FFFFFF;
-    box-shadow: 0px 5px 15px 0px rgba(189, 189, 189, 0.64); }
+    box-shadow: 0px 5px 15px 0px rgba(189, 189, 189, 0.64);
+    padding: 20px 30px; }
+    .main-block .form-page .actions-panel .buttons {
+      float: left; }
+      .main-block .form-page .actions-panel .buttons button {
+        margin-right: 12px; }
+        .main-block .form-page .actions-panel .buttons button:last-child {
+          margin-right: 0; }
+    .main-block .form-page .actions-panel .links {
+      float: right; }
+      .main-block .form-page .actions-panel .links a {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        text-decoration: none;
+        margin-right: 12px;
+        font-weight: 500;
+        font-size: 15px;
+        color: #9594A5;
+        text-transform: uppercase; }
+        .main-block .form-page .actions-panel .links a:last-child {
+          margin-right: 0; }
+        .main-block .form-page .actions-panel .links a i {
+          color: rgba(104, 132, 157, 0.4);
+          line-height: 40px;
+          margin-right: 7px; }
+        .main-block .form-page .actions-panel .links a i, .main-block .form-page .actions-panel .links a span {
+          display: inline-block;
+          vertical-align: middle; }
+  .main-block .form-page fieldset {
+    margin-bottom: 30px; }
+    .main-block .form-page fieldset:last-child {
+      margin-bottom: 0; }
+    .main-block .form-page fieldset .fields {
+      width: 830px; }
 
 .form-page fieldset {
   background: #FFFFFF;
   border: 1px solid #DFDFDF; }
+  .form-page fieldset .fieldset-title {
+    font-weight: 500;
+    font-size: 22px;
+    color: #000000;
+    border-bottom: 1px solid #DFDFDF;
+    padding: 25px 30px; }
+  .form-page fieldset .fields {
+    padding: 25px 30px; }
+    .form-page fieldset .fields .form-field {
+      margin-bottom: 20px; }
+      .form-page fieldset .fields .form-field:last-child {
+        margin-bottom: 0; }
+      .form-page fieldset .fields .form-field label {
+        font-size: 13px;
+        color: #616171;
+        display: block;
+        margin-bottom: 10px; }
+      .form-page fieldset .fields .form-field input[type=text], .form-page fieldset .fields .form-field input[type=email], .form-page fieldset .fields .form-field input[type=password], .form-page fieldset .fields .form-field textarea {
+        width: 100%; }
+      .form-page fieldset .fields .form-field input[type=checkbox] {
+        display: none; }
+      .form-page fieldset .fields .form-field input[type=checkbox] + label {
+        display: inline-block;
+        padding-left: 25px;
+        padding-top: 1px;
+        min-height: 15px;
+        background: transparent url("../images/forms/checkbox-unchecked.png") 0 0 no-repeat;
+        background-size: 15px 15px;
+        font-size: 14px; }
+      .form-page fieldset .fields .form-field input[type=checkbox]:checked + label {
+        background-image: url("../images/forms/checkbox-checked.png"); }
+      .form-page fieldset .fields .form-field input[type=checkbox] + label.alone {
+        padding: 0;
+        width: 15px; }

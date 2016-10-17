@@ -38,6 +38,20 @@ class CommonLibrary extends TemplateLibrary
     }
 
     /**
+     * @name render_flash
+     * @kind function
+     * @return string
+     */
+    public static function renderFlash($params)
+    {
+        $template = isset($params['template']) ? $params['template'] : '_flash.tpl';
+
+        return self::renderTemplate($template, [
+            'messages' => Phact::app()->flash->read()
+        ]);
+    }
+
+    /**
      * @name build_url
      * @kind function
      * @return string

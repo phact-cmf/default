@@ -16,6 +16,8 @@
 <body>
     <div class="wrapper">
         {if !$.request->getIsAjax()}
+            {render_flash:raw template='admin/_flash.tpl'}
+
             {block 'menu_block'}
                 <div class="menu-block">
                     <div class="links-block clearfix">

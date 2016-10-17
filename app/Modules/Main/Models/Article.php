@@ -36,7 +36,8 @@ class Article extends Model
             'article' => [
                 'class' => ForeignField::class,
                 'modelClass' => Article::className(),
-                'label' => "Article"
+                'label' => "Article",
+                'null' => true
             ],
             'articles' => [
                 'class' => HasManyField::class,

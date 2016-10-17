@@ -457,9 +457,29 @@ abstract class Admin
         $form->setInstance($model);
 
         $request = Phact::app()->request;
-        if ($request->getIsPost() && $form->fill($_POST, $_FILES) && $form->valid && $form->save()) {
-            d('SAVED');
+        if ($request->getIsPost() && $form->fill($_POST, $_FILES)) {
+            if ($form->valid && $form->save()) {
+                if ($request->getIsAjax()) {
+
+                } else {
+                    Phact::app()->flash->success('Изменения сохранены');
+
+                    $next = isset($_POST['save']) ? $_POST['save']: 'save';
+                    if ($next == 'save') {
+                        $request->redirect($this->getAllUrl());
+                    } elseif ($next == 'save-stay') {
+                        $request->refresh();
+                    } else {
+                        $request->redirect($this->getCreateUrl());
+                    }
+                }
+            } else {
+                if (!$request->getIsAjax()) {
+                    Phact::app()->flash->error('Пожалуйста, исправьте ошибки');
+                }
+            }
         }
+        
         $template = $new ? $this->createTemplate : $this->updateTemplate;
         $this->render($template, [
             'form' => $form,

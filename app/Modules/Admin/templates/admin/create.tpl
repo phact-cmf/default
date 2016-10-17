@@ -6,7 +6,7 @@
 
 {block 'main_block'}
     <div class="form-page {block 'page_class'}create{/block}">
-        <form action="{$.request->getUrl()}" enctype="multipart/form-data">
+        <form action="{$.request->getUrl()}" enctype="multipart/form-data" method="post">
             <div class="form-data">
                 {include 'admin/form/_form.tpl'}
             </div>
@@ -20,8 +20,8 @@
                         Сохранить и продолжить
                     </button>
 
-                    <button type="submit" name="save" value="save-stay" class="button transparent pad round">
-                        Сохранить и продолжить
+                    <button type="submit" name="save" value="save-create" class="button transparent pad round">
+                        Сохранить и создать
                     </button>
                 </div>
 
@@ -36,10 +36,10 @@
                     {/if}
 
                     {if $model->pk}
-                        <a href="{$admin->getRemoveUrl($model->pk)}" data-prevention data-title="Вы действительно хотите удалить данный объект?" data-trigger="form-removed">
-                            <i class="icon-watch_on_site"></i>
+                        <a href="{$admin->getRemoveUrl($model->pk)}" data-all="{$admin->getAllUrl()}" data-prevention data-title="Вы действительно хотите удалить данный объект?" data-trigger="form-removed">
+                            <i class="icon-delete_in_filter"></i>
                             <span class="text">
-                                Посмотреть на сайте
+                                Удалить
                             </span>
                         </a>
                     {/if}

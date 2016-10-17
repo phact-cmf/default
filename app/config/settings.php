@@ -48,7 +48,8 @@ return [
             'pathRoutes' => 'base.config.routes'
         ],
         'template' => [
-            'class' => \Phact\Template\TemplateManager::class
+            'class' => \Phact\Template\TemplateManager::class,
+            'forceCompile' => true
         ],
         'auth' => [
             'class' => \Modules\User\Components\Auth::class
@@ -58,7 +59,10 @@ return [
         ],
         'seo' => [
             'class' => \Phact\Components\Seo::class
-        ]
+        ],
+        'flash' => [
+            'class' => \Phact\Components\Flash::class
+        ],
     ],
     'autoloadComponents' => [
         'errorHandler'
