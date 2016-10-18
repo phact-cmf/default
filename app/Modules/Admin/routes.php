@@ -18,6 +18,11 @@ return [
         'name' => 'create'
     ],
     [
+        'route' => '/group_action/{:module}/{:admin}',
+        'target' => [\Modules\Admin\Controllers\AdminController::class, 'groupAction'],
+        'name' => 'group_action'
+    ],
+    [
         'route' => '/update/{:module}/{:admin}/{:pk}',
         'target' => [\Modules\Admin\Controllers\AdminController::class, 'update'],
         'name' => 'update'

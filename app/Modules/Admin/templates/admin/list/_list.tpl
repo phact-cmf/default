@@ -65,7 +65,7 @@
                         <tr data-pk="{$pk}">
 
                             <td class="checker">
-                                <input type="checkbox" id="{$id}-{$pk}-check" name="ids[]" value="{$pk}">
+                                <input type="checkbox" id="{$id}-{$pk}-check" name="pk_list[]" value="{$pk}">
                                 <label for="{$id}-{$pk}-check" class="alone"></label>
                             </td>
 
@@ -119,13 +119,13 @@
                         {if ("update" in $actions) || ("remove" in $actions)}
                             <div class="group-buttons">
                                 {if ("update" in $actions)}
-                                    <a href="#" class="group-button">
+                                    <a href="#" class="group-button" data-group-update>
                                         <i class="icon-edit"></i>
                                     </a>
                                 {/if}
 
                                 {if ("remove" in $actions)}
-                                    <a href="#" class="group-button">
+                                    <a href="#" class="group-button" data-group-remove>
                                         <i class="icon-delete_in_table"></i>
                                     </a>
                                 {/if}
@@ -162,7 +162,8 @@
 <script>
     $(function () {
         $('[data-id="{$id}-list"]').adminList({
-            url: "{$.request->getUrl()}"
+            url: "{$.request->getUrl()}",
+            groupActionUrl: "{$admin->getGroupActionUrl()}"
         });
     });
 </script>

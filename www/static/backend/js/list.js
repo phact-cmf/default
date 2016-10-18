@@ -1,7 +1,8 @@
 $(function () {
     var list = {
         options: {
-            url: undefined
+            url: undefined,
+            groupActionUrl: undefined
         },
         id: undefined,
         currentUrl: undefined,
@@ -24,9 +25,15 @@ $(function () {
         getUpdateBlockSelector: function () {
             return this.getListSelector() + ' .list-update-block';
         },
+        setLoading: function () {
+            this.$listBlock.addClass('loading');
+        },
+        unsetLoading: function () {
+            this.$listBlock.removeClass('loading');
+        },
         update: function () {
             var me = this;
-            me.$listBlock.addClass('loading');
+            me.setLoading();
 
             $.ajax({
                 url: this.currentUrl,
@@ -34,9 +41,44 @@ $(function () {
                     var $page = $('<div/>').append(page);
                     var ubSelector = me.getUpdateBlockSelector();
                     $(ubSelector).replaceWith($page.find(ubSelector));
-                    me.$listBlock.removeClass('loading');
+                    me.unsetLoading();
                 }
             });
+        },
+        getPkList: function () {
+            var pkList = [];
+            this.$listBlock.find('input[type=checkbox][name="pk_list[]"]:checked').each(function () {
+                var $checkbox = $(this);
+                pkList.push($checkbox.val());
+            });
+            return pkList;
+        },
+        groupAction: function (action) {
+            var me = this;
+            me.setLoading();
+            $.ajax({
+                url: me.options.groupActionUrl,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    action: action,
+                    pk_list: me.getPkList()
+                },
+                success: function (data) {
+                    me.unsetLoading();
+                    var type = 'success';
+                    if (!data.success) {
+                        type = 'error';
+                    }
+                    if (data.message) {
+                        window.addFlashMessage(data.message, type);
+                    }
+
+                    if (data.success) {
+                        me.update();
+                    }
+                }
+            })
         }
     };
 
@@ -76,16 +118,22 @@ $(function () {
     });
 
     $(document).on('change', '.list-block .pagination-block [data-pagesize]', function (e) {
-        e.preventDefault();
         var $this = $(this);
         var url = $this.val();
         var list = getList($this);
         list.setUrl(url);
+    });
+
+    $(document).on('click', '.list-block [data-group-remove]', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var url = $this.val();
+        var list = getList($this);
+        list.groupAction('remove');
         return false;
     });
 
     $(document).on('list-update', function (e, $element) {
-        console.log($element);
         var list = getList($element);
         list.update();
     });

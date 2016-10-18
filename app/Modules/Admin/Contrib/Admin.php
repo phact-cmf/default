@@ -16,6 +16,7 @@ namespace Modules\Admin\Contrib;
 
 
 use Exception;
+use Phact\Components\Flash;
 use Phact\Exceptions\HttpException;
 use Phact\Form\ModelForm;
 use Phact\Helpers\ClassNames;
@@ -27,6 +28,7 @@ use Phact\Orm\Fields\ForeignField;
 use Phact\Orm\Fields\HasManyField;
 use Phact\Orm\Fields\ManyToManyField;
 use Phact\Orm\Model;
+use Phact\Orm\QuerySet;
 use Phact\Pagination\Pagination;
 use Phact\Template\Renderer;
 
@@ -102,7 +104,15 @@ abstract class Admin
      *  'process' => [
      *      'title' => 'Process',
      *      'callback' => function ($qs, $ids) {
-     *          return $qs->filter(['status' => 1]);
+     *          $qs->filter(['status' => 1])->delete();
+     *          return true;
+     *      }
+     *  ],
+     * 'example' => [
+     *      'title' => 'Example return',
+     *      'callback' => function ($qs, $ids) {
+     *          $qs->filter(['status' => 3])->delete();
+     *          return [true, "Objects successfully removed"];
      *      }
      *  ],
      *  'do' => [
@@ -119,17 +129,11 @@ abstract class Admin
         ];
     }
 
-    public function getListDropDownGroupActions()
+    public function getListGroupActionsConfig()
     {
         $actions = $this->getListGroupActions();
-        foreach (['update', 'remove'] as $item) {
-            if(($key = array_search($item, $actions)) !== false) {
-                unset($actions[$key]);
-            }
-        }
         $result = [];
         foreach ($actions as $key => $item) {
-            $action = [];
             $title = null;
             $callback = null;
 
@@ -158,6 +162,61 @@ abstract class Admin
             ];
         }
         return $result;
+    }
+
+    public function handleGroupAction($action, $pkList = [])
+    {
+        /** @var Flash $flash */
+        $flash = Phact::app()->flash;
+        $request = Phact::app()->request;
+
+        $actions = $this->getListGroupActionsConfig();
+        if (!isset($actions[$action])) {
+            throw new HttpException(404);
+        }
+        $actionConfig = $actions[$action];
+        $callback = $actionConfig['callback'];
+        $qs = $this->getQuerySet();
+        $qs = $qs->filter(['pk__in' => $pkList]);
+        $result = call_user_func($callback, $qs, $pkList);
+
+        $success = true;
+        $message = 'Изменения успешно применены';
+
+        if (is_array($result) && count($result) == 2 && is_bool($result[0]) && is_string($result[1])) {
+            $success = $result[0];
+            $message = $result[1];
+        } elseif ($result !== true) {
+            $success = false;
+            if (is_string($result)) {
+                $message = $result;
+            } else {
+                $message = 'При применении изменений произошла ошибка';
+            }
+        }
+
+        if ($request->getIsAjax()) {
+            $this->jsonResponse([
+                'success' => $success,
+                'message' => $message
+            ]);
+            Phact::app()->end();
+        } else {
+            $flash->add($message, $success ? 'success' : 'error');
+            $request->redirect($this->getAllUrl());
+        }
+    }
+
+    public function getListDropDownGroupActions()
+    {
+        $actions = $this->getListGroupActionsConfig();
+        if (array_key_exists('remove', $actions)) {
+            unset($actions['remove']);
+        }
+        if (array_key_exists('update', $actions)) {
+            unset($actions['update']);
+        }
+        return $actions;
     }
 
     /**
@@ -365,6 +424,14 @@ abstract class Admin
         ]);
     }
 
+    public function getGroupActionUrl()
+    {
+        return Phact::app()->router->url('admin:group_action', [
+            'module' => static::getModuleName(),
+            'admin' => static::classNameShort()
+        ]);
+    }
+
     public function getItemProperty(Model $item, $property)
     {
         $value = $item;
@@ -404,6 +471,17 @@ abstract class Admin
             $data = ['error' => 'При удалении объекта произошла ошибка'];
         }
         $this->jsonResponse($data);
+    }
+
+    /**
+     * @param $qs QuerySet
+     * @param $pkList
+     * @return bool
+     */
+    public function groupRemove($qs, $pkList)
+    {
+        $qs->delete();
+        return [true, "Объекты успешно удалены"];
     }
 
     public function render($template, $data = [])

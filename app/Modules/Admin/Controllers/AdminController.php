@@ -49,6 +49,22 @@ class AdminController extends BackendController
         $admin->remove($pk);
     }
 
+    public function groupAction($module, $admin)
+    {
+        if (!$this->request->getIsPost()) {
+            $this->error(404);
+        }
+        $admin = $this->getAdmin($module, $admin);
+        $action = isset($_POST['action']) ? $_POST['action'] : null;
+        $pkList = isset($_POST['pk_list']) && is_array($_POST['pk_list']) ? $_POST['pk_list'] : [];
+
+        if ($action) {
+            $admin->handleGroupAction($action, $pkList);
+        } else {
+            $this->error(404);
+        }
+    }
+
     /**
      * @param $admin Admin
      */
