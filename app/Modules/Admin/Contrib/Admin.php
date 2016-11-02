@@ -23,11 +23,13 @@ use Phact\Helpers\ClassNames;
 use Phact\Helpers\SmartProperties;
 use Phact\Helpers\Text;
 use Phact\Main\Phact;
+use Phact\Orm\Expression;
 use Phact\Orm\Fields\Field;
 use Phact\Orm\Fields\ForeignField;
 use Phact\Orm\Fields\HasManyField;
 use Phact\Orm\Fields\ManyToManyField;
 use Phact\Orm\Model;
+use Phact\Orm\Q;
 use Phact\Orm\QuerySet;
 use Phact\Pagination\Pagination;
 use Phact\Template\Renderer;
@@ -55,6 +57,8 @@ abstract class Admin
      * @var null|string
      */
     public $sort = null;
+
+    public $autoFixSort = true;
 
     /**
      * @return mixed
@@ -305,6 +309,15 @@ abstract class Admin
     abstract public function getModel();
 
     /**
+     * @return Model
+     */
+    public function newModel()
+    {
+        $model = $this->getModel();
+        return new $model;
+    }
+
+    /**
      * @return ModelForm
      */
     public function getForm()
@@ -320,22 +333,34 @@ abstract class Admin
         return $this->getForm();
     }
 
+    /**
+     * @return string
+     */
     public static function getName()
     {
         return static::classNameShort();
     }
 
+    /**
+     * @return string
+     */
     public static function getItemName()
     {
         return static::classNameShort();
     }
 
+    /**
+     * @return QuerySet
+     */
     public function getQuerySet()
     {
         $model = $this->getModel();
         return $model->objects()->getQuerySet();
     }
 
+    /**
+     * @return array|null
+     */
     public function getOrder()
     {
         $order = isset($_GET['order']) ? $_GET['order'] : null;
@@ -356,17 +381,73 @@ abstract class Admin
         return null;
     }
 
+    /**
+     * @param $qs QuerySet
+     * @return QuerySet
+     */
+    public function handleSearch($qs, $search)
+    {
+        $columns = $this->getSearchColumns();
+        if ($search && $columns) {
+            $orData = [];
+            foreach ($columns as $column) {
+                $orData[] = [$column . '__contains' => $search];
+            }
+            $filter = call_user_func_array([Q::class, 'orQ'], $orData);
+            $qs = $qs->filter($filter);
+        }
+        return $qs;
+    }
+
+    /**
+     * @param $qs QuerySet
+     * @return QuerySet
+     */
     public function applyOrder($qs)
     {
         $order = $this->getOrder();
+
         if ($order && isset($order['raw'])) {
             $qs->order([
                 $order['raw']
+            ]);
+        } else if ($this->sort) {
+            $qs->order([
+                $this->sort
             ]);
         }
         return $qs;
     }
 
+    /**
+     * @param $qs QuerySet
+     * @return mixed
+     */
+    public function fixSort($qs)
+    {
+        if ($this->sort && $this->autoFixSort && $this->getCanSort($qs)) {
+            $newQs = clone($qs);
+            $raw = $newQs->group([$this->sort])->having(new Expression('c > 1'))->values([$this->sort, new Expression('count(*) as c')]);
+            if ($raw) {
+                $newQs = clone($qs);
+                $qLayer = $newQs->getQueryLayer();
+                $queryBuilder = $qLayer->getQueryBuilderRaw();
+                $queryBuilder->query('SET @position = 0;');
+
+                $model = $this->getModel();
+                $pk = $model->getPkAttribute();
+
+                $newQs->order([$this->sort, $pk])->update([
+                    $this->sort => new Expression("@position := (@position + 1)")
+                ]);
+            }
+        }
+        return $qs;
+    }
+
+    /**
+     * @return array
+     */
     public function getCommonData()
     {
         return [
@@ -432,6 +513,14 @@ abstract class Admin
         ]);
     }
 
+    public function getSortUrl()
+    {
+        return Phact::app()->router->url('admin:sort', [
+            'module' => static::getModuleName(),
+            'admin' => static::classNameShort()
+        ]);
+    }
+
     public function getItemProperty(Model $item, $property)
     {
         $value = $item;
@@ -444,8 +533,12 @@ abstract class Admin
 
     public function all()
     {
+        $search = isset($_GET['search']) ? $_GET['search'] : null;
+
         $qs = $this->getQuerySet();
+        $qs = $this->handleSearch($qs, $search);
         $qs = $this->applyOrder($qs);
+        $qs = $this->fixSort($qs);
 
         $pagination = new Pagination($qs, [
             'defaultPageSize' => $this->pageSize,
@@ -457,7 +550,8 @@ abstract class Admin
             'pagination' => $pagination,
             'order' => $this->getOrder(),
             'search' => $this->getSearchColumns(),
-            'columns' => $this->buildListColumns()
+            'columns' => $this->buildListColumns(),
+            'canSort' => $this->getCanSort($qs)
         ]);
     }
 
@@ -566,9 +660,33 @@ abstract class Admin
         ]);
     }
 
-    public function newModel()
+    /**
+     * @param $qs QuerySet
+     * @return bool
+     */
+    public function getCanSort($qs)
     {
-        $model = $this->getModel();
-        return new $model;
+        if ($this->sort) {
+            $order = $qs->getOrder();
+            return $order == [$this->sort];
+        } else {
+            return false;
+        }
+    }
+
+    public function sort($pkList, $to, $prev, $next)
+    {
+        $qs = $this->getQuerySet();
+        $positions = $qs->filter(['pk__in' => $pkList])->values(['position'], true);
+        asort($positions);
+        $result = array_combine($pkList, $positions);
+
+        $model = $qs->getModel();
+        foreach ($result as $pk => $position) {
+            $model::objects()->filter(['pk' => $pk])->update(['position' => $position]);
+        }
+        $this->jsonResponse([
+            'success' => true
+        ]);
     }
 }

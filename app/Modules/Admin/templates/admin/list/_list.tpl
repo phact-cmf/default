@@ -1,6 +1,6 @@
 {var $id = $admin->getId()}
 
-<div class="list-block" data-id="{$id}-list">
+<div class="list-block" data-list data-id="{$id}-list">
     <div class="list-top clearfix">
         <div class="top-buttons-block left">
             <a href="{$admin->getCreateUrl()}" class="button round upper pad">
@@ -19,7 +19,7 @@
     </div>
     <div class="list-wrapper">
         <div class="list-update-block">
-            <table>
+            <table data-list-table>
                 <thead>
                     {var $cols = 0}
 
@@ -31,8 +31,10 @@
                         </th>
 
                         {if $admin->sort}
-                            <th class="sort full">
-                                <i class="icon-double_triangle"></i>
+                            <th class="sort full" data-sort-column>
+                                <a href="{build_url data=['order' => $admin->sort]}" class="sort-title title">
+                                    <i class="icon-double_triangle"></i>
+                                </a>
                                 {var $cols = $cols+1}
                             </th>
                         {/if}
@@ -71,7 +73,7 @@
 
                             {if $admin->sort}
                                 <td class="sort">
-                                    <a href="#" class="sort-handler">
+                                    <a href="#" class="sort-handler {if $canSort}active{else}not-active{/if}">
                                         <i class="icon-double_triangle"></i>
                                     </a>
                                 </td>
@@ -135,7 +137,7 @@
                         {var $dropdown = $admin->getListDropDownGroupActions()}
                         {if $dropdown}
                             <div class="dropdown-block">
-                                <select name="" id="">
+                                <select name="" id="" data-group-action>
                                     <option value="" selected disabled>Выберите действие</option>
                                     {foreach $dropdown as $key => $item}
                                         <option value="{$key}">
@@ -143,7 +145,7 @@
                                         </option>
                                     {/foreach}
                                 </select>
-                                <button class="button">
+                                <button class="button" data-group-submit>
                                     <i class="icon-check_mark"></i>
                                 </button>
                             </div>
@@ -163,7 +165,8 @@
     $(function () {
         $('[data-id="{$id}-list"]').adminList({
             url: "{$.request->getUrl()}",
-            groupActionUrl: "{$admin->getGroupActionUrl()}"
+            groupActionUrl: "{$admin->getGroupActionUrl()}",
+            sortUrl: "{$admin->getSortUrl()}"
         });
     });
 </script>

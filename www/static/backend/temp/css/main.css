@@ -572,7 +572,7 @@ body {
     font-weight: 500; }
 
 ul.errors {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 12px;
   color: #FC585E; }
   ul.errors li {
@@ -757,10 +757,21 @@ h1 {
     padding-right: 0 !important;
     text-align: center;
     font-size: 0; }
-  .list-block .list-wrapper table tbody tr:first-child td {
+  .list-block .list-wrapper table th.sort, .list-block .list-wrapper table td.sort {
+    width: 40px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: center; }
+    .list-block .list-wrapper table th.sort a, .list-block .list-wrapper table td.sort a {
+      text-decoration: none;
+      color: #efefef; }
+      .list-block .list-wrapper table th.sort a.not-active, .list-block .list-wrapper table td.sort a.not-active {
+        cursor: not-allowed; }
+      .list-block .list-wrapper table th.sort a.active, .list-block .list-wrapper table td.sort a.active {
+        cursor: move;
+        color: #c6c6c6; }
+  .list-block .list-wrapper table tbody tr:first-child:not(.ui-sortable-helper) td, .list-block .list-wrapper table tbody tr:first-child.ui-sortable-helper + tr td {
     border-top: 1px solid #DFDFDF; }
-  .list-block .list-wrapper table tbody tr:last-child td {
-    border-bottom: 1px solid #DFDFDF; }
   .list-block .list-wrapper table tbody tr td {
     border-left: 1px solid #DFDFDF;
     border-right: 1px solid #DFDFDF;
@@ -788,6 +799,12 @@ h1 {
           margin-right: 0; }
         .list-block .list-wrapper table tbody tr td.actions a:hover {
           color: #A9A9B3; }
+  .list-block .list-wrapper table tbody tr.empty td {
+    padding: 30px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 300;
+    color: #aaa; }
   .list-block .list-wrapper table tbody tr:hover td {
     background: #F7F7F7;
     -webkit-transition: background 0.3s;
@@ -802,7 +819,6 @@ h1 {
 .list-block .list-wrapper .list-footer {
   background-color: #fff;
   border: 1px solid #DFDFDF;
-  border-top: none;
   font-size: 13px;
   color: #000000; }
   .list-block .list-wrapper .list-footer .list-footer-block {
@@ -844,7 +860,7 @@ h1 {
           border-right: none;
           font-size: 13px; }
         .list-block .list-wrapper .list-footer .list-footer-block.group .dropdown-block button {
-          line-height: 30px;
+          line-height: 34px;
           font-size: 10px;
           padding: 0 12px; }
 
@@ -985,14 +1001,14 @@ h1 {
   padding: 25px 30px; }
 
 .main-block .form-page {
-  padding: 0 30px 70px; }
+  padding: 0 30px 110px; }
   .main-block .form-page .actions-panel {
     position: fixed;
     left: 278px;
     right: 0;
     bottom: 0;
     background: #FFFFFF;
-    box-shadow: 0px 5px 15px 0px rgba(189, 189, 189, 0.64);
+    box-shadow: 0px -4px 4px -1px rgba(189, 189, 189, 0.4);
     padding: 20px 30px; }
     .main-block .form-page .actions-panel .buttons {
       float: left; }
@@ -1048,8 +1064,27 @@ h1 {
         color: #616171;
         display: block;
         margin-bottom: 10px; }
+        .form-page fieldset .fields .form-field label.required:after {
+          content: '*';
+          color: #FB585E;
+          padding-left: 3px; }
       .form-page fieldset .fields .form-field input[type=text], .form-page fieldset .fields .form-field input[type=email], .form-page fieldset .fields .form-field input[type=password], .form-page fieldset .fields .form-field textarea {
         width: 100%; }
+      .form-page fieldset .fields .form-field .hint {
+        background: #F5F5F5;
+        padding: 12px;
+        padding-left: 40px;
+        font-size: 12px;
+        color: #828282;
+        position: relative; }
+        .form-page fieldset .fields .form-field .hint:before {
+          content: '?';
+          position: absolute;
+          font-weight: bold;
+          font-size: 15px;
+          color: #8C8C8C;
+          top: 10px;
+          left: 20px; }
       .form-page fieldset .fields .form-field input[type=checkbox] {
         display: none; }
       .form-page fieldset .fields .form-field input[type=checkbox] + label {

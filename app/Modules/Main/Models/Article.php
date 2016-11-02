@@ -17,6 +17,7 @@ namespace Modules\Main\Models;
 use Phact\Orm\Fields\CharField;
 use Phact\Orm\Fields\ForeignField;
 use Phact\Orm\Fields\HasManyField;
+use Phact\Orm\Fields\IntField;
 use Phact\Orm\Fields\TextField;
 use Phact\Orm\Model;
 
@@ -44,6 +45,11 @@ class Article extends Model
                 'modelClass' => Article::className(),
                 'label' => "Articles"
             ],
+            'position' => [
+                'class' => IntField::class,
+                'label' => "Position",
+                'default' => 0
+            ]
         ];
     }
 

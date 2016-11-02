@@ -21,6 +21,8 @@ use Phact\Orm\Model;
 
 class ArticleAdmin extends Admin
 {
+    public $sort = 'position';
+    
     public function getSearchColumns()
     {
         return ['name', 'text'];

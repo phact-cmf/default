@@ -133,6 +133,19 @@ module.exports.backend = {
             scss_include: [
                 'components/cds'
             ]
+        },
+        deparam: {
+            js: [
+                'components/deparam/jquery.deparam.js'
+            ]
+        },
+        ui_custom: {
+            js: [
+                'components/ui-custom/jquery-ui.min.js'
+            ],
+            css: [
+                'components/ui-custom/jquery-ui.min.css'
+            ]
         }
     }
 };

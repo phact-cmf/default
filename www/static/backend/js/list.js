@@ -2,19 +2,39 @@ $(function () {
     var list = {
         options: {
             url: undefined,
-            groupActionUrl: undefined
+            groupActionUrl: undefined,
+            sortUrl: undefined,
+            searchTimeout: 500
         },
         id: undefined,
         currentUrl: undefined,
         $listBlock: undefined,
+
+        _searchTimer: undefined,
+        _searchQuery: undefined,
+
         init: function (options) {
             this.options = $.extend(this.options, options);
             this.currentUrl = this.options.url;
-            this.id = this.$listBlock.data('id')
+            this.id = this.$listBlock.data('id');
+            this.initSort();
         },
         setUrl: function (url) {
             this.currentUrl = url;
             this.update();
+        },
+        modifyUrl: function (key, value) {
+            var url = this.currentUrl;
+            var params = {};
+            var cleanUrl = url;
+            if (url.indexOf('?') !== -1) {
+                cleanUrl = url.substr(0, url.indexOf('?'));
+                var paramsString = url.substr(url.indexOf('?') + 1);
+                params = $.deparam(paramsString);
+            }
+            params[key] = value;
+            paramsString = $.param(params);
+            this.setUrl(cleanUrl + '?' + paramsString)
         },
         setListBlock: function ($listBlock) {
             this.$listBlock = $listBlock;
@@ -24,6 +44,9 @@ $(function () {
         },
         getUpdateBlockSelector: function () {
             return this.getListSelector() + ' .list-update-block';
+        },
+        getTable: function () {
+            return this.$listBlock.find('[data-list-table]');
         },
         setLoading: function () {
             this.$listBlock.addClass('loading');
@@ -41,6 +64,7 @@ $(function () {
                     var $page = $('<div/>').append(page);
                     var ubSelector = me.getUpdateBlockSelector();
                     $(ubSelector).replaceWith($page.find(ubSelector));
+                    me.initSort();
                     me.unsetLoading();
                 }
             });
@@ -77,6 +101,69 @@ $(function () {
                     if (data.success) {
                         me.update();
                     }
+                }
+            })
+        },
+        search: function (search) {
+            var me = this;
+            if (me._searchQuery != search) {
+                me._searchQuery = search;
+                me.setLoading();
+                clearTimeout(me._searchTimer);
+                me._searchTimer = setTimeout(function () {
+                    me.processSearch(search);
+                }, me.options.searchTimeout);
+            }
+        },
+        processSearch: function (search) {
+            var me = this;
+            me.modifyUrl('search', search);
+        },
+        initSort: function () {
+            var me = this;
+            var $table = me.getTable();
+
+            $table.find("tbody").sortable({
+                axis: 'y',
+                placeholder: "highlight",
+                start: function(e, ui){
+                    ui.placeholder.height(ui.item.height());
+                },
+                helper: function (e, ui) {
+                    ui.children().each(function () {
+                        var $this = $(this);
+                        $this.width($this.width());
+                    });
+                    return ui;
+                },
+                update: function (event, ui) {
+                    var $to = $(ui.item),
+                        $prev = $to.prev(),
+                        $next = $to.next();
+
+                    var pk_list = $(this).sortable('toArray', {
+                        attribute: 'data-pk'
+                    });
+
+                    me.setSort(pk_list, $to.data('id'), $prev.data('id'), $next.data('id'))
+                }
+            });
+        },
+        setSort: function (pk_list, to, prev, next) {
+            var me = this;
+            $.ajax({
+                url: me.options.sortUrl,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    action: 'sort',
+                    pk_list: pk_list,
+                    to: to,
+                    prev: prev,
+                    next: next
+                },
+                success: function (data) {
+                    me.update();
                 }
             })
         }
@@ -131,6 +218,25 @@ $(function () {
         var list = getList($this);
         list.groupAction('remove');
         return false;
+    });
+
+    $(document).on('click', '.list-block [data-group-submit]', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $listBlock = getListBlock($this);
+        var action = $listBlock.find('[data-group-action]').val();
+        if (action) {
+            var list = getList($this);
+            list.groupAction(action);
+        }
+        return false;
+    });
+
+    $(document).on('change keyup', '.list-block [data-list-search]',function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var list = getList($this);
+        list.search($this.val());
     });
 
     $(document).on('list-update', function (e, $element) {

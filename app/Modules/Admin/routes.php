@@ -23,6 +23,11 @@ return [
         'name' => 'group_action'
     ],
     [
+        'route' => '/sort/{:module}/{:admin}',
+        'target' => [\Modules\Admin\Controllers\AdminController::class, 'sort'],
+        'name' => 'sort'
+    ],
+    [
         'route' => '/update/{:module}/{:admin}/{:pk}',
         'target' => [\Modules\Admin\Controllers\AdminController::class, 'update'],
         'name' => 'update'
@@ -37,7 +42,6 @@ return [
         'target' => [\Modules\Admin\Controllers\AdminController::class, 'remove'],
         'name' => 'remove'
     ],
-
     [
         'route' => '/login',
         'target' => [\Modules\Admin\Controllers\AuthController::class, 'login'],
