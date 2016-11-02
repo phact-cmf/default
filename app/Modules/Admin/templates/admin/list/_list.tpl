@@ -32,9 +32,10 @@
 
                         {if $admin->sort}
                             <th class="sort full" data-sort-column>
-                                <a href="{build_url data=['order' => $admin->sort]}" class="sort-title title">
-                                    <i class="icon-double_triangle"></i>
-                                </a>
+                                <span class="title">
+                                     <i class="icon-double_triangle"></i>
+                                </span>
+
                                 {var $cols = $cols+1}
                             </th>
                         {/if}
