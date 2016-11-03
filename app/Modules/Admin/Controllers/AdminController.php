@@ -61,6 +61,15 @@ class AdminController extends BackendController
         $admin->sort($pkList, $to , $prev, $next);
     }
 
+    public function columns($module, $admin)
+    {
+        $admin = $this->getAdmin($module, $admin);
+
+        $columns = isset($_POST['columns']) && is_array($_POST['columns']) ? $_POST['columns'] : [];
+
+        $admin->setColumns($columns);
+    }
+
     public function groupAction($module, $admin)
     {
         if (!$this->request->getIsPost()) {

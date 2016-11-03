@@ -16,6 +16,7 @@ namespace Modules\Admin\Contrib;
 
 
 use Exception;
+use Modules\Admin\Models\AdminConfig;
 use Phact\Components\Flash;
 use Phact\Exceptions\HttpException;
 use Phact\Form\ModelForm;
@@ -229,7 +230,8 @@ abstract class Admin
      */
     public function getUserColumns()
     {
-        return null;
+        $config = AdminConfig::fetch(static::getModuleName(), static::classNameShort());
+        return $config->getColumnsList();
     }
 
     public function buildListColumns()
@@ -272,6 +274,7 @@ abstract class Admin
                         $columnConfig['order'] = $attribute;
                     }
                 }
+                $columnConfig['template'] = 'admin/list/columns/default.tpl';
                 $config[$name] = $columnConfig;
             }
         }
@@ -521,6 +524,14 @@ abstract class Admin
         ]);
     }
 
+    public function getColumnsUrl()
+    {
+        return Phact::app()->router->url('admin:columns', [
+            'module' => static::getModuleName(),
+            'admin' => static::classNameShort()
+        ]);
+    }
+
     public function getItemProperty(Model $item, $property)
     {
         $value = $item;
@@ -685,6 +696,15 @@ abstract class Admin
         foreach ($result as $pk => $position) {
             $model::objects()->filter(['pk' => $pk])->update(['position' => $position]);
         }
+        $this->jsonResponse([
+            'success' => true
+        ]);
+    }
+
+    public function setColumns($columns)
+    {
+        $config = AdminConfig::fetch(static::getModuleName(), static::classNameShort());
+        $config->setColumnsList($columns);
         $this->jsonResponse([
             'success' => true
         ]);

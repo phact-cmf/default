@@ -49,9 +49,26 @@
                         {/foreach}
 
                         <th class="actions">
-                            <a href="#" class="button-appender">
-                                <i class="icon-plus"></i>
-                            </a>
+                            <div class="columns-list-appender">
+                                <a href="#" class="button-appender appender-columns">
+                                    <i class="icon-plus"></i>
+                                </a>
+                                <div class="popup-block">
+                                    <ul class="columns-list">
+                                        {foreach $columns['config'] as $name => $column}
+                                            <li>
+                                                <div class="checker">
+                                                    <input type="checkbox" id="{$id}-{$name}-column" name="columns_list[]" value="{$name}" {if $name in $columns['enabled']}checked="checked"{/if}>
+                                                    <label for="{$id}-{$name}-column">
+                                                        {$column['title']}
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                </div>
+                            </div>
+
                             {var $cols = $cols+1}
                         </th>
                     </tr>
@@ -167,7 +184,8 @@
         $('[data-id="{$id}-list"]').adminList({
             url: "{$.request->getUrl()}",
             groupActionUrl: "{$admin->getGroupActionUrl()}",
-            sortUrl: "{$admin->getSortUrl()}"
+            sortUrl: "{$admin->getSortUrl()}",
+            columnsUrl: "{$admin->getColumnsUrl()}"
         });
     });
 </script>

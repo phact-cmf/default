@@ -4,6 +4,7 @@ $(function () {
             url: undefined,
             groupActionUrl: undefined,
             sortUrl: undefined,
+            columnsUrl: undefined,
             searchTimeout: 500
         },
         id: undefined,
@@ -166,6 +167,28 @@ $(function () {
                     me.update();
                 }
             })
+        },
+        saveColumns: function () {
+            var columns = [];
+            var me = this;
+
+            this.$listBlock.find('[name="columns_list[]"]:checked').each(function() {
+                columns.push($(this).val());
+            }).val();
+
+            $.ajax({
+                url: me.options.columnsUrl,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    columns: columns
+                },
+                success: function (data) {
+                    if (data.success) {
+                        me.update();
+                    }
+                }
+            });
         }
     };
 
@@ -242,5 +265,17 @@ $(function () {
     $(document).on('list-update', function (e, $element) {
         var list = getList($element);
         list.update();
+    });
+
+    $(document).on('click', '.appender-columns', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $this.closest('.columns-list-appender').toggleClass('list');
+        return false;
+    });
+
+    $(document).on('change', '.columns-list-appender input', function () {
+        var list = getList($(this));
+        list.saveColumns();
     });
 });

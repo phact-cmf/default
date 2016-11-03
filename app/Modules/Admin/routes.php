@@ -28,6 +28,11 @@ return [
         'name' => 'sort'
     ],
     [
+        'route' => '/columns/{:module}/{:admin}',
+        'target' => [\Modules\Admin\Controllers\AdminController::class, 'columns'],
+        'name' => 'columns'
+    ],
+    [
         'route' => '/update/{:module}/{:admin}/{:pk}',
         'target' => [\Modules\Admin\Controllers\AdminController::class, 'update'],
         'name' => 'update'
