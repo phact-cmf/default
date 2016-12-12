@@ -65,4 +65,9 @@ class DbCommand extends Command
             echo PHP_EOL;
         }
     }
+
+    public function getDescription()
+    {
+        return 'Sync models with database';
+    }
 }
