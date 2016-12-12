@@ -38,6 +38,11 @@ class User extends Model
                 'class' => BooleanField::class,
                 'label' => 'Is superuser',
                 'default' => false
+            ],
+            'is_staff' => [
+                'class' => BooleanField::class,
+                'label' => 'Is staff',
+                'default' => false
             ]
         ];
     }

@@ -56,11 +56,18 @@
             </div>
         </header>
 
+        {render_flash:raw template='base/_flash.tpl'}
+
         {block 'content-header'}
             <div class="content-header">
                 <div class="row">
                     <div class="column large-12">
+                        {block 'breadcrumbs'}
+                            {render_breadcrumbs:raw template="base/_breadcrumbs.tpl"}
+                        {/block}
+
                         {block 'heading'}
+
                         {/block}
                     </div>
                 </div>

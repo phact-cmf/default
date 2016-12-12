@@ -52,13 +52,15 @@ trait AdminTrait
     public static function getAdminClasses()
     {
         $classes = [];
-        $modulePath = static::getPath();
+        $modulePath = self::getPath();
         $path = implode(DIRECTORY_SEPARATOR, [$modulePath, static::$adminFolder]);
-        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
-        {
-            if ($filename->isDir()) continue;
-            $name = $filename->getBasename('.php');
-            $classes[] = implode('\\', ['Modules', static::getName(), static::$adminFolder, $name]);
+        if (is_dir($path)) {
+            foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
+            {
+                if ($filename->isDir()) continue;
+                $name = $filename->getBasename('.php');
+                $classes[] = implode('\\', ['Modules', static::getName(), static::$adminFolder, $name]);
+            }
         }
         return $classes;
     }

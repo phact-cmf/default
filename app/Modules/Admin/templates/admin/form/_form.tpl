@@ -7,8 +7,8 @@
             </div>
             <div class="fields">
                 {foreach $fieldsNames as $fieldName}
+                    {var $field = $form->getField($fieldName)}
                     <div class="form-field {$fieldName}">
-                        {var $field = $form->getField($fieldName)}
                         {raw $field->render()}
                     </div>
                 {/foreach}

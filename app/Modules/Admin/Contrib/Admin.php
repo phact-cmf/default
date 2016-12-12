@@ -337,22 +337,6 @@ abstract class Admin
     }
 
     /**
-     * @return string
-     */
-    public static function getName()
-    {
-        return static::classNameShort();
-    }
-
-    /**
-     * @return string
-     */
-    public static function getItemName()
-    {
-        return static::classNameShort();
-    }
-
-    /**
      * @return QuerySet
      */
     public function getQuerySet()
@@ -651,7 +635,7 @@ abstract class Admin
                     if ($next == 'save') {
                         $request->redirect($this->getAllUrl());
                     } elseif ($next == 'save-stay') {
-                        $request->refresh();
+                        $request->redirect($this->getUpdateUrl($model->pk));
                     } else {
                         $request->redirect($this->getCreateUrl());
                     }
@@ -708,5 +692,21 @@ abstract class Admin
         $this->jsonResponse([
             'success' => true
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public static function getName()
+    {
+        return static::classNameShort();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getItemName()
+    {
+        return static::classNameShort();
     }
 }

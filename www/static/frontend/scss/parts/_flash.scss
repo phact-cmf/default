@@ -1,0 +1,38 @@
+.flash-messages-block {
+  .flash-list {
+    display: block;
+
+    li {
+      display: block;
+      font-size: 18px;
+
+      .message {
+        height: 60px;
+        line-height: 60px;
+        padding-left: 60px;
+      }
+
+      &.error {
+        background-color: #FDEAEA;
+        border-bottom: 1px solid #E3B7B7;
+
+        .message {
+          background: $t url('../images/flash/error-flash.png') 0 50% no-repeat;
+          background-size: 40px 40px;
+          color: #955F5F;
+        }
+      }
+
+      &.success {
+        background-color: #D5F8AD;
+        border-bottom: 1px solid #A6D76E;
+
+        .message {
+          background: $t url('../images/flash/success-flash.png') 0 50% no-repeat;
+          background-size: 40px 40px;
+          color: #698D3F;
+        }
+      }
+    }
+  }
+}

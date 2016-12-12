@@ -12,14 +12,19 @@ $input: "input[type=text], input[type=search], input[type=email]";
 #{$input}, textarea {
   background: #FFFFFF;
   border: 1px solid #DFDFDF;
-  padding: 0 18px;
+  padding: 0 10px;
   height: $button-height;
   font-size: 14px;
 
   @include placeholder {
     font-size: 14px;
-    color: #000000;
+    color: #797979;
   }
+}
+
+textarea {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 select {
@@ -31,7 +36,7 @@ select {
   font-size: 14px;
   color: #000000;
   height: $button-height;
-  padding: 0 12px;
+  padding: 0 10px;
   padding-right: 26px;
   background-image: url('../images/forms/select-bg.png');
   background-repeat: no-repeat;

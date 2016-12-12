@@ -20,7 +20,7 @@ use Phact\Template\TemplateLibrary;
 class AdminLibrary extends TemplateLibrary
 {
     /**
-     * @kind accessorCallback
+     * @kind accessorProperty
      * @name admin_menu
      * @return array
      */

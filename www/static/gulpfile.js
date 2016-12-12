@@ -141,14 +141,26 @@ gulp.task('backend_fonts', function() {
         .pipe(gulp.dest(backend.dst.fonts)).pipe(livereload());
 });
 
+gulp.task('frontend_raw', function() {
+    return gulp.src(frontend.src.raw)
+        .pipe(gulp.dest(frontend.dst.raw)).pipe(livereload());
+});
+
+gulp.task('backend_raw', function() {
+    return gulp.src(backend.src.raw)
+        .pipe(gulp.dest(backend.dst.raw)).pipe(livereload());
+});
+
 gulp.task('watch', ['build'], function() {
     livereload({ start: true });
-    
+
+    gulp.watch(frontend.src.raw, ['frontend_raw']);
     gulp.watch(frontend.src.scss, ['frontend_css']);
     gulp.watch(frontend.src.js, ['frontend_js']);
     gulp.watch(frontend.src.images, ['frontend_images']);
     gulp.watch(frontend.src.fonts, ['frontend_fonts']);
 
+    gulp.watch(backend.src.raw, ['backend_raw']);
     gulp.watch(backend.src.scss, ['backend_css']);
     gulp.watch(backend.src.js, ['backend_js']);
     gulp.watch(backend.src.images, ['backend_images']);
@@ -162,8 +174,8 @@ gulp.task('clear', function() {
 
 gulp.task('build', ['clear'], function(){
     gulp.start(
-        'frontend_css', 'frontend_js', 'frontend_images', 'frontend_fonts',
-        'backend_css', 'backend_js', 'backend_images', 'backend_fonts'
+        'frontend_raw', 'frontend_css', 'frontend_js', 'frontend_images', 'frontend_fonts',
+        'backend_raw', 'backend_css', 'backend_js', 'backend_images', 'backend_fonts'
     );
 });
 

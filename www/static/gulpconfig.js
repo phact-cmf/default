@@ -1,3 +1,11 @@
+var fs = require('fs');
+
+var modulesDir = '../../app/Modules';
+
+var modules = fs.readdirSync(modulesDir).map(function (module) {
+    return modulesDir + '/' + module;
+});
+
 module.exports.name = "main";
 
 module.exports.compress = false;
@@ -8,7 +16,8 @@ module.exports.frontend = {
         scss: 'frontend/css',
         css: 'frontend/dist/css',
         images: 'frontend/dist/images',
-        fonts: 'frontend/dist/fonts'
+        fonts: 'frontend/dist/fonts',
+        raw: 'frontend/dist/raw'
     },
     src: {
         js: [
@@ -28,6 +37,9 @@ module.exports.frontend = {
         ],
         fonts: [
             'fonts/GothamPro/fonts/**/*'
+        ],
+        raw: [
+
         ]
     },
     vendors: {
@@ -83,30 +95,39 @@ module.exports.backend = {
         scss: 'backend/temp/css',
         css: 'backend/dist/css',
         images: 'backend/dist/images',
-        fonts: 'backend/dist/fonts'
+        fonts: 'backend/dist/fonts',
+        raw: 'backend/dist/raw'
     },
     src: {
         js: [
-            '../../app/Modules/*/static/js/*',
             'backend/js/*.js'
-        ],
+        ].concat(modules.map(function(dir) {
+            return dir + '/static/js/**/*.*'
+        })),
         scss: [
-            '../../app/Modules/*/static/scss/*',
             'backend/scss/**/*.scss'
-        ],
+        ].concat(modules.map(function(dir) {
+            return dir + '/static/scss/**/*.*'
+        })),
         css: [
-            '../../app/Modules/*/static/css/*',
             'backend/temp/css/*',
             'fonts/GothamPro/css/GothamPro.css',
             'backend/fonts/icons/css/style.css'
-        ],
+        ].concat(modules.map(function(dir) {
+            return dir + '/static/css/**/*.*'
+        })),
         images: [
             'backend/images/**/*.*'
         ],
         fonts: [
             'fonts/GothamPro/fonts/**/*',
             'backend/fonts/icons/fonts/*'
-        ]
+        ],
+        raw: [
+
+        ].concat(modules.map(function(dir) {
+            return dir + '/static/raw/*/**'
+        }))
     },
     vendors: {
         jquery: {
@@ -146,6 +167,16 @@ module.exports.backend = {
             css: [
                 'components/ui-custom/jquery-ui.min.css'
             ]
-        }
+        },
+        flow: {
+            js: [
+                'bower_components/flow-js/dist/flow.js'
+            ]
+        },
+        files_field: {
+            js: [
+                'components/fields/js/filesfield.js'
+            ]
+        },
     }
 };

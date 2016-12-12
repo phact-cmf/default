@@ -18,7 +18,8 @@
         }
     ],
     "require": {
-        "phact-cmf/phact": "dev-master"
+        "phact-cmf/phact": "dev-master",
+        "swiftmailer/swiftmailer": ">=5.4.3"
     },
     "authors": [{
         "name": "Anton Okulov",
