@@ -15,6 +15,7 @@
 namespace Modules\Admin\Models;
 
 
+use Modules\User\Models\User;
 use Phact\Main\Phact;
 use Phact\Orm\Fields\CharField;
 use Phact\Orm\Fields\ForeignField;
@@ -36,7 +37,8 @@ class AdminConfig extends Model
             ],
             'user' => [
                 'class' => ForeignField::class,
-                'label' => 'User'
+                'label' => 'User',
+                'modelClass' => User::class
             ],
             // Comma-separated columns
             'columns' => [
