@@ -19,6 +19,16 @@ use Phact\Orm\Fields\CharField;
 use Phact\Orm\Fields\EmailField;
 use Phact\Orm\Model;
 
+/**
+ * Class User
+ * @package Modules\User\Models
+ *
+ * @property String email User email
+ * @property String password Hashed password
+ * @property bool is_superuser User is superuser (admin)
+ * @property bool is_staff User is staff
+ * @property bool isGuest Is guest (not authorized user)
+ */
 class User extends Model
 {
     public $is_guest = false;
