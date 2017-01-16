@@ -18,6 +18,14 @@ use Phact\Orm\Fields\CharField;
 use Phact\Orm\Fields\TextField;
 use Phact\Orm\Model;
 
+/**
+ * Class InfoBlock
+ * @package Modules\Text\Models
+ *
+ * @property String name
+ * @property String text
+ * @property String key
+ */
 class InfoBlock extends Model
 {
     public static function getFields()
