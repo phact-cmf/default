@@ -1,4 +1,6 @@
 {var $id = $admin->getId()}
+{var $tree = $admin->getIsTree()}
+{var $treeParent = $admin->getTreeParent()}
 
 <div class="list-block" data-list data-id="{$id}-list">
     <div class="list-top clearfix">
@@ -29,6 +31,19 @@
                             <label for="{$id}-check-all" class="alone"></label>
                             {var $cols = $cols+1}
                         </th>
+
+                        {if $tree}
+                            <th class="tree full">
+                                {if $treeParent}
+                                    <a href="{$admin->getAllUrl($treeParent ? $treeParent->parent_id : null)}">
+                                        <i class="icon-folder"></i>
+                                    </a>
+                                {else}
+                                    <i class="icon-folder"></i>
+                                {/if}
+                                {var $cols = $cols+1}
+                            </th>
+                        {/if}
 
                         {if $admin->sort}
                             <th class="sort full" data-sort-column>
@@ -82,12 +97,19 @@
                 <tbody>
                     {foreach $objects as $item}
                         {var $pk = $item->pk}
-                        <tr data-pk="{$pk}">
-
+                        <tr data-pk="{$pk}" {if $tree and !$item->getIsLeaf()}data-children="{$admin->getAllUrl($pk)}"{/if}>
                             <td class="checker">
                                 <input type="checkbox" id="{$id}-{$pk}-check" name="pk_list[]" value="{$pk}">
                                 <label for="{$id}-{$pk}-check" class="alone"></label>
                             </td>
+
+                            {if $tree}
+                                <td class="tree">
+                                    {if !$item->getIsLeaf()}
+                                        <i class="icon-folder"></i>
+                                    {/if}
+                                </td>
+                            {/if}
 
                             {if $admin->sort}
                                 <td class="sort">

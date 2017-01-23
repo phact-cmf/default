@@ -19,18 +19,18 @@ use Phact\Main\Phact;
 
 class AdminController extends BackendController
 {
-    public function all($module, $admin)
+    public function all($module, $admin, $parentId = null)
     {
-        $admin = $this->getAdmin($module, $admin);
+        $admin = $this->getAdmin($module, $admin, $parentId);
         $this->setBreadcrumbs($admin);
         $admin->all();
     }
 
-    public function create($module, $admin)
+    public function create($module, $admin, $parentId = null)
     {
-        $admin = $this->getAdmin($module, $admin);
+        $admin = $this->getAdmin($module, $admin, $parentId);
         $this->setBreadcrumbs($admin, 'Создание');
-        $admin->create();
+        $admin->create($parentId);
     }
 
     public function update($module, $admin, $pk)
@@ -49,9 +49,9 @@ class AdminController extends BackendController
         $admin->remove($pk);
     }
 
-    public function sort($module, $admin)
+    public function sort($module, $admin, $parentId = null)
     {
-        $admin = $this->getAdmin($module, $admin);
+        $admin = $this->getAdmin($module, $admin, $parentId);
 
         $pkList = isset($_POST['pk_list']) && is_array($_POST['pk_list']) ? $_POST['pk_list'] : [];
         $to = isset($_POST['to']) ? $_POST['to'] : null;
@@ -91,10 +91,13 @@ class AdminController extends BackendController
      */
     public function setBreadcrumbs($admin, $last = null)
     {
-        Phact::app()->breadcrumbs->add(
-            $admin->getName(),
-            $admin->getAllUrl()
-        );
+        $breadcrumbs = $admin->getBreadcrumbs();
+        foreach ($breadcrumbs as $breadcrumb) {
+            Phact::app()->breadcrumbs->add(
+                $breadcrumb['name'],
+                isset($breadcrumb['url']) ? $breadcrumb['url']: null
+            );
+        }
 
         if ($last) {
             Phact::app()->breadcrumbs->add($last);
@@ -104,14 +107,19 @@ class AdminController extends BackendController
     /**
      * @param $module
      * @param $admin
+     * @param $parentId
      * @return Admin
      * @throws \Phact\Exceptions\HttpException
      */
-    public function getAdmin($module, $admin)
+    public function getAdmin($module, $admin, $parentId = null)
     {
         $class = "Modules\\{$module}\\Admin\\{$admin}";
         if (class_exists($class)) {
-            return new $class;
+            $admin = new $class;
+            if ($parentId) {
+                $admin->parentId = $parentId;
+            }
+            return $admin;
         }
         $this->error(404);
     }

@@ -6,5 +6,8 @@
 /www/static/bower_components
 /www/static/frontend/dist/*
 /www/static/backend/dist/*
+
+/app/Modules/Tree
+
 .idea
 .DS_Store

@@ -1,7 +1,8 @@
 {extends "admin/base.tpl"}
 
 {block 'heading'}
-    <h1>{$admin->name}</h1>
+    {var $treeParent = $admin->getTreeParent()}
+    <h1>{$treeParent ? $treeParent : $admin->name}</h1>
 {/block}
 
 {block 'main_block'}

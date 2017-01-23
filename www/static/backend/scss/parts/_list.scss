@@ -222,10 +222,31 @@
             }
           }
         }
+
+        &.tree {
+          width: 40px;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          text-align: center;
+
+          a {
+            text-decoration: none;
+            color: #bdbdbd;
+          }
+
+          i {
+            font-size: 13px;
+            color: #bdbdbd;
+          }
+        }
       }
 
       tbody {
         tr {
+          &[data-children] {
+            cursor: pointer;
+          }
+
           &:first-child:not(.ui-sortable-helper), &:first-child.ui-sortable-helper + tr {
             td {
               border-top: 1px solid #DFDFDF;

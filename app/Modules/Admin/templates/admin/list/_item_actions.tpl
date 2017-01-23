@@ -1,5 +1,11 @@
 {var $actions = $admin->getListItemActions()}
 
+{if $admin->getIsTree() && "create" in $actions}
+    <a href="{$admin->getCreateUrl($pk)}">
+        <i class="icon-plus"></i>
+    </a>
+{/if}
+
 {if "update" in $actions}
     <a href="{$admin->getUpdateUrl($pk)}">
         <i class="icon-edit"></i>

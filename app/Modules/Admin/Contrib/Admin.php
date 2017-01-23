@@ -26,12 +26,11 @@ use Phact\Helpers\Text;
 use Phact\Main\Phact;
 use Phact\Orm\Expression;
 use Phact\Orm\Fields\Field;
-use Phact\Orm\Fields\ForeignField;
-use Phact\Orm\Fields\HasManyField;
-use Phact\Orm\Fields\ManyToManyField;
 use Phact\Orm\Model;
 use Phact\Orm\Q;
 use Phact\Orm\QuerySet;
+use Phact\Orm\TreeModel;
+use Phact\Orm\TreeQuerySet;
 use Phact\Pagination\Pagination;
 use Phact\Template\Renderer;
 
@@ -61,6 +60,8 @@ abstract class Admin
 
     public $autoFixSort = true;
 
+    public $parentId = null;
+
     /**
      * @return mixed
      */
@@ -85,8 +86,20 @@ abstract class Admin
         return ['id', '(string)'];
     }
 
+    public function getExcludedColumns()
+    {
+        $columns = [];
+        if ($this->getIsTree()) {
+            $columns[] = 'lft';
+            $columns[] = 'rgt';
+            $columns[] = 'root';
+            $columns[] = 'depth';
+        }
+        return $columns;
+    }
+
     /**
-     * Available string options: "update", "view", "remove", "info"
+     * Available string options: "update", "view", "remove", "info", "create" (only for TreeModel)
      * @return array
      */
     public function getListItemActions()
@@ -94,7 +107,8 @@ abstract class Admin
         return [
             'update',
             'view',
-            'remove'
+            'remove',
+            'create'
         ];
     }
 
@@ -240,6 +254,7 @@ abstract class Admin
         $userColumns = $this->getUserColumns();
 
         $availableColumns = $this->getAvailableListColumns();
+        $excludedColumns = $this->getExcludedColumns();
         $fields = $this->getModel()->getFields();
 
         $config = [];
@@ -261,7 +276,7 @@ abstract class Admin
             }
         }
         foreach ($fields as $name => $field) {
-            if (is_array($field)) {
+            if (is_array($field) && !in_array($name, $excludedColumns)) {
                 $columnConfig = isset($config[$name]) ? $config[$name] : [];
                 if (!isset($columnConfig['title']) && isset($field['label'])) {
                     $columnConfig['title'] = $field['label'];
@@ -307,9 +322,29 @@ abstract class Admin
     }
 
     /**
-     * @return Model
+     * @return Model|TreeModel
      */
     abstract public function getModel();
+
+    /**
+     * @return bool
+     */
+    public function getIsTree()
+    {
+        return $this->getModel() instanceof TreeModel;
+    }
+
+    /**
+     * @return TreeModel|null
+     */
+    public function getTreeParent()
+    {
+        if ($this->getIsTree() && $this->parentId) {
+            $model = $this->getModel();
+            return $model->objects()->filter(['id' => $this->parentId])->get();
+        }
+        return null;
+    }
 
     /**
      * @return Model
@@ -337,11 +372,20 @@ abstract class Admin
     }
 
     /**
-     * @return QuerySet
+     * @return QuerySet|TreeQuerySet
      */
     public function getQuerySet()
     {
+        /** @var Model|TreeModel $model */
         $model = $this->getModel();
+        if ($this->getIsTree()) {
+            $parent = $this->getTreeParent();
+            if ($parent) {
+                return $parent->objects()->children();
+            } else {
+                return $model->objects()->roots();
+            }
+        }
         return $model->objects()->getQuerySet();
     }
 
@@ -395,11 +439,11 @@ abstract class Admin
         $order = $this->getOrder();
 
         if ($order && isset($order['raw'])) {
-            $qs->order([
+            $qs->setOrder([
                 $order['raw']
             ]);
         } else if ($this->sort) {
-            $qs->order([
+            $qs->setOrder([
                 $this->sort
             ]);
         }
@@ -449,20 +493,32 @@ abstract class Admin
         return implode('-', [static::getModuleName(), static::classNameShort()]);
     }
 
-    public function getAllUrl()
+    public function getAllUrl($parentId = null)
     {
-        return Phact::app()->router->url('admin:all', [
+        $route = 'admin:all';
+        $params = [
             'module' => static::getModuleName(),
             'admin' => static::classNameShort()
-        ]);
+        ];
+        if ($parentId) {
+            $route = 'admin:all_children';
+            $params['parentId'] = $parentId;
+        }
+        return Phact::app()->router->url($route, $params);
     }
 
-    public function getCreateUrl()
+    public function getCreateUrl($parentId = null)
     {
-        return Phact::app()->router->url('admin:create', [
+        $route = 'admin:create';
+        $params = [
             'module' => static::getModuleName(),
             'admin' => static::classNameShort()
-        ]);
+        ];
+        if ($parentId || $this->parentId) {
+            $route = 'admin:create_child';
+            $params['parentId'] = $parentId ? $parentId : $this->parentId;
+        }
+        return Phact::app()->router->url($route, $params);
     }
 
     public function getUpdateUrl($pk = null)
@@ -500,12 +556,21 @@ abstract class Admin
         ]);
     }
 
-    public function getSortUrl()
+    public function getSortUrl($parentId = null)
     {
-        return Phact::app()->router->url('admin:sort', [
-            'module' => static::getModuleName(),
-            'admin' => static::classNameShort()
-        ]);
+        if ($this->sort || $this->getIsTree()) {
+            $route = 'admin:sort';
+            $params = [
+                'module' => static::getModuleName(),
+                'admin' => static::classNameShort()
+            ];
+            if ($parentId || $this->parentId) {
+                $route = 'admin:sort_children';
+                $params['parentId'] = $parentId ? $parentId : $this->parentId;
+            }
+            return Phact::app()->router->url($route, $params);
+        }
+        return null;
     }
 
     public function getColumnsUrl()
@@ -603,12 +668,12 @@ abstract class Admin
         return null;
     }
 
-    public function create()
+    public function create($parentId = null)
     {
-        $this->update(null);
+        $this->update(null, $parentId);
     }
 
-    public function update($pk = null)
+    public function update($pk = null, $parentId = null)
     {
         $new = false;
         if (is_null($pk)) {
@@ -618,6 +683,10 @@ abstract class Admin
         } else {
             $model = $this->getModelOr404($pk);
             $form = $this->getUpdateForm();
+        }
+
+        if ($this->getIsTree() && $parentId) {
+            $model->parent_id = $parentId;
         }
 
         $form->setModel($model);
@@ -630,14 +699,13 @@ abstract class Admin
 
                 } else {
                     Phact::app()->flash->success('Изменения сохранены');
-
                     $next = isset($_POST['save']) ? $_POST['save']: 'save';
                     if ($next == 'save') {
-                        $request->redirect($this->getAllUrl());
+                        $request->redirect($this->getAllUrl($this->parentId));
                     } elseif ($next == 'save-stay') {
                         $request->redirect($this->getUpdateUrl($model->pk));
                     } else {
-                        $request->redirect($this->getCreateUrl());
+                        $request->redirect($this->getCreateUrl($this->parentId));
                     }
                 }
             } else {
@@ -671,14 +739,42 @@ abstract class Admin
 
     public function sort($pkList, $to, $prev, $next)
     {
-        $qs = $this->getQuerySet();
-        $positions = $qs->filter(['pk__in' => $pkList])->values(['position'], true);
-        asort($positions);
-        $result = array_combine($pkList, $positions);
-
-        $model = $qs->getModel();
-        foreach ($result as $pk => $position) {
-            $model::objects()->filter(['pk' => $pk])->update(['position' => $position]);
+        /** @var Model|TreeModel $model */
+        $model = $this->getQuerySet()->filter(['pk' => $to])->get();
+        if ($this->getIsTree()) {
+            if ($model) {
+                if ($model->getIsRoot()) {
+                    /** @var TreeModel[] $roots */
+                    $roots = $model->objects()->filter(['pk__in' => $pkList])->all();
+                    $old = [];
+                    $descendants = [];
+                    foreach ($roots as $root) {
+                        $descendants[$root->id] = $root->objects()->descendants(true)->values(['id'], true);
+                        $old[] = $root->root;
+                    }
+                    asort($old);
+                    foreach ($pkList as $pk) {
+                        $newRoot = array_shift($old);
+                        $model->objects()->filter(['pk__in' => $descendants[$pk]])->update([
+                            'root' => $newRoot
+                        ]);
+                    }
+                } else {
+                    if ($prev && ($prevModel = $model->objects()->filter(['pk' => $prev])->get())) {
+                        $model->setAfter($prevModel);
+                    } elseif ($next && ($nextModel = $model->objects()->filter(['pk' => $next])->get())) {
+                        $model->setBefore($nextModel);
+                    }
+                }
+            }
+        } else {
+            $sortColumn = $this->sort;
+            $positions = $this->getQuerySet()->filter(['pk__in' => $pkList])->values([$sortColumn], true);
+            asort($positions);
+            $result = array_combine($pkList, $positions);
+            foreach ($result as $pk => $position) {
+                $this->getModel()->objects()->filter(['pk' => $pk])->update([$sortColumn => $position]);
+            }
         }
         $this->jsonResponse([
             'success' => true
@@ -692,6 +788,26 @@ abstract class Admin
         $this->jsonResponse([
             'success' => true
         ]);
+    }
+
+    public function getBreadcrumbs()
+    {
+        $breadcrumbs = [];
+        $breadcrumbs[] = [
+            'name' => $this->getName(),
+            'url' => $this->getAllUrl()
+        ];
+        $parent = $this->getTreeParent();
+        if ($parent) {
+            $ancestors = $parent->objects()->ancestors(true)->all();
+            foreach ($ancestors as $ancestor) {
+                $breadcrumbs[] = [
+                    'name' => (string) $ancestor,
+                    'url' => $this->getAllUrl($ancestor->pk)
+                ];
+            }
+        }
+        return $breadcrumbs;
     }
 
     /**

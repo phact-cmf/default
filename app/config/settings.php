@@ -13,7 +13,8 @@ return [
         'Files',
         'Mail',
         'Text',
-        'User'
+        'User',
+        'Tree'
     ],
     'components' => [
         'db' => [
@@ -58,6 +59,14 @@ return [
         ],
         'auth' => [
             'class' => \Modules\User\Components\Auth::class
+        ],
+        'storage'=>[
+            'class'=>\Phact\Storage\StorageManager::class,
+            'config'=>[
+                'default'=>[
+                    'class'=>\Phact\Storage\FileSystemStorage::class,
+                ]
+            ],
         ],
         'breadcrumbs' => [
             'class' => \Phact\Components\Breadcrumbs::class

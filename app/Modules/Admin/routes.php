@@ -13,9 +13,19 @@ return [
         'name' => 'all'
     ],
     [
+        'route' => '/all/{:module}/{:admin}/{:parentId}',
+        'target' => [\Modules\Admin\Controllers\AdminController::class, 'all'],
+        'name' => 'all_children'
+    ],
+    [
         'route' => '/create/{:module}/{:admin}',
         'target' => [\Modules\Admin\Controllers\AdminController::class, 'create'],
         'name' => 'create'
+    ],
+    [
+        'route' => '/create/{:module}/{:admin}/{:parentId}',
+        'target' => [\Modules\Admin\Controllers\AdminController::class, 'create'],
+        'name' => 'create_child'
     ],
     [
         'route' => '/group_action/{:module}/{:admin}',
@@ -26,6 +36,11 @@ return [
         'route' => '/sort/{:module}/{:admin}',
         'target' => [\Modules\Admin\Controllers\AdminController::class, 'sort'],
         'name' => 'sort'
+    ],
+    [
+        'route' => '/sort/{:module}/{:admin}/{:parentId}',
+        'target' => [\Modules\Admin\Controllers\AdminController::class, 'sort'],
+        'name' => 'sort_children'
     ],
     [
         'route' => '/columns/{:module}/{:admin}',

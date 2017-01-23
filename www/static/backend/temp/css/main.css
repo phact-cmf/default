@@ -817,6 +817,19 @@ h1 {
       .list-block .list-wrapper table th.sort a.active, .list-block .list-wrapper table td.sort a.active {
         cursor: move;
         color: #c6c6c6; }
+  .list-block .list-wrapper table th.tree, .list-block .list-wrapper table td.tree {
+    width: 40px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: center; }
+    .list-block .list-wrapper table th.tree a, .list-block .list-wrapper table td.tree a {
+      text-decoration: none;
+      color: #bdbdbd; }
+    .list-block .list-wrapper table th.tree i, .list-block .list-wrapper table td.tree i {
+      font-size: 13px;
+      color: #bdbdbd; }
+  .list-block .list-wrapper table tbody tr[data-children] {
+    cursor: pointer; }
   .list-block .list-wrapper table tbody tr:first-child:not(.ui-sortable-helper) td, .list-block .list-wrapper table tbody tr:first-child.ui-sortable-helper + tr td {
     border-top: 1px solid #DFDFDF; }
   .list-block .list-wrapper table tbody tr td {
