@@ -20,4 +20,9 @@ use Phact\Module\Module;
 class TextModule extends Module
 {
     use AdminTrait;
+
+    public static function getVerboseName()
+    {
+        return "Тексты";
+    }
 }
