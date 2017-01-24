@@ -14,7 +14,7 @@ return [
         'Mail',
         'Text',
         'User',
-        'Tree'
+        'Catalog'
     ],
     'components' => [
         'db' => [

@@ -15,6 +15,7 @@
 namespace Modules\Base\TemplateLibraries;
 
 use Phact\Main\Phact;
+use Phact\Pagination\Pagination;
 use Phact\Template\Renderer;
 use Phact\Template\TemplateLibrary;
 
@@ -64,5 +65,15 @@ class CommonLibrary extends TemplateLibrary
             $query[$key] = $value;
         }
         return Phact::app()->request->getPath() . '?' . http_build_query($query);
+    }
+
+    /**
+     * @name pager
+     * @kind accessorFunction
+     * @return Pagination
+     */
+    public static function pager($provider, $options = [])
+    {
+        return new Pagination($provider, $options);
     }
 }

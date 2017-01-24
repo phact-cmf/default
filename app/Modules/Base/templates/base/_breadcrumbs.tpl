@@ -2,7 +2,7 @@
     <div class="breadcrumbs-block">
         <ul class="breadcrumbs-list">
             <li>
-                <a href="{url route="admin:index"}">
+                <a href="/">
                     Главная
                 </a>
             </li>

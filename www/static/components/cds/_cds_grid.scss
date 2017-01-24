@@ -80,6 +80,8 @@ $grid: (
   @for $i from 1 through $grid-columns {
     .#{$name}-block-grid-#{$i} {
       margin: 0 -#{$half}px;
+      @include clearfix();
+
       &>* {
         float: left;
         width: (100%/$i);

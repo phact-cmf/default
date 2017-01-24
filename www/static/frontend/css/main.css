@@ -155,6 +155,13 @@ $grid: (
     width: 100%; }
   .small-block-grid-1 {
     margin: 0 -6px; }
+    .small-block-grid-1:before {
+      content: "";
+      display: table; }
+    .small-block-grid-1:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-1 > * {
       float: left;
       width: 100%;
@@ -165,6 +172,13 @@ $grid: (
         clear: both; }
   .small-block-grid-2 {
     margin: 0 -6px; }
+    .small-block-grid-2:before {
+      content: "";
+      display: table; }
+    .small-block-grid-2:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-2 > * {
       float: left;
       width: 50%;
@@ -175,6 +189,13 @@ $grid: (
         clear: both; }
   .small-block-grid-3 {
     margin: 0 -6px; }
+    .small-block-grid-3:before {
+      content: "";
+      display: table; }
+    .small-block-grid-3:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-3 > * {
       float: left;
       width: 33.33333%;
@@ -185,6 +206,13 @@ $grid: (
         clear: both; }
   .small-block-grid-4 {
     margin: 0 -6px; }
+    .small-block-grid-4:before {
+      content: "";
+      display: table; }
+    .small-block-grid-4:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-4 > * {
       float: left;
       width: 25%;
@@ -195,6 +223,13 @@ $grid: (
         clear: both; }
   .small-block-grid-5 {
     margin: 0 -6px; }
+    .small-block-grid-5:before {
+      content: "";
+      display: table; }
+    .small-block-grid-5:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-5 > * {
       float: left;
       width: 20%;
@@ -205,6 +240,13 @@ $grid: (
         clear: both; }
   .small-block-grid-6 {
     margin: 0 -6px; }
+    .small-block-grid-6:before {
+      content: "";
+      display: table; }
+    .small-block-grid-6:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-6 > * {
       float: left;
       width: 16.66667%;
@@ -215,6 +257,13 @@ $grid: (
         clear: both; }
   .small-block-grid-7 {
     margin: 0 -6px; }
+    .small-block-grid-7:before {
+      content: "";
+      display: table; }
+    .small-block-grid-7:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-7 > * {
       float: left;
       width: 14.28571%;
@@ -225,6 +274,13 @@ $grid: (
         clear: both; }
   .small-block-grid-8 {
     margin: 0 -6px; }
+    .small-block-grid-8:before {
+      content: "";
+      display: table; }
+    .small-block-grid-8:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-8 > * {
       float: left;
       width: 12.5%;
@@ -235,6 +291,13 @@ $grid: (
         clear: both; }
   .small-block-grid-9 {
     margin: 0 -6px; }
+    .small-block-grid-9:before {
+      content: "";
+      display: table; }
+    .small-block-grid-9:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-9 > * {
       float: left;
       width: 11.11111%;
@@ -245,6 +308,13 @@ $grid: (
         clear: both; }
   .small-block-grid-10 {
     margin: 0 -6px; }
+    .small-block-grid-10:before {
+      content: "";
+      display: table; }
+    .small-block-grid-10:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-10 > * {
       float: left;
       width: 10%;
@@ -255,6 +325,13 @@ $grid: (
         clear: both; }
   .small-block-grid-11 {
     margin: 0 -6px; }
+    .small-block-grid-11:before {
+      content: "";
+      display: table; }
+    .small-block-grid-11:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-11 > * {
       float: left;
       width: 9.09091%;
@@ -265,6 +342,13 @@ $grid: (
         clear: both; }
   .small-block-grid-12 {
     margin: 0 -6px; }
+    .small-block-grid-12:before {
+      content: "";
+      display: table; }
+    .small-block-grid-12:after {
+      content: "";
+      display: table;
+      clear: both; }
     .small-block-grid-12 > * {
       float: left;
       width: 8.33333%;
@@ -330,6 +414,13 @@ $grid: (
     width: 100%; }
   .large-block-grid-1 {
     margin: 0 -15px; }
+    .large-block-grid-1:before {
+      content: "";
+      display: table; }
+    .large-block-grid-1:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-1 > * {
       float: left;
       width: 100%;
@@ -340,6 +431,13 @@ $grid: (
         clear: both; }
   .large-block-grid-2 {
     margin: 0 -15px; }
+    .large-block-grid-2:before {
+      content: "";
+      display: table; }
+    .large-block-grid-2:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-2 > * {
       float: left;
       width: 50%;
@@ -350,6 +448,13 @@ $grid: (
         clear: both; }
   .large-block-grid-3 {
     margin: 0 -15px; }
+    .large-block-grid-3:before {
+      content: "";
+      display: table; }
+    .large-block-grid-3:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-3 > * {
       float: left;
       width: 33.33333%;
@@ -360,6 +465,13 @@ $grid: (
         clear: both; }
   .large-block-grid-4 {
     margin: 0 -15px; }
+    .large-block-grid-4:before {
+      content: "";
+      display: table; }
+    .large-block-grid-4:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-4 > * {
       float: left;
       width: 25%;
@@ -370,6 +482,13 @@ $grid: (
         clear: both; }
   .large-block-grid-5 {
     margin: 0 -15px; }
+    .large-block-grid-5:before {
+      content: "";
+      display: table; }
+    .large-block-grid-5:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-5 > * {
       float: left;
       width: 20%;
@@ -380,6 +499,13 @@ $grid: (
         clear: both; }
   .large-block-grid-6 {
     margin: 0 -15px; }
+    .large-block-grid-6:before {
+      content: "";
+      display: table; }
+    .large-block-grid-6:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-6 > * {
       float: left;
       width: 16.66667%;
@@ -390,6 +516,13 @@ $grid: (
         clear: both; }
   .large-block-grid-7 {
     margin: 0 -15px; }
+    .large-block-grid-7:before {
+      content: "";
+      display: table; }
+    .large-block-grid-7:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-7 > * {
       float: left;
       width: 14.28571%;
@@ -400,6 +533,13 @@ $grid: (
         clear: both; }
   .large-block-grid-8 {
     margin: 0 -15px; }
+    .large-block-grid-8:before {
+      content: "";
+      display: table; }
+    .large-block-grid-8:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-8 > * {
       float: left;
       width: 12.5%;
@@ -410,6 +550,13 @@ $grid: (
         clear: both; }
   .large-block-grid-9 {
     margin: 0 -15px; }
+    .large-block-grid-9:before {
+      content: "";
+      display: table; }
+    .large-block-grid-9:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-9 > * {
       float: left;
       width: 11.11111%;
@@ -420,6 +567,13 @@ $grid: (
         clear: both; }
   .large-block-grid-10 {
     margin: 0 -15px; }
+    .large-block-grid-10:before {
+      content: "";
+      display: table; }
+    .large-block-grid-10:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-10 > * {
       float: left;
       width: 10%;
@@ -430,6 +584,13 @@ $grid: (
         clear: both; }
   .large-block-grid-11 {
     margin: 0 -15px; }
+    .large-block-grid-11:before {
+      content: "";
+      display: table; }
+    .large-block-grid-11:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-11 > * {
       float: left;
       width: 9.09091%;
@@ -440,6 +601,13 @@ $grid: (
         clear: both; }
   .large-block-grid-12 {
     margin: 0 -15px; }
+    .large-block-grid-12:before {
+      content: "";
+      display: table; }
+    .large-block-grid-12:after {
+      content: "";
+      display: table;
+      clear: both; }
     .large-block-grid-12 > * {
       float: left;
       width: 8.33333%;
@@ -524,6 +692,21 @@ footer .footer-block {
 
 .content-header {
   padding: 20px 0; }
+
+.breadcrumbs-block .breadcrumbs-list {
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 1.2; }
+  .breadcrumbs-block .breadcrumbs-list li {
+    display: inline-block;
+    vertical-align: middle;
+    color: #363636; }
+    .breadcrumbs-block .breadcrumbs-list li a {
+      text-decoration: underline;
+      color: #363636; }
+    .breadcrumbs-block .breadcrumbs-list li.delimiter {
+      padding: 1px 4px 0;
+      color: #7e7e7e; }
 
 .main-menu {
   font-size: 16px;

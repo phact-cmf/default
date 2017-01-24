@@ -7,6 +7,11 @@ return [
         'namespace' => 'main'
     ],
     [
+        'route' => '/catalog',
+        'path' => 'Modules.Catalog.routes',
+        'namespace' => 'catalog'
+    ],
+    [
         'route' => '/admin',
         'path' => 'Modules.Admin.routes',
         'namespace' => 'admin'
