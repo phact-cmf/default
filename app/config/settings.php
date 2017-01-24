@@ -13,8 +13,7 @@ return [
         'Files',
         'Mail',
         'Text',
-        'User',
-        'Catalog'
+        'User'
     ],
     'components' => [
         'db' => [
