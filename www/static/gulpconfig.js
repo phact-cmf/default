@@ -135,6 +135,11 @@ module.exports.backend = {
                 'bower_components/jquery/dist/jquery.min.js'
             ]
         },
+        jquery_form: {
+            js: [
+                'bower_components/jquery-form/jquery.form.js'
+            ]
+        },
         modal: {
             js: [
                 'components/modal/modal.js'

@@ -74,6 +74,59 @@
       }
     }
   }
+
+  .related-admins {
+    .related-admin {
+      margin-bottom: 30px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      h2.title {
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+
+      .unsaved-error {
+        
+      }
+    }
+  }
+
+}
+
+.modal-container.related {
+  .modal-content {
+    background-color: #fff;
+
+    h1 {
+      padding: 20px 30px;
+    }
+
+    .form-page {
+      width: 800px;
+
+      fieldset {
+        border-left: 0;
+        border-right: 0;
+      }
+
+      .actions-panel {
+        padding: 20px 30px;
+      }
+    }
+
+    .admin-form-success {
+      text-align: center;
+      max-width: 800px;
+      min-width: 400px;
+
+      h1 {
+        padding: 30px 40px;
+      }
+    }
+  }
 }
 
 .form-page {

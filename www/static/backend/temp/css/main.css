@@ -1189,6 +1189,31 @@ h1 {
       width: 770px; }
     .main-block .form-page fieldset .fields .form-field textarea {
       min-height: 110px; }
+  .main-block .form-page .related-admins .related-admin {
+    margin-bottom: 30px; }
+    .main-block .form-page .related-admins .related-admin:last-child {
+      margin-bottom: 0; }
+    .main-block .form-page .related-admins .related-admin h2.title {
+      text-transform: uppercase;
+      margin-bottom: 20px; }
+
+.modal-container.related .modal-content {
+  background-color: #fff; }
+  .modal-container.related .modal-content h1 {
+    padding: 20px 30px; }
+  .modal-container.related .modal-content .form-page {
+    width: 800px; }
+    .modal-container.related .modal-content .form-page fieldset {
+      border-left: 0;
+      border-right: 0; }
+    .modal-container.related .modal-content .form-page .actions-panel {
+      padding: 20px 30px; }
+  .modal-container.related .modal-content .admin-form-success {
+    text-align: center;
+    max-width: 800px;
+    min-width: 400px; }
+    .modal-container.related .modal-content .admin-form-success h1 {
+      padding: 30px 40px; }
 
 .form-page fieldset {
   background: #FFFFFF;

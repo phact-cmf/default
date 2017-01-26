@@ -155,7 +155,7 @@
             }
 
             if (this.options.useAjaxForm) {
-                $form.ajaxForm({
+                $form.ajaxSubmit({
                     type: type,
                     success: this.getHandleFormResponse()
                 });
@@ -180,10 +180,14 @@
                 var jsonResponse = false;
                 var success = false;
 
-                try {
-                    data = $.parseJSON(data);
+                if (typeof data === "object") {
                     jsonResponse = true;
-                } catch (e) {}
+                } else {
+                    try {
+                        data = $.parseJSON(data);
+                        jsonResponse = true;
+                    } catch (e) {}
+                }
 
                 options.afterFormSubmit.call(this, data, textStatus, jqXHR);
 

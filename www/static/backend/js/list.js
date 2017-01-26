@@ -293,4 +293,20 @@ $(function () {
         var list = getList($(this));
         list.saveColumns();
     });
+
+    $(document).on('click', '.list-block a.related-modal', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        $this.modal({
+            theme: 'related',
+            useAjaxForm: true,
+            closeOnSuccess: true,
+            closeOnSuccessDelay: 1000,
+            onFormSuccess: function() {
+                var list = getList($this);
+                list.update();
+            }
+        });
+        return false;
+    });
 });
