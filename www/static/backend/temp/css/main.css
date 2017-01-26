@@ -1162,25 +1162,6 @@ h1 {
           margin-right: 0; }
     .main-block .form-page .actions-panel .links {
       float: right; }
-      .main-block .form-page .actions-panel .links a {
-        display: inline-block;
-        height: 40px;
-        line-height: 40px;
-        text-decoration: none;
-        margin-right: 12px;
-        font-weight: 500;
-        font-size: 15px;
-        color: #9594A5;
-        text-transform: uppercase; }
-        .main-block .form-page .actions-panel .links a:last-child {
-          margin-right: 0; }
-        .main-block .form-page .actions-panel .links a i {
-          color: rgba(104, 132, 157, 0.4);
-          line-height: 40px;
-          margin-right: 7px; }
-        .main-block .form-page .actions-panel .links a i, .main-block .form-page .actions-panel .links a span {
-          display: inline-block;
-          vertical-align: middle; }
   .main-block .form-page fieldset {
     margin-bottom: 30px; }
     .main-block .form-page fieldset:last-child {
@@ -1208,6 +1189,17 @@ h1 {
       border-right: 0; }
     .modal-container.related .modal-content .form-page .actions-panel {
       padding: 20px 30px; }
+      .modal-container.related .modal-content .form-page .actions-panel:before {
+        content: "";
+        display: table; }
+      .modal-container.related .modal-content .form-page .actions-panel:after {
+        content: "";
+        display: table;
+        clear: both; }
+      .modal-container.related .modal-content .form-page .actions-panel .buttons {
+        float: left; }
+      .modal-container.related .modal-content .form-page .actions-panel .links {
+        float: right; }
   .modal-container.related .modal-content .admin-form-success {
     text-align: center;
     max-width: 800px;
@@ -1271,3 +1263,23 @@ h1 {
       .form-page fieldset .fields .form-field input[type=checkbox] + label.alone {
         padding: 0;
         width: 15px; }
+
+.form-page .actions-panel .links a {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  margin-right: 12px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #9594A5;
+  text-transform: uppercase; }
+  .form-page .actions-panel .links a:last-child {
+    margin-right: 0; }
+  .form-page .actions-panel .links a i {
+    color: rgba(104, 132, 157, 0.4);
+    line-height: 40px;
+    margin-right: 7px; }
+  .form-page .actions-panel .links a i, .form-page .actions-panel .links a span {
+    display: inline-block;
+    vertical-align: middle; }
