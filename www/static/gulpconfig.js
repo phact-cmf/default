@@ -102,19 +102,19 @@ module.exports.backend = {
         js: [
             'backend/js/*.js'
         ].concat(modules.map(function(dir) {
-            return dir + '/static/js/**/*.*'
+            return dir + '/static/backend/js/**/*.*'
         })),
         scss: [
             'backend/scss/**/*.scss'
         ].concat(modules.map(function(dir) {
-            return dir + '/static/scss/**/*.*'
+            return dir + '/static/backend/scss/**/*.*'
         })),
         css: [
             'backend/temp/css/*',
             'fonts/GothamPro/css/GothamPro.css',
             'backend/fonts/icons/css/style.css'
         ].concat(modules.map(function(dir) {
-            return dir + '/static/css/**/*.*'
+            return dir + '/static/backend/css/**/*.*'
         })),
         images: [
             'backend/images/**/*.*'
@@ -126,7 +126,7 @@ module.exports.backend = {
         raw: [
 
         ].concat(modules.map(function(dir) {
-            return dir + '/static/raw/*/**'
+            return dir + '/static/backend/raw/*/**'
         }))
     },
     vendors: {
