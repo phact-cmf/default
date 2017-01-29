@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir www/media
+mkdir www/media/Editor
 mkdir app/runtime
 mkdir app/Modules
 cd app/Modules
