@@ -85,6 +85,11 @@ module.exports.frontend = {
             scss_include: [
                 'components/cds'
             ]
+        },
+        forms: {
+            js: [
+                'components/forms/validation.js'
+            ]
         }
     }
 };
@@ -183,5 +188,10 @@ module.exports.backend = {
                 'components/fields/js/filesfield.js'
             ]
         },
+        forms: {
+            js: [
+                'components/forms/validation.js'
+            ]
+        }
     }
 };

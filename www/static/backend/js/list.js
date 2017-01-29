@@ -70,6 +70,9 @@ $(function () {
                 }
             });
         },
+        checkAll: function (bool) {
+            this.$listBlock.find('tr[data-pk] td.checker input, [data-checkall-list]').prop('checked', bool);
+        },
         getPkList: function () {
             var pkList = [];
             this.$listBlock.find('input[type=checkbox][name="pk_list[]"]:checked').each(function () {
@@ -101,6 +104,29 @@ $(function () {
 
                     if (data.success) {
                         me.update();
+                    }
+                }
+            })
+        },
+        groupUpdate: function () {
+            this.$listBlock.addClass('update');
+            var pkList = this.getPkList();
+            this.modifyUrl('update', pkList);
+        },
+        groupSave: function () {
+            var me = this;
+            var data = this.$listBlock.find('td.updatable input, td.updatable textarea, td.updatable select').serialize();
+            $.ajax({
+                url: me.currentUrl,
+                method: 'post',
+                data: data,
+                success: function (data) {
+                    if (data.status == 'success') {
+                        me.modifyUrl('update', []);
+                    } else if (data.hasOwnProperty('errors')) {
+                        _.each(data.errors, function (errors, formname) {
+                            validator_validate_form(formname, errors);
+                        });
                     }
                 }
             })
@@ -252,9 +278,24 @@ $(function () {
     $(document).on('click', '.list-block [data-group-remove]', function (e) {
         e.preventDefault();
         var $this = $(this);
-        var url = $this.val();
         var list = getList($this);
         list.groupAction('remove');
+        return false;
+    });
+
+    $(document).on('click', '.list-block [data-group-update]', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var list = getList($this);
+        list.groupUpdate();
+        return false;
+    });
+
+    $(document).on('click', '.list-block [data-group-save]', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var list = getList($this);
+        list.groupSave();
         return false;
     });
 
@@ -292,6 +333,12 @@ $(function () {
     $(document).on('change', '.columns-list-appender input', function () {
         var list = getList($(this));
         list.saveColumns();
+    });
+
+    $(document).on('change', '[data-checkall-list]', function() {
+        var $this = $(this);
+        var list = getList($this);
+        list.checkAll($this.is(':checked'));
     });
 
     $(document).on('click', '.list-block a.related-modal', function (e) {

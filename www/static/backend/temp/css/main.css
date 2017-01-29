@@ -943,6 +943,29 @@ h1 {
           margin-right: 0; }
         .list-block .list-wrapper table tbody tr td.actions a:hover {
           color: #A9A9B3; }
+    .list-block .list-wrapper table tbody tr td.updatable {
+      padding: 0; }
+      .list-block .list-wrapper table tbody tr td.updatable input, .list-block .list-wrapper table tbody tr td.updatable textarea, .list-block .list-wrapper table tbody tr td.updatable select {
+        border: none;
+        padding: 10px 15px;
+        display: block;
+        width: 100%; }
+      .list-block .list-wrapper table tbody tr td.updatable label {
+        display: none; }
+      .list-block .list-wrapper table tbody tr td.updatable input[type=checkbox] {
+        display: none;
+        padding: 0; }
+      .list-block .list-wrapper table tbody tr td.updatable input[type=checkbox] + label {
+        display: block;
+        width: 100%;
+        margin: 10px 15px; }
+      .list-block .list-wrapper table tbody tr td.updatable ul {
+        margin-top: 0;
+        padding: 8px 15px 3px;
+        background-color: #ffe9ea; }
+        .list-block .list-wrapper table tbody tr td.updatable ul li {
+          padding-bottom: 4px;
+          margin-bottom: 0; }
   .list-block .list-wrapper table tbody tr.empty td {
     padding: 30px;
     text-align: center;
