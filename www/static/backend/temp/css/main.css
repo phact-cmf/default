@@ -597,7 +597,16 @@ body {
         text-transform: uppercase;
         background-color: #F7F9FA;
         padding: 20px;
-        padding-left: 28px; }
+        padding-left: 28px;
+        padding-right: 52px;
+        position: relative; }
+        .wrapper .menu-block .menu-wrapper .main-menu .module .name .settings-link {
+          width: 20px;
+          top: 20px;
+          right: 25px;
+          color: #FC585E;
+          text-decoration: none;
+          position: absolute; }
       .wrapper .menu-block .menu-wrapper .main-menu .module .items .item {
         border-bottom: 1px solid #DFDFDF; }
         .wrapper .menu-block .menu-wrapper .main-menu .module .items .item a {

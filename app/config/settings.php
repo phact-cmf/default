@@ -76,6 +76,9 @@ return [
         'flash' => [
             'class' => \Phact\Components\Flash::class
         ],
+        'settings' => [
+            'class' => \Phact\Components\Settings::class
+        ],
     ],
     'autoloadComponents' => [
         'errorHandler'

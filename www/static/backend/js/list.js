@@ -58,6 +58,7 @@ $(function () {
         update: function () {
             var me = this;
             me.setLoading();
+            var listColumnsOpened = me.$listBlock.find('.columns-list-appender').hasClass('list');
 
             $.ajax({
                 url: this.currentUrl,
@@ -66,6 +67,9 @@ $(function () {
                     var ubSelector = me.getUpdateBlockSelector();
                     $(ubSelector).replaceWith($page.find(ubSelector));
                     me.initSort();
+                    if (listColumnsOpened) {
+                        me.$listBlock.find('.columns-list-appender').addClass('list');
+                    }
                     me.unsetLoading();
                 }
             });
