@@ -79,6 +79,14 @@ return [
         'settings' => [
             'class' => \Phact\Components\Settings::class
         ],
+        'cache' => [
+            'class' => \Phact\Cache\Cache::class,
+            'drivers' => [
+                'default' =>  [
+                    'class' => \Phact\Cache\Drivers\File::class
+                ]
+            ]
+        ]
     ],
     'autoloadComponents' => [
         'errorHandler'
