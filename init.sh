@@ -13,3 +13,4 @@ git clone https://github.com/phact-cmf-modules/Mail.git Mail
 git clone https://github.com/phact-cmf-modules/Text.git Text
 git clone https://github.com/phact-cmf-modules/Text.git Text
 git clone https://github.com/phact-cmf-modules/User.git User
+git clone https://github.com/phact-cmf-modules/Meta.git Meta

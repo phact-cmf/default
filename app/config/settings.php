@@ -13,7 +13,8 @@ return [
         'Files',
         'Mail',
         'Text',
-        'User'
+        'User',
+        'Meta'
     ],
     'components' => [
         'db' => [
@@ -70,8 +71,8 @@ return [
         'breadcrumbs' => [
             'class' => \Phact\Components\Breadcrumbs::class
         ],
-        'seo' => [
-            'class' => \Phact\Components\Seo::class
+        'meta' => [
+            'class' => \Modules\Meta\Components\MetaComponent::class
         ],
         'flash' => [
             'class' => \Phact\Components\Flash::class
@@ -85,6 +86,18 @@ return [
                 'default' =>  [
                     'class' => \Phact\Cache\Drivers\File::class
                 ]
+            ]
+        ],
+        'mail' => [
+            'class' => \Modules\Mail\Components\Mailer::class,
+            'defaultFrom' => 'EMAIL',
+            'mode' => 'smtp',
+            'config' => [
+                'host' => 'HOST',
+                'username' => 'EMAIL',
+                'password' => 'PASSWORD',
+                'port' => '465',
+                'security' => 'ssl'
             ]
         ]
     ],
