@@ -99,7 +99,10 @@ return [
                 'port' => '465',
                 'security' => 'ssl'
             ]
-        ]
+        ],
+        'event' => [
+            'class' => \Phact\Event\EventManager::class
+        ],
     ],
     'autoloadComponents' => [
         'errorHandler'
