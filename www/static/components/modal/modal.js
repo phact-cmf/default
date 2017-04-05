@@ -203,7 +203,7 @@
                     }
                 } else {
                     me.setContent(data);
-                    success = me.content.find('form').length == 0 || this.content.find('[data-modal-success]').length > 0;
+                    success = me.content.find('form').length == 0 || me.content.find('[data-modal-success]').length > 0;
                 }
 
                 if (success) {

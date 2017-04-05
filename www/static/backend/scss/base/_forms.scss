@@ -8,7 +8,7 @@ ul.errors {
   }
 }
 
-$input: "input[type=text], input[type=search], input[type=email]";
+$input: "input[type=text], input[type=search], input[type=email], input[type=password]";
 #{$input}, textarea {
   background: #FFFFFF;
   border: 1px solid #DFDFDF;
@@ -43,6 +43,19 @@ select {
   background-size: (18px/2) (14px/2);
   background-position: right 10px center;
   font-family: $font;
+
+
+  &[multiple] {
+    height: 150px;
+    background-image: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 1.8;
+
+    option {
+      padding: 5px;
+    }
+  }
 }
 
 @mixin checkbox() {

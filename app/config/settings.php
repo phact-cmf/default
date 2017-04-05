@@ -11,10 +11,10 @@ return [
         'Admin',
         'Base',
         'Files',
-        'Mail',
         'Text',
+        'Meta',
         'User',
-        'Meta'
+        'Mail',
     ],
     'components' => [
         'db' => [

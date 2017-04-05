@@ -252,3 +252,19 @@ $grid: (
     @warn "Unknown breakpoint '#{$name}'";
   }
 }
+
+@mixin respond-property($property, $values...) {
+  $grid-counter: 0;
+  @each $name, $data in $grid {
+    $counter: 0;
+    @each $var in $values {
+      @if $counter == $grid-counter {
+        @include respond($name) {
+          #{$property}: #{$var};
+        }
+      }
+      $counter: $counter+1;
+    }
+    $grid-counter: $grid-counter+1;
+  }
+}
