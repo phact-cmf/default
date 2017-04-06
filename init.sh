@@ -14,3 +14,4 @@ git clone https://github.com/phact-cmf-modules/Text.git Text
 git clone https://github.com/phact-cmf-modules/Text.git Text
 git clone https://github.com/phact-cmf-modules/User.git User
 git clone https://github.com/phact-cmf-modules/Meta.git Meta
+git clone https://github.com/phact-cmf-modules/Sitemap.git Sitemap

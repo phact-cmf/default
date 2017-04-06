@@ -15,6 +15,7 @@
 /app/Modules/Text
 /app/Modules/User
 /app/Modules/Meta
+/app/Modules/Sitemap
 
 .idea
 .DS_Store

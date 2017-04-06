@@ -2,6 +2,11 @@
 
 return [
     [
+        'route' => '/sitemap',
+        'path' => 'Modules.Sitemap.routes',
+        'namespace' => 'sitemap'
+    ],
+    [
         'route' => '',
         'path' => 'Modules.Main.routes',
         'namespace' => 'main'

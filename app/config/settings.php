@@ -15,6 +15,7 @@ return [
         'Meta',
         'User',
         'Mail',
+        'Sitemap'
     ],
     'components' => [
         'db' => [
