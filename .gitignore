@@ -5,7 +5,10 @@
 /www/static/node_modules
 /www/static/bower_components
 /www/static/frontend/dist/*
+/www/static/frontend/temp/*
 /www/static/backend/dist/*
+/www/static/backend/temp/*
+/www/media
 
 /app/Modules/Admin
 /app/Modules/Base

@@ -76,9 +76,10 @@ gulp.task('frontend_css', ['frontend_scss'], function() {
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
-    return pipe.pipe(concat(config.name + '.css')).
+    return pipe.
+    pipe(concat(config.name + '.css')).
     pipe(gulp.dest(frontend.dst.css)).
-    pipe(hashsum({filename: 'frontend/versions/css.yml', hash: 'md5'})).
+    pipe(hashsum({filename: frontend.dst.css + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
@@ -87,9 +88,10 @@ gulp.task('backend_css', ['backend_scss'], function() {
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
-    return pipe.pipe(concat(config.name + '.css')).
+    return pipe.
+    pipe(concat(config.name + '.css')).
     pipe(gulp.dest(backend.dst.css)).
-    pipe(hashsum({filename: 'backend/versions/css.yml', hash: 'md5'})).
+    pipe(hashsum({filename: backend.dst.css + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
@@ -98,9 +100,10 @@ gulp.task('frontend_js', function() {
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
-    return pipe.pipe(concat(config.name + '.js')).
+    return pipe.
+    pipe(concat(config.name + '.js')).
     pipe(gulp.dest(frontend.dst.js)).
-    pipe(hashsum({filename: 'frontend/versions/js.yml', hash: 'md5'})).
+    pipe(hashsum({filename: frontend.dst.js + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
@@ -109,9 +112,10 @@ gulp.task('backend_js', function() {
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
-    return pipe.pipe(concat(config.name + '.js')).
+    return pipe.
+    pipe(concat(config.name + '.js')).
     pipe(gulp.dest(backend.dst.js)).
-    pipe(hashsum({filename: 'backend/versions/js.yml', hash: 'md5'})).
+    pipe(hashsum({filename: backend.dst.js + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 

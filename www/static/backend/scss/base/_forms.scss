@@ -58,6 +58,13 @@ select {
   }
 }
 
+.current-image {
+  margin: 0 0 10px;
+  max-width: 300px;
+  display: block;
+}
+
+
 @mixin checkbox() {
   input[type=checkbox] {
     display: none;
