@@ -69,7 +69,7 @@
       }
 
       .unsaved-error {
-        
+
       }
     }
   }
@@ -85,7 +85,7 @@
     }
 
     .form-page {
-      width: 800px;
+      width: 1000px;
 
       fieldset {
         border-left: 0;
@@ -102,6 +102,27 @@
 
         .links {
           float: right;
+        }
+      }
+
+      .related-admins {
+        padding: 30px 30px 0;
+
+        .related-admin {
+          margin-bottom: 30px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          h2.title {
+            text-transform: uppercase;
+            margin-bottom: 20px;
+          }
+
+          .unsaved-error {
+
+          }
         }
       }
     }

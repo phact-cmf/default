@@ -1,19 +1,19 @@
 @import "settings";
 @import "__cds_index";
 
-@import "parts/base";
-@import "parts/typo";
+@import "_parts/base";
+@import "_parts/typo";
 
-@import "parts/header";
-@import "parts/footer";
-@import "parts/content_header";
-@import "parts/breadcrumbs";
+@import "_parts/header";
+@import "_parts/footer";
+@import "_parts/content_header";
+@import "_parts/breadcrumbs";
 
-@import "parts/menu";
-@import "parts/forms";
+@import "_parts/menu";
+@import "_parts/forms";
 
-@import "vendors/_fancy";
-@import "vendors/_modal";
-@import "vendors/_tabs";
-@import "vendors/_slick";
-@import "vendors/_sticky";
+@import "_vendors/_fancy";
+@import "_vendors/_modal";
+@import "_vendors/_tabs";
+@import "_vendors/_slick";
+@import "_vendors/_sticky";

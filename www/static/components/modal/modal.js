@@ -11,16 +11,16 @@
         closer: undefined,
 
         escHandler: undefined,
-        
+
         init: function (element, options) {
             var defaultOptions = {
                 /*
-                animation: {
-                    classIn: 'animation-in',
-                    classOut: 'animation-out',
-                    timeoutOut: 1000
-                },
-                */
+                 animation: {
+                     classIn: 'animation-in',
+                     classOut: 'animation-out',
+                     timeoutOut: 1000
+                 },
+                 */
                 animation: null,
                 preloader: true,
                 theme: 'default',
@@ -219,6 +219,9 @@
                 }
             }
         },
+        hasAnotherModal: function () {
+            return $('.' + this.options.classes.background).not(this.background).length > 0;
+        },
         start: function (html) {
             this.options.onBeforeStart();
             this.render();
@@ -238,21 +241,18 @@
             this.background.show();
             this.container.css('width', this.options.width || this.container.width()).show();
 
-            $body.css({
-                'overflow': 'hidden',
-                'padding-right': $body.outerWidth() - before
-            }).addClass(this.options.classes.body);
+            if (!this.hasAnotherModal()) {
+                $body.css({
+                    'overflow': 'hidden',
+                    'padding-right': $body.outerWidth() - before
+                }).addClass(this.options.classes.body);
+            }
 
             this.options.onAfterOpen();
         },
         close: function () {
             this.unbindEvents();
             this.options.onBeforeClose();
-
-            $('body').css({
-                'overflow': '',
-                'padding-right': ''
-            }).removeClass(this.options.classes.body);
 
             if (this.options.animation) {
                 this.container.addClass(this.options.animation.classOut);
@@ -262,6 +262,13 @@
                 }, this.options.animation.timeoutOut);
             } else {
                 this.background.remove();
+            }
+
+            if (!this.hasAnotherModal()) {
+                $('body').css({
+                    'overflow': '',
+                    'padding-right': ''
+                }).removeClass(this.options.classes.body);
             }
 
             this.options.onAfterClose();

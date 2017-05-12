@@ -631,6 +631,12 @@ $grid: (
   .large-up-show {
     display: none !important; } }
 
+/**
+* From small to large
+* Usage:
+*  @include respond-property(margin-bottom, 15px, 20px, 100px);
+*  @include respond-property(padding, 30px 15px, 40px 30px, 50px 45px);
+*/
 body {
   font-size: 14px;
   font-family: Arial, sans-serif;

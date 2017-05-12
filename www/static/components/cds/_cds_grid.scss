@@ -253,6 +253,12 @@ $grid: (
   }
 }
 
+/**
+* From small to large
+* Usage:
+*  @include respond-property(margin-bottom, 15px, 20px, 100px);
+*  @include respond-property(padding, 30px 15px, 40px 30px, 50px 45px);
+*/
 @mixin respond-property($property, $values...) {
   $grid-counter: 0;
   @each $name, $data in $grid {
