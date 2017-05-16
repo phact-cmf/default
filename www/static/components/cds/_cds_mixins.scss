@@ -162,3 +162,19 @@
     border-right: $width solid transparent;
   }
 }
+
+@mixin image-ico($path, $width, $height)
+{
+  background: {
+    color: $t;
+    image: url('../images/image-icons/#{$path}.png');
+    position: 50% 50%;
+    repeat: no-repeat;
+  }
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1) {
+    background-image: url('../images/image-icons/#{$path}-2x.png');
+  }
+}

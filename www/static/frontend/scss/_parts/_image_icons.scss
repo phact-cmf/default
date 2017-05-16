@@ -1,0 +1,25 @@
+@mixin image-icon($path, $width, $height)
+{
+  &.#{$path} {
+    background-size: contain;
+    width: $width;
+    height: $height;
+    @include image-ico($path, $width, $height);
+  }
+}
+
+@mixin with-icon($path, $width, $height)
+{
+  &.#{$path} {
+    background-size: $width $height;
+    @include image-ico($path, $width, $height);
+  }
+}
+
+.image-icon{
+  display: inline-block;
+  vertical-align: middle;
+  //@include image-icon('example', 20px, 34px);
+}
+
+

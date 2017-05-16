@@ -37,6 +37,8 @@
     margin-bottom: 30px;
 
     .top-buttons-block {
+      margin-right: 30px;
+
       .button {
         i {
           margin-left: 4px;
@@ -46,8 +48,6 @@
     }
 
     .top-search-block {
-      margin-left: 30px;
-
       input {
         height: $button-height;
         min-width: 300px;

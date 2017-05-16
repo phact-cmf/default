@@ -8,7 +8,8 @@ $grid: (
   small: (
     from: 0,
     to: 977,
-    gutter: 12
+    gutter: 12,
+    spacer: 8
   ),
   large: (
     from: 978,
@@ -61,6 +62,23 @@ $grid: (
   }
 }
 
+@mixin grid-spacer($spacer, $gutter)
+{
+  @if ($spacer) {
+    $spacer: $spacer - $gutter/2;
+
+    .row {
+      padding-left: #{$spacer}px;
+      padding-right: #{$spacer}px;
+    }
+
+    .row .row {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
 @mixin grid-hide()
 {
   display: none !important;
@@ -89,7 +107,7 @@ $grid: (
         padding-right: #{$half}px;
         padding-bottom: #{$gutter}px;
 
-        &:nth-child(#{$i+1}) {
+        &:nth-child(#{$i}n + 1) {
           clear: both;
         }
       }
@@ -97,10 +115,11 @@ $grid: (
   }
 }
 
-@mixin grid-handle-visibility-from-to($name, $gutter, $from, $to)
+@mixin grid-handle-visibility-from-to($name, $spacer, $gutter, $from, $to)
 {
   @media (min-width: #{$from}px) and (max-width: #{$to}px) {
     @include grid-gutter($gutter);
+    @include grid-spacer($spacer, $gutter);
     @include grid-columns($name, $gutter);
     @include block-grid($name, $gutter);
     // *-only-hide
@@ -137,10 +156,11 @@ $grid: (
   }
 }
 
-@mixin grid-handle-visibility-from($name, $gutter, $from)
+@mixin grid-handle-visibility-from($name, $spacer, $gutter, $from)
 {
   @media (min-width: #{$from}px) {
     @include grid-gutter($gutter);
+    @include grid-spacer($spacer, $gutter);
     @include grid-columns($name, $gutter);
     @include block-grid($name, $gutter);
     // *-only-hide
@@ -165,10 +185,11 @@ $grid: (
   }
 }
 
-@mixin grid-handle-visibility-to($name, $gutter, $to)
+@mixin grid-handle-visibility-to($name, $spacer, $gutter, $to)
 {
   @media (min-width: #{$to}px) {
     @include grid-gutter($gutter);
+    @include grid-spacer($spacer, $gutter);
     @include grid-columns($name, $gutter);
     @include block-grid($name, $gutter);
     // *-only-hide
@@ -195,11 +216,11 @@ $grid: (
 
 @each $name, $data in $grid {
   @if map-has-key($data, from) and map-has-key($data, to) {
-    @include grid-handle-visibility-from-to($name, map-get($data, gutter), map-get($data, from), map-get($data, to));
+    @include grid-handle-visibility-from-to($name, map-get($data, spacer), map-get($data, gutter), map-get($data, from), map-get($data, to));
   } @else if map-has-key($data, to) {
-    @include grid-handle-visibility-to($name, map-get($data, gutter), map-get($data, to));
+    @include grid-handle-visibility-to($name, map-get($data, spacer), map-get($data, gutter), map-get($data, to));
   }  @else if map-has-key($data, from) {
-    @include grid-handle-visibility-from($name, map-get($data, gutter), map-get($data, from));
+    @include grid-handle-visibility-from($name, map-get($data, spacer), map-get($data, gutter), map-get($data, from));
   }
 }
 

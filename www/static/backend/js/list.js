@@ -5,7 +5,8 @@ $(function () {
             groupActionUrl: undefined,
             sortUrl: undefined,
             columnsUrl: undefined,
-            searchTimeout: 500
+            searchTimeout: 500,
+            name: undefined
         },
         id: undefined,
         currentUrl: undefined,
@@ -115,7 +116,7 @@ $(function () {
         groupUpdate: function () {
             this.$listBlock.addClass('update');
             var pkList = this.getPkList();
-            this.modifyUrl('update', pkList);
+            this.modifyUrl('update_' + this.options.name, pkList);
         },
         groupSave: function () {
             var me = this;
@@ -126,7 +127,7 @@ $(function () {
                 data: data,
                 success: function (data) {
                     if (data.status == 'success') {
-                        me.modifyUrl('update', []);
+                        me.modifyUrl('update_' + me.options.name, []);
                     } else if (data.hasOwnProperty('errors')) {
                         _.each(data.errors, function (errors, formname) {
                             validator_validate_form(formname, errors);
