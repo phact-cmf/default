@@ -7,6 +7,7 @@ const rimraf = require('gulp-rimraf');
 const sass = require('gulp-sass');
 const hashsum = require('gulp-hashsum');
 const uglify = require('gulp-uglify');
+const hash = require('gulp-hash-filename');
 
 var config = require('./gulpconfig');
 var frontend = config.frontend;
@@ -71,51 +72,51 @@ gulp.task('backend_scss', function() {
         .pipe(gulp.dest(backend.dst.scss));
 });
 
-gulp.task('frontend_css', ['frontend_scss'], function() {
+gulp.task('frontend_css', ['frontend_scss', 'clear_frontend_css'], function() {
     var pipe = gulp.src(frontend.src.css);
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
     return pipe.
     pipe(concat(config.name + '.css')).
+    pipe(hash()).
     pipe(gulp.dest(frontend.dst.css)).
-    pipe(hashsum({filename: frontend.dst.css + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
-gulp.task('backend_css', ['backend_scss'], function() {
+gulp.task('backend_css', ['backend_scss', 'clear_backend_css'], function() {
     var pipe = gulp.src(backend.src.css);
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
     return pipe.
     pipe(concat(config.name + '.css')).
+    pipe(hash()).
     pipe(gulp.dest(backend.dst.css)).
-    pipe(hashsum({filename: backend.dst.css + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
-gulp.task('frontend_js', function() {
+gulp.task('frontend_js', ['clear_frontend_js'], function() {
     var pipe = gulp.src(frontend.src.js);
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
     return pipe.
     pipe(concat(config.name + '.js')).
+    pipe(hash()).
     pipe(gulp.dest(frontend.dst.js)).
-    pipe(hashsum({filename: frontend.dst.js + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
-gulp.task('backend_js', function() {
+gulp.task('backend_js', ['clear_backend_js'], function() {
     var pipe = gulp.src(backend.src.js);
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
     return pipe.
     pipe(concat(config.name + '.js')).
+    pipe(hash()).
     pipe(gulp.dest(backend.dst.js)).
-    pipe(hashsum({filename: backend.dst.js + '/version.yml', hash: 'md5'})).
     pipe(livereload());
 });
 
@@ -174,6 +175,22 @@ gulp.task('watch', ['build'], function() {
 
 gulp.task('clear', function() {
     return gulp.src(['frontend/dist/*', 'backend/dist/*']).pipe(rimraf());
+});
+
+gulp.task('clear_frontend_css', function() {
+    return gulp.src(['frontend/dist/css/*']).pipe(rimraf());
+});
+
+gulp.task('clear_backend_css', function() {
+    return gulp.src(['backend/dist/css/*']).pipe(rimraf());
+});
+
+gulp.task('clear_frontend_js', function() {
+    return gulp.src(['frontend/dist/js/*']).pipe(rimraf());
+});
+
+gulp.task('clear_backend_js', function() {
+    return gulp.src(['backend/dist/js/*']).pipe(rimraf());
 });
 
 gulp.task('build', ['clear'], function(){
