@@ -1,0 +1,14 @@
+{{#shapes}}
+.svg-icon.icon-{{base}} {
+    width: {{width.inner}}px;
+    height: {{height.inner}}px;
+    background: transparent url('../svg/{{base}}.svg') 50% 50% no-repeat;
+    background-size: {{width.inner}}px {{height.inner}}px;
+}
+
+svg.svg-icon.icon-{{base}} {
+  width: {{width.inner}}px;
+  height: {{height.inner}}px;
+  background: transparent;
+}
+{{/shapes}}

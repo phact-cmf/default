@@ -879,6 +879,14 @@ form textarea {
   display: inline-block;
   vertical-align: middle; }
 
+/*
+{icon:raw 'unchecked'}
+<i class="svg-icon icon-unchecked"></i>
+*/
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle; }
+
 /*! fancyBox v2.1.5 fancyapps.com | fancyapps.com/fancybox/#license */
 .fancybox-wrap,
 .fancybox-skin,

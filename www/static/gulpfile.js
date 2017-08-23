@@ -8,6 +8,9 @@ const sass = require('gulp-sass');
 const hashsum = require('gulp-hashsum');
 const uglify = require('gulp-uglify');
 const hash = require('gulp-hash-filename');
+const sprite = require('gulp-svg-sprite');
+const svgmin = require('gulp-svgmin');
+const cheerio = require('gulp-cheerio');
 
 var config = require('./gulpconfig');
 var frontend = config.frontend;
@@ -56,7 +59,44 @@ for (var vendorType in backendVendorsData) {
     }
 }
 
-gulp.task('frontend_scss', function() {
+gulp.task('svg_sprite', function () {
+    return gulp.src(frontend.src.svg)
+        .pipe(cheerio({
+            run: function ($) {
+                $('title').remove();
+            },
+            parserOptions: {xmlMode: true}
+        }))
+        .pipe(sprite({
+            mode: {
+                symbol: {
+                    dest: './',
+                    sprite: 'sprite',
+                    render: {
+                        css: {
+                            dest: 'svg_sprite.css',
+                            template: frontend.templates.svg_sprite
+                        }
+                    }
+                }
+            }
+        }))
+        .pipe(gulp.dest(frontend.dst.temp_svg));
+});
+
+gulp.task('svg_scss', ['svg_sprite'], function () {
+    return gulp.src([frontend.dst.temp_svg + '/*.scss'])
+        .pipe(gulp.dest(frontend.dst.svg_style));
+});
+
+gulp.task('svg', ['svg_scss'], function () {
+    var svgs = frontend.src.svg;
+    svgs.push(frontend.dst.temp_svg + '/sprite.svg');
+    return gulp.src(svgs)
+        .pipe(gulp.dest(frontend.dst.svg));
+});
+
+gulp.task('frontend_scss', ['svg'], function() {
     return gulp.src(frontend.src.scss)
         .pipe(sass({
             includePaths: frontend.src.scss_include ? frontend.src.scss_include : []
@@ -73,14 +113,17 @@ gulp.task('backend_scss', function() {
 });
 
 gulp.task('frontend_css', ['frontend_scss', 'clear_frontend_css'], function() {
+    var css = frontend.src.css;
+    css.push(frontend.dst.temp_svg + "/svg_sprite.css");
     var pipe = gulp.src(frontend.src.css);
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
-    return pipe.
-    pipe(concat(config.name + '.css')).
-    pipe(hash()).
-    pipe(gulp.dest(frontend.dst.css)).
+    pipe = pipe.pipe(concat(config.name + '.css'));
+    if (config.hash) {
+        pipe = pipe.pipe(hash());
+    }
+    return pipe.pipe(gulp.dest(frontend.dst.css)).
     pipe(livereload());
 });
 
@@ -89,10 +132,11 @@ gulp.task('backend_css', ['backend_scss', 'clear_backend_css'], function() {
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
-    return pipe.
-    pipe(concat(config.name + '.css')).
-    pipe(hash()).
-    pipe(gulp.dest(backend.dst.css)).
+    pipe = pipe.pipe(concat(config.name + '.css'));
+    if (config.hash) {
+        pipe = pipe.pipe(hash());
+    }
+    return pipe.pipe(gulp.dest(backend.dst.css)).
     pipe(livereload());
 });
 
@@ -101,10 +145,11 @@ gulp.task('frontend_js', ['clear_frontend_js'], function() {
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
-    return pipe.
-    pipe(concat(config.name + '.js')).
-    pipe(hash()).
-    pipe(gulp.dest(frontend.dst.js)).
+    pipe = pipe.pipe(concat(config.name + '.js'));
+    if (config.hash) {
+        pipe = pipe.pipe(hash());
+    }
+    return pipe.pipe(gulp.dest(frontend.dst.js)).
     pipe(livereload());
 });
 
@@ -113,10 +158,11 @@ gulp.task('backend_js', ['clear_backend_js'], function() {
     if (config.compress) {
         pipe = pipe.pipe(uglify())
     }
-    return pipe.
-    pipe(concat(config.name + '.js')).
-    pipe(hash()).
-    pipe(gulp.dest(backend.dst.js)).
+    pipe = pipe.pipe(concat(config.name + '.js'));
+    if (config.hash) {
+        pipe = pipe.pipe(hash());
+    }
+    return pipe.pipe(gulp.dest(backend.dst.js)).
     pipe(livereload());
 });
 
@@ -164,6 +210,7 @@ gulp.task('watch', ['build'], function() {
     gulp.watch(frontend.src.js, ['frontend_js']);
     gulp.watch(frontend.src.images, ['frontend_images']);
     gulp.watch(frontend.src.fonts, ['frontend_fonts']);
+    gulp.watch(frontend.src.svg, ['frontend_css']);
 
     gulp.watch(backend.src.raw, ['backend_raw']);
     gulp.watch(backend.src.scss, ['backend_css']);

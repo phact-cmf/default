@@ -22,4 +22,12 @@
   //@include image-icon('example', 20px, 34px);
 }
 
+/*
+{icon:raw 'unchecked'}
+<i class="svg-icon icon-unchecked"></i>
+*/
 
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+}

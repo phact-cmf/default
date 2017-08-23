@@ -10,6 +10,8 @@ module.exports.name = "main";
 
 module.exports.compress = false;
 
+module.exports.hash = true;
+
 module.exports.frontend = {
     dst: {
         js: 'frontend/dist/js',
@@ -17,7 +19,10 @@ module.exports.frontend = {
         css: 'frontend/dist/css',
         images: 'frontend/dist/images',
         fonts: 'frontend/dist/fonts',
-        raw: 'frontend/dist/raw'
+        raw: 'frontend/dist/raw',
+        svg: 'frontend/dist/svg',
+        svg_style: 'frontend/scss/_parts',
+        temp_svg: 'frontend/temp/svg'
     },
     src: {
         js: [
@@ -38,9 +43,15 @@ module.exports.frontend = {
         fonts: [
             'fonts/GothamPro/fonts/**/*'
         ],
+        svg: [
+            'frontend/svg/*.svg'
+        ],
         raw: [
 
         ]
+    },
+    templates: {
+        svg_sprite: 'frontend/templates/_svg_sprite._css'
     },
     vendors: {
         jquery: {
