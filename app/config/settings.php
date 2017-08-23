@@ -5,6 +5,7 @@ return [
     'paths' => [
         'base' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..'])),
         'www' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www'])),
+        'static' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static'])),
     ],
     'modules' => [
         'Editor',
@@ -20,6 +21,9 @@ return [
     'components' => [
         'db' => [
             'class' => \Phact\Orm\ConnectionManager::class,
+            'settings' => [
+                'cacheFieldsTimeout' => DEBUG ? null : 86400
+            ],
             'connections' => [
                 'default' => [
                     'driver' => 'mysql',
@@ -36,7 +40,7 @@ return [
         ],
         'errorHandler' => [
             'class' => \Phact\Main\ErrorHandler::class,
-            'debug' => true
+            'debug' => DEBUG
         ],
         'request' => [
             'class' => \Phact\Request\RequestManager::class,
@@ -52,11 +56,14 @@ return [
         ],
         'router' => [
             'class' => \Phact\Router\Router::class,
-            'pathRoutes' => 'base.config.routes'
+            'pathRoutes' => 'base.config.routes',
+            'cacheTimeout' => DEBUG ? null : 86400
         ],
         'template' => [
             'class' => \Phact\Template\TemplateManager::class,
-            'forceCompile' => true
+            'librariesCacheTimeout' => DEBUG ? null : 86400,
+            'forceCompile' => DEBUG ? true : false,
+            'autoReload' => DEBUG ? true : false
         ],
         'auth' => [
             'class' => \Modules\User\Components\Auth::class

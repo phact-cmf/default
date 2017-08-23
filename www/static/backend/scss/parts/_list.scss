@@ -294,18 +294,20 @@
                 padding: $height-padding $width-padding;
                 display: block;
                 width: 100%;
+                font-size: 15px;
+                background-color: $t;
               }
 
               label {
                 display: none;
               }
 
-              input[type=checkbox] {
+              input[type=checkbox], input[type=radio] {
                 display: none;
                 padding: 0;
               }
 
-              input[type=checkbox] + label {
+              input[type=checkbox] + label, input[type=radio] + label {
                 display: block;
                 width: 100%;
                 margin: $height-padding $width-padding;
