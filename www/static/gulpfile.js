@@ -59,7 +59,7 @@ for (var vendorType in backendVendorsData) {
     }
 }
 
-gulp.task('svg_sprite', function () {
+gulp.task('svg_sprite', ['clear_svg'], function () {
     return gulp.src(frontend.src.svg)
         .pipe(cheerio({
             run: function ($) {
@@ -84,19 +84,14 @@ gulp.task('svg_sprite', function () {
         .pipe(gulp.dest(frontend.dst.temp_svg));
 });
 
-gulp.task('svg_scss', ['svg_sprite'], function () {
-    return gulp.src([frontend.dst.temp_svg + '/*.scss'])
-        .pipe(gulp.dest(frontend.dst.svg_style));
-});
-
-gulp.task('svg', ['svg_scss'], function () {
+gulp.task('svg', ['svg_sprite'], function () {
     var svgs = frontend.src.svg;
     svgs.push(frontend.dst.temp_svg + '/sprite.svg');
     return gulp.src(svgs)
         .pipe(gulp.dest(frontend.dst.svg));
 });
 
-gulp.task('frontend_scss', ['svg'], function() {
+gulp.task('frontend_scss', function() {
     return gulp.src(frontend.src.scss)
         .pipe(sass({
             includePaths: frontend.src.scss_include ? frontend.src.scss_include : []
@@ -125,6 +120,10 @@ gulp.task('frontend_css', ['frontend_scss', 'clear_frontend_css'], function() {
     }
     return pipe.pipe(gulp.dest(frontend.dst.css)).
     pipe(livereload());
+});
+
+gulp.task('full_frontend_css', ['svg'], function () {
+    gulp.start('frontend_css');
 });
 
 gulp.task('backend_css', ['backend_scss', 'clear_backend_css'], function() {
@@ -210,7 +209,7 @@ gulp.task('watch', ['build'], function() {
     gulp.watch(frontend.src.js, ['frontend_js']);
     gulp.watch(frontend.src.images, ['frontend_images']);
     gulp.watch(frontend.src.fonts, ['frontend_fonts']);
-    gulp.watch(frontend.src.svg, ['frontend_css']);
+    gulp.watch(frontend.src.svg, ['full_frontend_css']);
 
     gulp.watch(backend.src.raw, ['backend_raw']);
     gulp.watch(backend.src.scss, ['backend_css']);
@@ -240,9 +239,13 @@ gulp.task('clear_backend_js', function() {
     return gulp.src(['backend/dist/js/*']).pipe(rimraf());
 });
 
+gulp.task('clear_svg', function() {
+    return gulp.src(['frontend/dist/svg/*', frontend.dst.temp_svg + '/*']).pipe(rimraf());
+});
+
 gulp.task('build', ['clear'], function(){
     gulp.start(
-        'frontend_raw', 'frontend_css', 'frontend_js', 'frontend_images', 'frontend_fonts',
+        'frontend_raw', 'full_frontend_css', 'frontend_js', 'frontend_images', 'frontend_fonts',
         'backend_raw', 'backend_css', 'backend_js', 'backend_images', 'backend_fonts'
     );
 });
