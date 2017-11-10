@@ -101,6 +101,19 @@ module.exports.frontend = {
             js: [
                 'components/forms/validation.js'
             ]
+        },
+        fancybox3: {
+            js:[
+                'components/fancybox3/js/jquery.fancybox.min.js'
+            ],
+            css:[
+                'components/fancybox3/css/jquery.fancybox.min.css'
+            ]
+        },
+        masked: {
+            js: [
+                'components/masked/jquery.maskedinput.js'
+            ]
         }
     }
 };
