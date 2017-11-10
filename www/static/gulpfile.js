@@ -5,7 +5,6 @@ const imagemin = require('gulp-imagemin');
 const livereload = require('gulp-livereload');
 const rimraf = require('gulp-rimraf');
 const sass = require('gulp-sass');
-const hashsum = require('gulp-hashsum');
 const uglify = require('gulp-uglify');
 const hash = require('gulp-hash-filename');
 const sprite = require('gulp-svg-sprite');

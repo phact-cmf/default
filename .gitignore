@@ -19,6 +19,7 @@
 /app/Modules/User
 /app/Modules/Meta
 /app/Modules/Sitemap
+/app/Modules/Projector
 
 .idea
 .DS_Store

@@ -16,9 +16,9 @@
             var defaultOptions = {
                 /*
                  animation: {
-                     classIn: 'animation-in',
-                     classOut: 'animation-out',
-                     timeoutOut: 1000
+                 classIn: 'animation-in',
+                 classOut: 'animation-out',
+                 timeoutOut: 1000
                  },
                  */
                 animation: null,
@@ -26,8 +26,9 @@
                 theme: 'default',
                 closerText: '×',
 
+                fixWidth: true,
                 width: undefined,
-                
+
                 closeOnClickBg: true,
                 closeKeys: [27],
 
@@ -222,6 +223,9 @@
         hasAnotherModal: function () {
             return $('.' + this.options.classes.background).not(this.background).length > 0;
         },
+        isLastModal: function () {
+            return this.background;
+        },
         start: function (html) {
             this.options.onBeforeStart();
             this.render();
@@ -239,7 +243,10 @@
                 this.hidePreloader();
             }
             this.background.show();
-            this.container.css('width', this.options.width || this.container.width()).show();
+            if (this.options.fixWidth) {
+                this.container.css('width', this.options.width || this.container.width());
+            }
+            this.container.show();
 
             if (!this.hasAnotherModal()) {
                 $body.css({
@@ -296,7 +303,9 @@
             if (options.closeKeys.length > 0) {
                 this.escHandler = function (e) {
                     if ($.inArray(e.which, options.closeKeys) !== -1) {
-                        me.close();
+                        if ($('.' + me.options.classes.background + ':last').is(me.background)) {
+                            me.close();
+                        }
                     }
                 };
                 $(document).on('keyup', this.escHandler);
