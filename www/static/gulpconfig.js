@@ -56,25 +56,28 @@ module.exports.frontend = {
     vendors: {
         jquery: {
             js: [
-                'bower_components/jquery/dist/jquery.min.js'
+                'node_modules/jquery/dist/jquery.min.js'
             ]
         },
         underscore: {
             js: [
-                'bower_components/underscore/underscore.js'
+                'node_modules/underscore/underscore.js'
             ]
         },
         fancybox: {
             js: [
-                'bower_components/fancybox/source/jquery.fancybox.pack.js',
-                'bower_components/fancybox/source/jquery.fancybox-buttons.js',
-                'bower_components/fancybox/source/jquery.fancybox-media.js',
-                'bower_components/fancybox/source/jquery.fancybox-thumbs.js'
+                'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js'
+            ],
+            css: [
+                'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.css'
             ]
         },
         slick: {
             js: [
-                'bower_components/slick-carousel/slick/slick.min.js'
+                'node_modules/slick-carousel/slick/slick.min.js'
+            ],
+            css: [
+                'node_modules/slick-carousel/slick/slick.css'
             ]
         },
         modal: {
@@ -100,14 +103,6 @@ module.exports.frontend = {
         forms: {
             js: [
                 'components/forms/validation.js'
-            ]
-        },
-        fancybox3: {
-            js:[
-                'components/fancybox3/js/jquery.fancybox.min.js'
-            ],
-            css:[
-                'components/fancybox3/css/jquery.fancybox.min.css'
             ]
         },
         masked: {
@@ -161,12 +156,12 @@ module.exports.backend = {
     vendors: {
         jquery: {
             js: [
-                'bower_components/jquery/dist/jquery.min.js'
+                'node_modules/jquery/dist/jquery.min.js'
             ]
         },
         jquery_form: {
             js: [
-                'bower_components/jquery-form/jquery.form.js'
+                'node_modules/jquery-form/jquery.form.js'
             ]
         },
         modal: {
@@ -176,7 +171,7 @@ module.exports.backend = {
         },
         underscore: {
             js: [
-                'bower_components/underscore/underscore.js'
+                'node_modules/underscore/underscore.js'
             ]
         },
         confirm: {
@@ -204,7 +199,7 @@ module.exports.backend = {
         },
         flow: {
             js: [
-                'bower_components/flow-js/dist/flow.js'
+                'node_modules/@flowjs/flow.js/dist/flow.js'
             ]
         },
         files_field: {

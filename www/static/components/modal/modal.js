@@ -161,12 +161,35 @@
                     success: this.getHandleFormResponse()
                 });
             } else {
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: type,
-                    data: $form.serialize(),
-                    success: this.getHandleFormResponse()
-                })
+                if ($form.find("input[type='file']").length > 0) {
+                    var formData = new FormData();
+                    $.each($form.find("input[type='file']"), function(i, tag) {
+                        $.each($(tag)[0].files, function(i, file) {
+                            formData.append(tag.name, file);
+                        });
+                    });
+                    var params = $form.serializeArray();
+                    $.each(params, function (i, val) {
+                        formData.append(val.name, val.value);
+                    });
+                    $.ajax({
+                        url: $form.attr('action'),
+                        type: type,
+                        data: formData,
+                        success: this.getHandleFormResponse(),
+                        processData: false,
+                        cache: false,
+                        contentType: false
+                    })
+                } else {
+                    $.ajax({
+                        url: $form.attr('action'),
+                        type: type,
+                        data: $form.serialize(),
+                        success: this.getHandleFormResponse()
+                    })
+                }
+
             }
         },
         getHandleFormResponse: function() {

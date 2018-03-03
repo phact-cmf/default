@@ -12,7 +12,14 @@
     "gulp-sass": "~2.3.2",
     "gulp-svg-sprite": "^1.3.7",
     "gulp-svgmin": "^1.2.4",
-    "gulp-uglify": "~2.0.0"
+    "gulp-uglify": "~2.0.0",
+    "@fancyapps/fancybox": ">=3.2.5",
+    "@flowjs/flow.js": ">=2.13.0",
+    "jquery": ">=3.1.0",
+    "jquery-form": ">=4.2.2",
+    "select2": "^4.0.6-rc.1",
+    "slick-carousel": ">=1.8.1",
+    "underscore": ">=1.8.3"
   },
   "devDependencies": {}
 }
