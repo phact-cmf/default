@@ -161,7 +161,7 @@ module.exports.backend = {
         },
         jquery_form: {
             js: [
-                'node_modules/jquery-form/jquery.form.js'
+                'node_modules/jquery-form/dist/jquery.form.min.js'
             ]
         },
         modal: {

@@ -106,8 +106,7 @@
                         <div class="column large-4">
                             <div class="footer-block v-align">
                                 <div>
-                                    Компания <br/>
-                                    Все права защищены &copy; {'now'|date:"Y"}
+                                    Компания
                                 </div>
                             </div>
                         </div>
@@ -117,8 +116,7 @@
                         <div class="column large-4">
                             <div class="footer-block v-align text-right">
                                 <div>
-                                    Разработано в <a href="http://hashstudio.ru">#hashstudio</a> <br/>
-                                    &copy; {'now'|date:"Y"}
+                                    Все права защищены &copy; {'now'|date:"Y"}
                                 </div>
                             </div>
                         </div>
