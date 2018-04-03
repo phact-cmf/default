@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     {* Title, description, keywords *}
-    {block 'seo'}{/block}
+    {block 'seo'}
+        {render_meta:raw}
+    {/block}
 
     {* Another head information *}
     {block 'head'}{/block}
