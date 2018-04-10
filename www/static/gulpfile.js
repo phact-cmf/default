@@ -10,6 +10,7 @@ const hash = require('gulp-hash-filename');
 const sprite = require('gulp-svg-sprite');
 const svgmin = require('gulp-svgmin');
 const cheerio = require('gulp-cheerio');
+const autoprefixer = require('gulp-autoprefixer');
 
 var config = require('./gulpconfig');
 var frontend = config.frontend;
@@ -110,6 +111,7 @@ gulp.task('frontend_css', ['frontend_scss', 'clear_frontend_css'], function() {
     var css = frontend.src.css;
     css.push(frontend.dst.temp_svg + "/svg_sprite.css");
     var pipe = gulp.src(frontend.src.css);
+    pipe = pipe.pipe(autoprefixer());
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
@@ -127,6 +129,7 @@ gulp.task('full_frontend_css', ['svg'], function () {
 
 gulp.task('backend_css', ['backend_scss', 'clear_backend_css'], function() {
     var pipe = gulp.src(backend.src.css);
+    pipe = pipe.pipe(autoprefixer());
     if (config.compress) {
         pipe = pipe.pipe(cssnano())
     }
