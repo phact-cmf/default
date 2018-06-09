@@ -42,6 +42,30 @@ return [
             'class' => \Phact\Main\ErrorHandler::class,
             'debug' => DEBUG
         ],
+        'log' => [
+            'class' => \Phact\Log\LogManager::class,
+            'handlers' => [
+                'default' => [
+                    'class' => \Monolog\Handler\RotatingFileHandler::class,
+                    '__construct' => [
+                        realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'runtime'])) . DIRECTORY_SEPARATOR . 'default.log',
+                        7,
+                        DEBUG ? \Monolog\Logger::DEBUG : \Monolog\Logger::WARNING
+                    ]
+                ]
+            ],
+            'loggers' => [
+                'default' => [
+                    'class' => \Monolog\Logger::class,
+                    'handlers' => [
+                        'default'
+                    ]
+                ]
+            ]
+        ],
+        'event' => [
+            'class' => \Phact\Event\EventManager::class
+        ],
         'request' => [
             'class' => \Phact\Request\RequestManager::class,
             'httpRequest' => [
@@ -108,11 +132,9 @@ return [
                 'security' => 'ssl'
             ]
         ],
-        'event' => [
-            'class' => \Phact\Event\EventManager::class
-        ],
     ],
     'autoloadComponents' => [
-        'errorHandler'
+        'errorHandler',
+        'log'
     ]
 ];
