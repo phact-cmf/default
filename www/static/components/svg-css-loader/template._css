@@ -1,0 +1,4 @@
+.icon-<%= name %> {
+    width: <%= width %>px;
+    height: <%= height %>px;
+}

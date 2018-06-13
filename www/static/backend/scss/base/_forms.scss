@@ -17,7 +17,7 @@ $input: "input[type=text], input[type=search], input[type=email], input[type=pas
   font-size: 14px;
   font-family: $font;
 
-  @include placeholder {
+  &::placeholder {
     font-size: 14px;
     color: #797979;
   }

@@ -7,11 +7,10 @@
         {render_meta:raw}
     {/block}
 
+    <link rel="stylesheet" href="{$.assets_public_path('frontend/dist/css/' ~ $.frontend_css_filename('main'))}">
+
     {* Another head information *}
     {block 'head'}{/block}
-
-    <link rel="stylesheet" href="/static/frontend/dist/css/{$.frontend_css_file('main')}">
-    <script src="/static/frontend/dist/js/{$.frontend_js_file('main')}"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -24,7 +23,7 @@
                                 <div class="header-block v-align">
                                     <div>
                                         <a href="/" class="logo">
-                                            <img src="/static/frontend/images/base/logo.png" alt="">
+                                            <img src="{$.assets_public_path('frontend/images/base/logo.png')}" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -57,6 +56,8 @@
                 </div>
             </div>
         </header>
+
+        {icon:raw "check"}
 
         {render_flash:raw template='base/_flash.tpl'}
 
@@ -128,6 +129,13 @@
         </div>
     </footer>
 
+    {block 'core_js'}
+        <script src="{$.assets_public_path('frontend/dist/js/' ~ $.frontend_js_filename('main'))}"></script>
+    {/block}
+    {render_dependencies_js:raw}
+    {render_inline_js:raw}
+    {render_dependencies_css:raw}
+    {render_inline_css:raw}
     {block 'js'}
 
     {/block}

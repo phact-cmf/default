@@ -1,10 +1,9 @@
 .smart-tabs {
   list-style: none;
-  @include clearfix();
+  display: flex;
+  justify-content: flex-start;
 
   li {
-    display: inline-block;
-
     a {
       display: block;
     }

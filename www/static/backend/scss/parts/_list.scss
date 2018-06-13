@@ -19,7 +19,7 @@
       visibility: hidden;
       background: rgba(243, 243, 243, 0.91) url('../images/loader/default.gif') 50% 50% no-repeat;
       z-index: 100;
-      @include transition(all 0.3s);
+      transition: all 0.3s;
     }
   }
 
@@ -103,7 +103,7 @@
                   top: 100%;
                   position: absolute;
                   right: 0;
-                  @include transition(all 0.3s);
+                  transition: all 0.3s;
                   opacity: 0;
                   visibility: hidden;
 
@@ -174,7 +174,7 @@
                 color: $inactive-color;
 
                 i.rotate {
-                  @include transform(rotate(180deg));
+                  transform: rotate(180deg);
                   display: inline-block;
                 }
 
@@ -274,7 +274,7 @@
                 display: inline-block;
                 margin-right: 5px;
                 color: $inactive-color;
-                @include transition(all 0.3s);
+                transition: all 0.3s;
 
                 &:last-child {
                   margin-right: 0;
@@ -338,7 +338,7 @@
           &:hover {
             td {
               background: #F7F7F7;
-              @include transition(background 0.3s);
+              transition: background 0.3s;
 
               &.actions {
                 a {

@@ -1,8 +1,14 @@
 @import "settings";
-@import "__cds_index";
+
+@import "_common/reset";
+@import "_common/grid";
+@import "_common/mixins";
+@import "_common/visibility";
+@import "_common/utils";
 
 @import "vendors/modal";
 
+@import "base/mixins";
 @import "base/layout";
 @import "base/defaults";
 @import "base/buttons";
@@ -19,3 +25,5 @@
 @import "pages/login";
 @import "pages/all";
 @import "pages/form";
+
+@import "../../components/fields/filesfield/filesfield.scss";

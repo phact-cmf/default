@@ -5,9 +5,10 @@ return [
     'paths' => [
         'base' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..'])),
         'www' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www'])),
-        'static' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static'])),
+        'static' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static']))
     ],
     'modules' => [
+        'Assets',
         'Editor',
         'Admin',
         'Base',
@@ -131,6 +132,9 @@ return [
                 'port' => '465',
                 'security' => 'ssl'
             ]
+        ],
+        'assets' => [
+            'class' => \Modules\Assets\Components\AssetsComponent::class
         ],
     ],
     'autoloadComponents' => [

@@ -99,7 +99,17 @@
 
       .actions-panel {
         padding: 20px 30px;
-        @include clearfix();
+
+        &:before {
+          content: "";
+          display: table;
+        }
+
+        &:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
 
         .buttons {
           float: left;
