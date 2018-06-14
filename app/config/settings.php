@@ -134,7 +134,27 @@ return [
             ]
         ],
         'assets' => [
-            'class' => \Modules\Assets\Components\AssetsComponent::class
+            'class' => \Modules\Assets\Components\AssetsComponent::class,
+            'builds' => [
+                'default' => [
+                    'class' => \Modules\Assets\Builds\SimpleBuild::class,
+                    'publicPath' => '/static'
+                ],
+                'frontend' => [
+                    'class' => \Modules\Assets\Builds\ManifestBuild::class,
+                    'publicPath' => DEBUG ? "http://127.0.0.1:9000/frontend/dist" : '/static/frontend/dist',
+                    'manifestFile' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static', 'frontend', 'dist', 'manifest.json']))
+                ],
+                'backend' => [
+                    'class' => \Modules\Assets\Builds\ManifestBuild::class,
+                    'publicPath' => '/static/backend/dist',
+                    'manifestFile' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static', 'backend', 'dist', 'manifest.json']))
+                ],
+                'modules' => [
+                    'class' => \Modules\Assets\Builds\SimpleBuild::class,
+                    'publicPath' => '/static/modules/dist'
+                ]
+            ]
         ],
     ],
     'autoloadComponents' => [

@@ -7,7 +7,7 @@
         {render_meta:raw}
     {/block}
 
-    <link rel="stylesheet" href="{$.assets_public_path('frontend/dist/css/' ~ $.frontend_css_filename('main'))}">
+    <link rel="stylesheet" href="{$.assets_public_path('main.css', 'frontend')}">
 
     {* Another head information *}
     {block 'head'}{/block}
@@ -130,7 +130,7 @@
     </footer>
 
     {block 'core_js'}
-        <script src="{$.assets_public_path('frontend/dist/js/' ~ $.frontend_js_filename('main'))}"></script>
+        <script src="{$.assets_public_path('main.js', 'frontend')}"></script>
     {/block}
     {render_dependencies_js:raw}
     {render_inline_js:raw}

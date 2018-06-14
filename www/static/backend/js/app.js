@@ -9,9 +9,11 @@ require('./list.js');
 require('./prevention.js');
 
 require('jquery-form/dist/jquery.form.min.js');
-require('underscore');
+
 let Flow = require('@flowjs/flow.js/dist/flow.js');
 window.Flow = Flow;
+let underscore = require('underscore');
+window._ = underscore;
 
 require('../../components/deparam/jquery.deparam.js');
 require('../../components/modal/modal.js');

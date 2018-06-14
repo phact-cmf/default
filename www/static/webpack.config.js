@@ -3,8 +3,6 @@ const webpack = require('webpack');
 const glob = require('glob').sync;
 const devMode = process.env.NODE_ENV !== 'production';
 
-const multi = require('multi-loader');
-const combine = require('webpack-combine-loaders');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -13,6 +11,8 @@ const autoprefixer = require('autoprefixer');
 const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const modulesPath = path.resolve(__dirname, '../../app/Modules');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = [
     {
@@ -32,7 +32,20 @@ module.exports = [
                     test: /\/([^\s\\\/]+)\/static\/(.*?)\/([^\s\\\/]+)\.([^\s\\\/\.]+)$/
                 }
             ]),
-        ]
+        ],
+        devServer: {
+            host: '0.0.0.0',
+            port: 9000,
+            hot: true,
+            inline: true,
+            contentBase: '../',
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, x-id, Content-Length, X-Requested-With",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+            }
+        }
     },
     {
         name: "svg-sprite",
@@ -73,7 +86,8 @@ module.exports = [
         devtool: "source-map",
         output: {
             path: path.join(__dirname, "frontend", "dist", "js"),
-            filename: "[name]-[hash].js"
+            filename: "[name]-[hash].js",
+            publicPath: 'http://127.0.0.1:9000/frontend/dist/js'
         },
         resolve: {
             alias: {
@@ -96,12 +110,12 @@ module.exports = [
                 test: /\.css$/,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader
                     },
                     {
                         loader: "css-loader",
                         options: {
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                     {
@@ -110,7 +124,7 @@ module.exports = [
                             plugins: [
                                 autoprefixer()
                             ],
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                 ]
@@ -119,12 +133,12 @@ module.exports = [
                 test: /\.scss$/,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        loader: devMode ? 'style-loader' : MiniCssExtractPlugin.loader
                     },
                     {
                         loader: "css-loader",
                         options: {
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                     {
@@ -133,13 +147,13 @@ module.exports = [
                             plugins: [
                                 autoprefixer()
                             ],
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                     {
                         loader: "sass-loader",
                         options: {
-                            sourceMap: true,
+                            sourceMap: devMode,
                             includePaths: [path.resolve(__dirname, 'frontend', "scss", "_settings")]
                         }
                     }
@@ -176,9 +190,21 @@ module.exports = [
             }),
             new webpack.ProvidePlugin({
                 $: "jquery",
-                jQuery: "jquery"
+                jQuery: "jquery",
+                _: "underscore",
+                underscore: "underscore",
+
             }),
-            new HardSourceWebpackPlugin()
+            new WebpackAssetsManifest({
+                writeToDisk: true,
+                output: path.join(__dirname, "frontend", "dist", "manifest.json"),
+                publicPath(filename, manifest)
+                {
+                    return path.join("js", filename);
+                }
+            }),
+            new webpack.NamedModulesPlugin()
+            // new HardSourceWebpackPlugin()
         ]
     },
     {
@@ -229,7 +255,7 @@ module.exports = [
                     {
                         loader: "css-loader",
                         options: {
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                     {
@@ -238,7 +264,7 @@ module.exports = [
                             plugins: [
                                 autoprefixer()
                             ],
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                 ]
@@ -252,7 +278,7 @@ module.exports = [
                     {
                         loader: "css-loader",
                         options: {
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                     {
@@ -261,13 +287,13 @@ module.exports = [
                             plugins: [
                                 autoprefixer()
                             ],
-                            sourceMap: true
+                            sourceMap: devMode
                         }
                     },
                     {
                         loader: "sass-loader",
                         options: {
-                            sourceMap: true,
+                            sourceMap: devMode,
                             includePaths: [path.resolve(__dirname, 'backend', "scss", "_settings")]
                         }
                     }
@@ -291,7 +317,14 @@ module.exports = [
                 $: "jquery",
                 jQuery: "jquery"
             }),
-            new HardSourceWebpackPlugin()
+            new WebpackAssetsManifest({
+                output: path.join(__dirname, "backend", "dist", "manifest.json"),
+                publicPath(filename, manifest)
+                {
+                    return path.join("js", filename);
+                }
+            })
+            // new HardSourceWebpackPlugin()
         ]
     }
 ];
