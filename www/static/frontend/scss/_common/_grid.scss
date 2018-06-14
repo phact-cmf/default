@@ -1,0 +1,307 @@
+/**
+
+Example:
+
+$max-row-width: 1008;
+$grid-columns: 12;
+$grid: (
+  small: (
+    from: 0,
+    to: 977,
+    gutter: 12,
+    spacer: 8
+  ),
+  large: (
+    from: 978,
+    gutter: 30
+  )
+);
+
+*/
+
+.row {
+  max-width: #{$max-row-width}px;
+  margin: 0 auto;
+
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+.column {
+  float: left;
+  width: 100%;
+}
+
+@mixin grid-columns($name, $gutter)
+{
+  @for $i from 1 through $grid-columns {
+    .#{$name}-#{$i} {
+      width: (100%*$i/$grid-columns);
+    }
+  }
+}
+
+@mixin grid-gutter($gutter)
+{
+  $half: $gutter/2;
+  .column {
+    padding-left: #{$half}px;
+    padding-right: #{$half}px;
+  }
+
+  .row .row {
+    margin-left: -#{$half}px;
+    margin-right: -#{$half}px;
+    max-width: none;
+  }
+}
+
+@mixin grid-spacer($spacer, $gutter)
+{
+  @if ($spacer) {
+    $spacer: $spacer - $gutter/2;
+
+    .row {
+      padding-left: #{$spacer}px;
+      padding-right: #{$spacer}px;
+    }
+
+    .row .row {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+@mixin grid-hide()
+{
+  display: none !important;
+}
+
+@mixin grid-range-hide($name, $range, $visibility)
+{
+  .#{$name}-#{$range}-#{$visibility} {
+    @include grid-hide();
+  }
+}
+
+@mixin block-grid($name, $gutter)
+{
+  $half: $gutter/2;
+
+  @for $i from 1 through $grid-columns {
+    .#{$name}-block-grid-#{$i} {
+      margin: 0 -#{$half}px;
+
+      &:before {
+        content: "";
+        display: table;
+      }
+
+      &:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      &>* {
+        float: left;
+        width: (100%/$i);
+        padding-left: #{$half}px;
+        padding-right: #{$half}px;
+        padding-bottom: #{$gutter}px;
+
+        &:nth-child(#{$i}n + 1) {
+          clear: both;
+        }
+      }
+    }
+  }
+}
+
+@mixin grid-handle-visibility-from-to($name, $spacer, $gutter, $from, $to)
+{
+  @media (min-width: #{$from}px) and (max-width: #{$to}px) {
+    @include grid-gutter($gutter);
+    @include grid-spacer($spacer, $gutter);
+    @include grid-columns($name, $gutter);
+    @include block-grid($name, $gutter);
+    // *-only-hide
+    @include grid-range-hide($name, only, hide);
+  }
+
+  // *-up-hide
+  @media (min-width: #{$from}px) {
+    @include grid-range-hide($name, up, hide);
+  }
+
+  // *-down-hide
+  @media (max-width: #{$to}px) {
+    @include grid-range-hide($name, down, hide);
+  }
+
+
+  $beforeFrom: $from - 1;
+  $afterTo: $to + 1;
+
+  // *-only-show
+  @media (max-width: #{$beforeFrom}px), (min-width: #{$afterTo}px) {
+    @include grid-range-hide($name, only, show);
+  }
+
+  // *-up-show
+  @media (max-width: #{$beforeFrom}px) {
+    @include grid-range-hide($name, up, show);
+  }
+
+  // *-down-show
+  @media (min-width: #{$afterTo}px) {
+    @include grid-range-hide($name, down, show);
+  }
+}
+
+@mixin grid-handle-visibility-from($name, $spacer, $gutter, $from)
+{
+  @media (min-width: #{$from}px) {
+    @include grid-gutter($gutter);
+    @include grid-spacer($spacer, $gutter);
+    @include grid-columns($name, $gutter);
+    @include block-grid($name, $gutter);
+    // *-only-hide
+    @include grid-range-hide($name, only, hide);
+  }
+
+  // *-up-hide
+  @media (min-width: #{$from}px) {
+    @include grid-range-hide($name, up, hide);
+  }
+
+  $beforeFrom: $from - 1;
+
+  // *-only-show
+  @media (max-width: #{$beforeFrom}px) {
+    @include grid-range-hide($name, only, show);
+  }
+
+  // *-up-show
+  @media (max-width: #{$beforeFrom}px) {
+    @include grid-range-hide($name, up, show);
+  }
+}
+
+@mixin grid-handle-visibility-to($name, $spacer, $gutter, $to)
+{
+  @media (min-width: #{$to}px) {
+    @include grid-gutter($gutter);
+    @include grid-spacer($spacer, $gutter);
+    @include grid-columns($name, $gutter);
+    @include block-grid($name, $gutter);
+    // *-only-hide
+    @include grid-range-hide($name, only, hide);
+  }
+
+  // *-down-hide
+  @media (max-width: #{$to}px) {
+    @include grid-range-hide($name, down, hide);
+  }
+
+  $afterTo: $to + 1;
+
+  // *-only-show
+  @media (min-width: #{$afterTo}px) {
+    @include grid-range-hide($name, only, show);
+  }
+
+  // *-down-show
+  @media (min-width: #{$afterTo}px) {
+    @include grid-range-hide($name, down, show);
+  }
+}
+
+@each $name, $data in $grid {
+  @if map-has-key($data, from) and map-has-key($data, to) {
+    @include grid-handle-visibility-from-to($name, map-get($data, spacer), map-get($data, gutter), map-get($data, from), map-get($data, to));
+  } @else if map-has-key($data, to) {
+    @include grid-handle-visibility-to($name, map-get($data, spacer), map-get($data, gutter), map-get($data, to));
+  }  @else if map-has-key($data, from) {
+    @include grid-handle-visibility-from($name, map-get($data, spacer), map-get($data, gutter), map-get($data, from));
+  }
+}
+
+@mixin respond($name)
+{
+  @if map-has-key($grid, $name) {
+    $point: map-get($grid, $name);
+    @if map-has-key($point, from) and map-has-key($point, to) {
+      @media (min-width: #{map-get($point, from)}px) and (max-width: #{map-get($point, to)}px) {
+        @content;
+      }
+    } @else if map-has-key($point, to) {
+      @media (max-width: #{map-get($point, to)}px) {
+        @content;
+      }
+    } @else if map-has-key($point, from) {
+      @media (min-width: #{map-get($point, from)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint '#{$name}'";
+  }
+}
+
+@mixin respond-up($name)
+{
+  @if map-has-key($grid, $name) {
+    $point: map-get($grid, $name);
+    @if map-has-key($point, from) {
+      @media (min-width: #{map-get($point, from)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint '#{$name}'";
+  }
+}
+
+@mixin respond-down($name)
+{
+  @if map-has-key($grid, $name) {
+    $point: map-get($grid, $name);
+    @if map-has-key($point, to) {
+      @media (max-width: #{map-get($point, to)}px) {
+        @content;
+      }
+    }
+  } @else {
+    @warn "Unknown breakpoint '#{$name}'";
+  }
+}
+
+/**
+* From small to large
+* Usage:
+*  @include respond-property(margin-bottom, 15px, 20px, 100px);
+*  @include respond-property(padding, 30px 15px, 40px 30px, 50px 45px);
+*/
+@mixin respond-property($property, $values...) {
+  $grid-counter: 0;
+  @each $name, $data in $grid {
+    $counter: 0;
+    @each $var in $values {
+      @if $counter == $grid-counter {
+        @include respond($name) {
+          #{$property}: #{$var};
+        }
+      }
+      $counter: $counter+1;
+    }
+    $grid-counter: $grid-counter+1;
+  }
+}

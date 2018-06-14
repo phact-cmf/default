@@ -5,12 +5,12 @@
 /www/static/node_modules
 /www/static/bower_components
 /www/static/frontend/dist/*
-/www/static/frontend/temp/*
 /www/static/backend/dist/*
-/www/static/backend/temp/*
+/www/static/modules/dist
 /www/media
 
 /app/Modules/Admin
+/app/Modules/Assets
 /app/Modules/Base
 /app/Modules/Editor
 /app/Modules/Files

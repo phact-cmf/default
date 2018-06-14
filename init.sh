@@ -25,6 +25,7 @@ php composer.phar install --no-dev
 echo '\x1b[32mInstalling phact modules\x1b[0m'
 cd Modules
 git clone https://github.com/phact-cmf-modules/Admin.git Admin
+git clone https://github.com/phact-cmf-modules/Assets.git Assets
 git clone https://github.com/phact-cmf-modules/Base.git Base
 git clone https://github.com/phact-cmf-modules/Editor.git Editor
 git clone https://github.com/phact-cmf-modules/Files.git Files

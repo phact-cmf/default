@@ -1,3 +1,6 @@
+require('./filesfield.scss');
+let Flow = require('@flowjs/flow.js/dist/flow.js');
+
 (function ($) {
 
     "use strict";

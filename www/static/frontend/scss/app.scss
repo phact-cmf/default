@@ -1,16 +1,12 @@
 @import "settings";
-@import "__cds_index";
+
+@import "_common/reset";
+@import "_common/grid";
 
 @import "_parts/base";
 @import "_parts/typo";
 @import "_parts/article";
 
-@import "_parts/header";
-@import "_parts/footer";
-@import "_parts/content_header";
-@import "_parts/breadcrumbs";
-
-@import "_parts/menu";
 @import "_parts/forms";
 @import "_parts/image_icons";
 

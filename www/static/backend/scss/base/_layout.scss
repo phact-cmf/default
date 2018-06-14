@@ -2,7 +2,9 @@ $menu-width: 278px;
 $links-height: 60px;
 
 body {
-  @include aal();
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background-color: #F3F3F3;
   font-family: $font;
 }
@@ -71,7 +73,7 @@ body {
         background-image: url('../images/sidebar/search.png');
         background-size: (32px/2) (32px/2);
 
-        @include placeholder {
+        &::placeholder {
           color: #666666;
         }
       }
@@ -122,7 +124,7 @@ body {
                 color: #6A6C7C;
                 text-decoration: none;
                 position: relative;
-                @include transition(all 0.3s);
+                transition: all 0.3s;
               }
 
               &.active {
