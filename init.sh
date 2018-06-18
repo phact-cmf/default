@@ -6,6 +6,7 @@ NC='\033[0m'
 
 echo -e "${GREEN}Creating directories${NC}"
 mkdir www/media
+mkdir www/static_modules
 mkdir www/media/Editor
 mkdir app/runtime
 mkdir app/Modules
