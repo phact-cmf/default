@@ -3,9 +3,10 @@
 return [
     'name' => 'First phact application',
     'paths' => [
-        'base' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..'])),
-        'www' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www'])),
-        'static' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static']))
+        'base' => realpath(__DIR__ . '/../'),
+        'www' => realpath(__DIR__ . '/../../www'),
+        'static' => realpath(__DIR__ . '/../../www/static'),
+        'static_modules' => realpath(__DIR__ . '/../../www/static_modules'),
     ],
     'modules' => [
         'Assets',
@@ -23,7 +24,7 @@ return [
         'db' => [
             'class' => \Phact\Orm\ConnectionManager::class,
             'settings' => [
-                'cacheFieldsTimeout' => DEBUG ? null : 86400
+                'cacheFieldsTimeout' => PHACT_DEBUG ? null : 86400
             ],
             'connections' => [
                 'default' => [
@@ -41,7 +42,7 @@ return [
         ],
         'errorHandler' => [
             'class' => \Phact\Main\ErrorHandler::class,
-            'debug' => DEBUG
+            'debug' => PHACT_DEBUG
         ],
         'log' => [
             'class' => \Phact\Log\LogManager::class,
@@ -49,9 +50,9 @@ return [
                 'default' => [
                     'class' => \Monolog\Handler\RotatingFileHandler::class,
                     '__construct' => [
-                        realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'runtime'])) . DIRECTORY_SEPARATOR . 'default.log',
+                        realpath(__DIR__ . '/../runtime') . '/default.log',
                         7,
-                        DEBUG ? \Monolog\Logger::DEBUG : \Monolog\Logger::WARNING
+                        PHACT_DEBUG ? \Monolog\Logger::DEBUG : \Monolog\Logger::WARNING
                     ]
                 ]
             ],
@@ -82,13 +83,13 @@ return [
         'router' => [
             'class' => \Phact\Router\Router::class,
             'pathRoutes' => 'base.config.routes',
-            'cacheTimeout' => DEBUG ? null : 86400
+            'cacheTimeout' => PHACT_DEBUG ? null : 86400
         ],
         'template' => [
             'class' => \Phact\Template\TemplateManager::class,
-            'librariesCacheTimeout' => DEBUG ? null : 86400,
-            'forceCompile' => DEBUG ? true : false,
-            'autoReload' => DEBUG ? true : false
+            'librariesCacheTimeout' => PHACT_DEBUG ? null : 86400,
+            'forceCompile' => PHACT_DEBUG ? true : false,
+            'autoReload' => PHACT_DEBUG ? true : false
         ],
         'auth' => [
             'class' => \Modules\User\Components\Auth::class
@@ -142,17 +143,17 @@ return [
                 ],
                 'frontend' => [
                     'class' => \Modules\Assets\Builds\ManifestBuild::class,
-                    'publicPath' => DEBUG ? "http://127.0.0.1:9000/frontend/dist" : '/static/frontend/dist',
-                    'manifestFile' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static', 'frontend', 'dist', 'manifest.json']))
+                    'publicPath' => '/static',
+                    'manifestFile' => realpath( __DIR__ . '/../../www/static/manifest.json')
                 ],
-                'backend' => [
+                'admin' => [
                     'class' => \Modules\Assets\Builds\ManifestBuild::class,
-                    'publicPath' => '/static/backend/dist',
-                    'manifestFile' => realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'www', 'static', 'backend', 'dist', 'manifest.json']))
+                    'publicPath' => '/static_admin',
+                    'manifestFile' => realpath(__DIR__ . '/../../www/static_admin/manifest.json')
                 ],
                 'modules' => [
                     'class' => \Modules\Assets\Builds\SimpleBuild::class,
-                    'publicPath' => '/static/modules/dist'
+                    'publicPath' => '/static_modules'
                 ]
             ]
         ],

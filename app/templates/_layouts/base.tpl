@@ -23,7 +23,7 @@
                                 <div class="header-block v-align">
                                     <div>
                                         <a href="/" class="logo">
-                                            <img src="{$.assets_public_path('frontend/images/base/logo.png')}" alt="">
+                                            <img src="{$.assets_public_path('images/base/logo.png', 'frontend')}" alt="">
                                         </a>
                                     </div>
                                 </div>

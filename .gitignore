@@ -1,12 +1,11 @@
 /app/runtime/*
-/app/vendor
-/app/composer.lock
+/vendor
 /app/config/local_settings.php
-/www/static/node_modules
-/www/static/bower_components
-/www/static/frontend/dist/*
-/www/static/backend/dist/*
-/www/static/modules/dist
+/node_modules
+/www/static/*
+/www/temp/*
+/www/static_admin/*
+/www/static_modules/*
 /www/media
 
 /app/Modules/Admin
@@ -25,3 +24,4 @@
 .DS_Store
 yarn.lock
 composer.phar
+composer.lock
