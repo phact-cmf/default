@@ -72,7 +72,7 @@ module.exports = [
     output: {
       path: path.join(__dirname, 'www/static'),
       filename: '[name]-[hash].js',
-      publicPath: 'http://127.0.0.1:9000/static',
+      publicPath: devMode ? 'http://127.0.0.1:9000/static' : '/static/',
     },
     resolve: {
       alias: {
@@ -167,17 +167,15 @@ module.exports = [
       {
         test: /\.svg$/,
         include: path.resolve(__dirname, 'static/svg'),
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: path.resolve(__dirname, 'static/components/svg-css-loader/loader.js'),
-          },
-        ],
+        oneOf: [{
+            issuer: /\.s?css$/,
+            loader: 'file-loader',
+            options: {
+                name: 'svg/[name]-[hash].[ext]',
+            },
+        }, {
+          loader: [MiniCssExtractPlugin.loader, 'css-loader', path.resolve(__dirname, 'static/components/svg-css-loader/loader.js')].join('!'),
+        }]
       }],
     },
     plugins: [

@@ -25,3 +25,4 @@
 yarn.lock
 composer.phar
 composer.lock
+package-lock.json
