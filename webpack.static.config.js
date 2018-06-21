@@ -96,7 +96,7 @@ module.exports = [
           loader: 'file-loader',
           options: {
             name: '[name]-[hash].[ext]',
-            outputPath: 'static/images-processed'
+            outputPath: '/images-processed'
           },
         }],
       },
@@ -106,7 +106,8 @@ module.exports = [
           {
             loader: 'file-loader',
             options: {
-              name: 'fonts/[name]-[hash].[ext]',
+              name: '[name]-[hash].[ext]',
+              outputPath: '/fonts'
             },
           },
         ],
@@ -171,7 +172,8 @@ module.exports = [
             issuer: /\.s?css$/,
             loader: 'file-loader',
             options: {
-                name: 'svg/[name]-[hash].[ext]',
+              name: '[name]-[hash].[ext]',
+              outputPath: '/svg'
             },
         }, {
           loader: [MiniCssExtractPlugin.loader, 'css-loader', path.resolve(__dirname, 'static/components/svg-css-loader/loader.js')].join('!'),
