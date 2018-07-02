@@ -1,9 +1,15 @@
 $(() => {
-  $(document).on('click', '[data-scroll-link], .scroll-link', (e) => {
+  $(document).on('click', '[data-scroll-link], .scroll-link', function scrollLink(e) {
     e.preventDefault();
-    const id = $(this).attr('href');
-    const $target = $(id);
-    let offset = $(this).data('offset');
+    const $link = $(this);
+    let $target = null;
+    if ($link.data('selector')) {
+      $target = $($link.data('selector'));
+    } else {
+      const id = $link.attr('href');
+      $target = $(id);
+    }
+    let offset = $link.data('offset');
     offset = offset || 0;
     if ($target.length) {
       $('body, html').animate({
@@ -13,25 +19,10 @@ $(() => {
     return false;
   });
 
-  $(document).on('click', '[data-toggle-link], .toggle-link', (e) => {
+  $(document).on('click', '[data-toggle-link], .toggle-link', function toggleLink(e) {
     e.preventDefault();
     const $this = $(this);
     $($this.data('selector')).toggleClass($this.data('toggle'));
-    return false;
-  });
-
-  $(document).on('click', '[data-first-link-click], .first-link-click', (e) => {
-    if ($(e.target).closest('a').length) {
-      return e;
-    }
-    const $this = $(this);
-    const $link = $this.find('a').first();
-
-    if ($link.hasClass('mmodal')) {
-      $link.click();
-    } else {
-      window.location.href = $link.attr('href');
-    }
     return false;
   });
 });

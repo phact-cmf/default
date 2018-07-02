@@ -1,9 +1,9 @@
-(function modal($) {
-  const Modal = (element, options) => {
+(function ($) {
+  let modal = function (element, options) {
     return this.init(element, options);
   };
 
-  Modal.prototype = {
+  modal.prototype = {
     element: undefined,
     background: undefined,
     container: undefined,
@@ -12,15 +12,15 @@
 
     escHandler: undefined,
 
-    init(element, options) {
-      const defaultOptions = {
+    init: function (element, options) {
+      let defaultOptions = {
         /*
-                 animation: {
-                 classIn: 'animation-in',
-                 classOut: 'animation-out',
-                 timeoutOut: 1000
-                 },
-                 */
+         animation: {
+         classIn: 'animation-in',
+         classOut: 'animation-out',
+         timeoutOut: 1000
+         },
+         */
         animation: null,
         preloader: true,
         theme: 'default',
@@ -59,8 +59,8 @@
           closer: 'modal-closer',
           body: 'modal-opened',
           loading: 'modal-loading',
-          loader: 'modal-loader',
-        },
+          loader: 'modal-loader'
+        }
       };
 
       this.element = element instanceof Object ? element : $(element);
@@ -75,34 +75,34 @@
         }
       }
 
-      if (this.element.is('a')) {
+      if (this.element.is("a")) {
         this.startLink(this.element.attr('href'));
       } else {
         this.start(this.element.clone(true));
       }
       return this;
     },
-    showPreloader() {
-      const $preloader = $('<div/>').addClass(this.options.classes.loader);
+    showPreloader: function(){
+      let $preloader = $('<div/>').addClass(this.options.classes.loader);
       $('body').addClass(this.options.classes.loading).append($preloader);
     },
-    hidePreloader() {
-      $('body').removeClass(this.options.classes.loading).find(`.${this.options.classes.loader}`).remove();
+    hidePreloader: function(){
+      $('body').removeClass(this.options.classes.loading).find('.' + this.options.classes.loader).remove();
     },
-    setContent($html) {
-      const $content = this.content;
+    setContent: function ($html) {
+      let $content = this.content;
 
       $content.html($html);
       if (this.options.handleForm && $content.find('form').not('[data-modal-handle-off]').length > 0) {
-        const me = this;
-        $content.find('form').not('[data-modal-handle-off]').off('submit').on('submit', function (e) {
+        let me = this;
+        $content.find("form").not('[data-modal-handle-off]').off("submit").on("submit", function (e) {
           e.preventDefault();
           me.submit(this);
           return false;
         });
       }
     },
-    render() {
+    render: function () {
       this.content = $('<div/>')
         .addClass(this.options.classes.content);
 
@@ -117,38 +117,39 @@
       this.container.append(this.closer)
         .append(this.content);
 
-      this.background = $('<div/>')
+      this.background = $("<div/>")
         .addClass(this.options.classes.background)
         .addClass(this.options.theme)
         .append(this.container)
         .appendTo('body');
     },
-    startLink(link) {
-      const me = this;
+    startLink: function (link) {
+      let me = this;
       if (link.match(/^#/)) {
         this.start($(link).clone(true));
       } else {
         $.ajax({
           url: link,
           cache: false,
-          success(data, textStatus, jqXHR) {
+          success: function (data, textStatus, jqXHR) {
             me.start(data);
           },
-          error(jqXHR, textStatus, errorThrown) {
+          error: function (jqXHR, textStatus, errorThrown) {
             me.start(jqXHR.responseText);
-          },
+          }
         });
       }
     },
-    submit(form) {
-      if (typeof this.options.onSubmit === 'function') {
+    submit: function (form) {
+      if (typeof this.options.onSubmit == 'function') {
         this.options.onSubmit.call(this, form);
       } else {
         this.onSubmitDefault(form);
       }
     },
-    onSubmitDefault(form) {
-      const $form = $(form);
+    onSubmitDefault: function (form) {
+      let $form = $(form);
+      let options = this.options;
       let type = $form.attr('method');
       if (!type) {
         type = 'post';
@@ -156,97 +157,76 @@
 
       if (this.options.useAjaxForm) {
         $form.ajaxSubmit({
-          type,
-          success: this.getHandleFormResponse(),
-        });
-      } else if ($form.find("input[type='file']").length > 0) {
-        const formData = new FormData();
-        $.each($form.find("input[type='file']"), (i, tag) => {
-          $.each($(tag)[0].files, (i, file) => {
-            formData.append(tag.name, file);
-          });
-        });
-        const params = $form.serializeArray();
-        $.each(params, (i, val) => {
-          formData.append(val.name, val.value);
-        });
-        $.ajax({
-          url: $form.attr('action'),
-          type,
-          data: formData,
-          success: this.getHandleFormResponse(),
-          processData: false,
-          cache: false,
-          contentType: false,
+          type: type,
+          success: this.getHandleFormResponse()
         });
       } else {
         $.ajax({
           url: $form.attr('action'),
-          type,
+          type: type,
           data: $form.serialize(),
-          success: this.getHandleFormResponse(),
-        });
+          success: this.getHandleFormResponse()
+        })
       }
     },
-    getHandleFormResponse() {
-      const me = this;
-      const opts = this.options;
+    getHandleFormResponse: function() {
+      let me = this,
+        options = this.options;
 
-      return (data, textStatus, jqXHR) => {
+      return function(data, textStatus, jqXHR) {
         if (!data) {
           me.close();
         }
 
-        let response = data;
         let jsonResponse = false;
         let success = false;
 
-        if (typeof data === 'object') {
+        if (typeof data === "object") {
           jsonResponse = true;
         } else {
           try {
-            response = $.parseJSON(response);
+            data = $.parseJSON(data);
             jsonResponse = true;
-          } catch (e) {
-            jsonResponse = false;
-          }
+          } catch (e) {}
         }
 
-        opts.afterFormSubmit.call(this, data, textStatus, jqXHR);
+        options.afterFormSubmit.call(this, data, textStatus, jqXHR);
 
         if (jsonResponse) {
-          if (response.close) {
+          if (data.close){
             return me.close();
           }
-          if (response.content) {
-            me.setContent(response.content);
+          if (data.content) {
+            me.setContent(data.content);
           }
-          if (response.status === 'success') {
+          if (data.status === 'success') {
             success = true;
           }
         } else {
-          me.setContent(response);
-          success = me.content.find('form').length === 0 || me.content.find('[data-modal-success]').length > 0;
+          me.setContent(data);
+          success = me.content.find('form').length == 0 || me.content.find('[data-modal-success]').length > 0;
         }
 
         if (success) {
-          opts.onFormSuccess.call(this, data, textStatus, jqXHR);
+          options.onFormSuccess.call(this, data, textStatus, jqXHR);
 
-          if (opts.closeOnSuccess !== false) {
-            setTimeout(() => me.close(), opts.closeOnSuccessDelay);
+          if (options.closeOnSuccess !== false) {
+            setTimeout(function () {
+              return me.close();
+            }, options.closeOnSuccessDelay);
           }
         } else {
-          opts.onFormError.call(this, data, textStatus, jqXHR);
+          options.onFormError.call(this, data, textStatus, jqXHR);
         }
-      };
+      }
     },
-    hasAnotherModal() {
-      return $(`.${this.options.classes.background}`).not(this.background).length > 0;
+    hasAnotherModal: function () {
+      return $('.' + this.options.classes.background).not(this.background).length > 0;
     },
-    isLastModal() {
+    isLastModal: function () {
       return this.background;
     },
-    start(html) {
+    start: function (html) {
       this.options.onBeforeStart();
       this.render();
       this.setContent(html);
@@ -254,37 +234,37 @@
       this.open();
       this.options.onAfterStart();
     },
-    open() {
-      const $body = $('body');
-      const before = $body.outerWidth();
+    open: function () {
+      let $body = $('body'),
+        before = $body.outerWidth();
 
       this.options.onBeforeOpen();
       if (this.options.preloader) {
         this.hidePreloader();
       }
-      this.background.show();
+      this.background.addClass('opened');
       if (this.options.fixWidth) {
         this.container.css('width', this.options.width || this.container.width());
       }
-      this.container.show();
+      this.container.addClass('opened');
 
       if (!this.hasAnotherModal()) {
         $body.css({
-          overflow: 'hidden',
-          'padding-right': $body.outerWidth() - before,
+          'overflow': 'hidden',
+          'padding-right': $body.outerWidth() - before
         }).addClass(this.options.classes.body);
       }
 
       this.options.onAfterOpen();
     },
-    close() {
+    close: function () {
       this.unbindEvents();
       this.options.onBeforeClose();
 
       if (this.options.animation) {
         this.container.addClass(this.options.animation.classOut);
-        const me = this;
-        setTimeout(() => {
+        let me = this;
+        setTimeout(function () {
           me.background.remove();
         }, this.options.animation.timeoutOut);
       } else {
@@ -293,39 +273,37 @@
 
       if (!this.hasAnotherModal()) {
         $('body').css({
-          overflow: '',
-          'padding-right': '',
+          'overflow': '',
+          'padding-right': ''
         }).removeClass(this.options.classes.body);
       }
 
       this.options.onAfterClose();
     },
-    bindEvents() {
-      const me = this;
-      const opts = this.options;
+    bindEvents: function () {
+      let me = this, options = this.options;
 
-      this.closer.on('click', (e) => {
+      this.closer.on('click', function (e) {
         e.preventDefault();
         me.close();
         return false;
       });
 
-      if (opts.closeOnClickBg === true) {
-        this.background.on('click', (e) => {
+      if (options.closeOnClickBg == true) {
+        this.background.on('click', function (e) {
           // Close only if bg == target element
           if (e.target === this) {
             e.preventDefault();
             me.close();
             return false;
           }
-          return e;
         });
       }
 
-      if (opts.closeKeys.length > 0) {
+      if (options.closeKeys.length > 0) {
         this.escHandler = function (e) {
-          if ($.inArray(e.which, opts.closeKeys) !== -1) {
-            if ($(`.${me.options.classes.background}:last`).is(me.background)) {
+          if ($.inArray(e.which, options.closeKeys) !== -1) {
+            if ($('.' + me.options.classes.background + ':last').is(me.background)) {
               me.close();
             }
           }
@@ -333,17 +311,17 @@
         $(document).on('keyup', this.escHandler);
       }
     },
-    unbindEvents() {
+    unbindEvents: function() {
       this.closer.off('click');
       this.background.off('click');
 
       if (this.options.closeKeys.length > 0) {
         $(document).off('keyup', this.escHandler);
       }
-    },
+    }
   };
 
-  $.fn.modal = (options) => {
-    return new Modal(this, options);
+  $.fn.modal = function (options) {
+    return new modal(this, options);
   };
 })(jQuery);

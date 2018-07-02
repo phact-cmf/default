@@ -130,6 +130,7 @@
     </footer>
 
     {block 'core_js'}
+        <script src="{$.assets_public_path('vendors.js', 'frontend')}"></script>
         <script src="{$.assets_public_path('main.js', 'frontend')}"></script>
     {/block}
     {render_dependencies_js:raw}

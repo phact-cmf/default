@@ -1,5 +1,5 @@
 (function ($) {
-  var psticky = function () {
+  let psticky = function () {
     return psticky.init.apply(this, arguments);
   };
   $.extend(psticky, {

@@ -12,7 +12,7 @@
 import { validatorValidateForm, validatorCleanErrors } from '../components/forms/validation';
 
 $(() => {
-  $(document).on('submit', '[data-ajax-form]', (e) => {
+  $(document).on('submit', '[data-ajax-form]', function submitAjax(e) {
     e.preventDefault();
     const $form = $(this);
     const classes = $form.data('ajax-form').split(',');

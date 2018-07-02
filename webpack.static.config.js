@@ -72,7 +72,7 @@ module.exports = [
     output: {
       path: path.join(__dirname, 'www/static'),
       filename: '[name]-[hash].js',
-      publicPath: devMode ? 'http://127.0.0.1:9000/static' : '/static/',
+      publicPath: '/static/',
     },
     resolve: {
       alias: {
@@ -96,7 +96,7 @@ module.exports = [
           loader: 'file-loader',
           options: {
             name: '[name]-[hash].[ext]',
-            outputPath: '/images-processed'
+            outputPath: 'images-processed'
           },
         }],
       },
@@ -107,7 +107,7 @@ module.exports = [
             loader: 'file-loader',
             options: {
               name: '[name]-[hash].[ext]',
-              outputPath: '/fonts'
+              outputPath: 'fonts'
             },
           },
         ],
@@ -169,12 +169,12 @@ module.exports = [
         test: /\.svg$/,
         include: path.resolve(__dirname, 'static/svg'),
         oneOf: [{
-            issuer: /\.s?css$/,
-            loader: 'file-loader',
-            options: {
-              name: '[name]-[hash].[ext]',
-              outputPath: '/svg'
-            },
+          issuer: /\.s?css$/,
+          loader: 'file-loader',
+          options: {
+            name: '[name]-[hash].[ext]',
+            outputPath: 'svg'
+          },
         }, {
           loader: [MiniCssExtractPlugin.loader, 'css-loader', path.resolve(__dirname, 'static/components/svg-css-loader/loader.js')].join('!'),
         }]
@@ -205,5 +205,24 @@ module.exports = [
       }),
       new webpack.NamedModulesPlugin()
     ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendors: {
+            test: (item) => {
+              if (item.resource && item.resource.match(/[\\/]node_modules[\\/]/)) {
+                if (item.resource.match(/\.s?css$/)) {
+                  return false
+                }
+                return true;
+              }
+              return false;
+            },
+            name: 'vendors',
+            chunks: 'all'
+          },
+        }
+      }
+    }
   },
 ];
