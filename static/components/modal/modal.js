@@ -6,6 +6,7 @@
   modal.prototype = {
     element: undefined,
     background: undefined,
+    layout: undefined,
     container: undefined,
     content: undefined,
     closer: undefined,
@@ -53,13 +54,15 @@
         onAfterClose: $.noop,
 
         classes: {
-          content: 'modal-content',
-          container: 'modal-container',
-          background: 'modal-modal-bg',
-          closer: 'modal-closer',
+          layout: 'modal__layout',
+          container: 'modal__container',
+          content: 'modal__content',
+          background: 'modal__bg',
+          closer: 'modal__closer',
+          loader: 'modal__loader',
+
           body: 'modal-opened',
-          loading: 'modal-loading',
-          loader: 'modal-loader'
+          loading: 'modal-loading'
         }
       };
 
@@ -106,6 +109,9 @@
       this.content = $('<div/>')
         .addClass(this.options.classes.content);
 
+      this.layout = $('<div/>')
+        .addClass(this.options.classes.layout);
+
       this.closer = $('<a href="javascript:void(0)"/>')
         .html(this.options.closerText)
         .addClass(this.options.classes.closer);
@@ -114,13 +120,16 @@
         .addClass(this.options.classes.container)
         .addClass(this.options.theme);
 
-      this.container.append(this.closer)
+      this.container
+        .append(this.closer)
         .append(this.content);
+
+      this.layout.append(this.container);
 
       this.background = $("<div/>")
         .addClass(this.options.classes.background)
         .addClass(this.options.theme)
-        .append(this.container)
+        .append(this.layout)
         .appendTo('body');
     },
     startLink: function (link) {
@@ -244,9 +253,9 @@
       }
       this.background.addClass('opened');
       if (this.options.fixWidth) {
-        this.container.css('width', this.options.width || this.container.width());
+        this.layout.css('width', this.options.width || this.layout.width());
       }
-      this.container.addClass('opened');
+      this.layout.addClass('opened');
 
       if (!this.hasAnotherModal()) {
         $body.css({

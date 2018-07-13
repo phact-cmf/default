@@ -43,6 +43,14 @@ $(() => {
           if (successTrigger) {
             $(document).trigger('success');
           }
+          if ($form.data('goal')) {
+            window.goal($form.data('goal'));
+          }
+          setTimeout(function () {
+            $form[0].reset();
+            $form.trigger('reset');
+            $success.removeClass('success');
+          }, 3000);
         }
       },
     });
