@@ -91,7 +91,7 @@ module.exports = [
         }],
       },
       {
-        test: /\.(png|je?pg|gif)$/,
+        test: /\.(png|jpe?g|gif)$/,
         use: [{
           loader: 'file-loader',
           options: {
@@ -167,7 +167,6 @@ module.exports = [
       },
       {
         test: /\.svg$/,
-        include: path.resolve(__dirname, 'static/svg'),
         oneOf: [{
           issuer: /\.s?css$/,
           loader: 'file-loader',

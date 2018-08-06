@@ -1,4 +1,4 @@
-require('../components/modal/modal.js');
+require('../../components/modal/modal.js');
 
 $(document).on('click', '[data-modal]', function openModal(e) {
   e.preventDefault();

@@ -1,5 +1,5 @@
 function validatorCleanErrors(formname) {
-  $(`.errors[id^='${formname}']`).html('').css({ display: 'none' });
+  $(`.errors[id^='${formname}'], .errors[id*='_${formname}_']`).html('').css({ display: 'none' });
 }
 
 function validatorCollectErrors(namespace, errors) {
@@ -23,7 +23,7 @@ function validatorValidateForm(formname, errors) {
   const errorsList = validatorCollectErrors(formname, errors);
   Object.keys(errorsList).forEach((name) => {
     const errorsName = name.replace(/\[/g, '_').replace(/\]/g, '');
-    const $errors = $(`#${errorsName}_errors`);
+    const $errors = $(`[id$='${errorsName}_errors']`);
     const errorsItems = errorsList[name];
     errorsItems.forEach((error) => {
       $errors.css({ display: '' });

@@ -9,7 +9,7 @@
  *  </form>
  */
 
-import { validatorValidateForm, validatorCleanErrors } from '../components/forms/validation';
+import { validatorValidateForm, validatorCleanErrors } from '../../components/forms/validation';
 
 $(() => {
   $(document).on('submit', '[data-ajax-form]', function submitAjax(e) {
@@ -81,5 +81,4 @@ $(() => {
         }
         echo json_encode($data);
  }
-
- */
+*/
