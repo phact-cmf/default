@@ -1,6 +1,5 @@
 {
     "name": "phact/default",
-    "version": "1.0",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -11,16 +10,30 @@
     "config": {
         "cache-files-ttl": 0
     },
-    "repositories": [
-        {
-            "url": "https://github.com/phact-cmf/phact.git",
-            "type": "git"
-        }
-    ],
     "require": {
-        "phact-cmf/phact": "dev-master",
+        "phact-cmf/phact": "^2.0.0",
         "monolog/monolog": "~1.23",
-        "phpmailer/phpmailer": "~5.2"
+        "phpmailer/phpmailer": "~5.2",
+        "phact-cmf-modules/admin": "~2.0.1",
+        "phact-cmf-modules/assets": "~2.0.1",
+        "phact-cmf-modules/base": "~2.0.2",
+        "phact-cmf-modules/editor": "~2.0.1",
+        "phact-cmf-modules/files": "~2.0.1",
+        "phact-cmf-modules/mail": "~2.0.0",
+        "phact-cmf-modules/text": "~2.0.0",
+        "phact-cmf-modules/user": "~2.0.0",
+        "phact-cmf-modules/meta": "~2.0.0",
+        "phact-cmf-modules/sitemap": "~2.0.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php -r \"mkdir('www/media');\"",
+            "php -r \"mkdir('www/media/Editor');\"",
+            "php -r \"mkdir('www/media/Editor');\"",
+            "php -r \"mkdir('app/runtime');\"",
+            "php -r \"mkdir('app/Modules');\"",
+            "php -r \"copy('app/config/_local_settings.php', 'app/config/local_settings.php');\""
+        ]
     },
     "authors": [{
         "name": "Anton Okulov",
