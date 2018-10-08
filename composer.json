@@ -26,7 +26,7 @@
         "phact-cmf-modules/sitemap": "~2.0.0"
     },
     "scripts": {
-        "post-install-cmd": [
+        "post-create-project-cmd": [
             "php -r \"mkdir('www/media');\"",
             "php -r \"mkdir('www/media/Editor');\"",
             "php -r \"mkdir('www/media/Editor');\"",
