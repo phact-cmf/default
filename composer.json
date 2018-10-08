@@ -29,7 +29,6 @@
         "post-create-project-cmd": [
             "php -r \"mkdir('www/media');\"",
             "php -r \"mkdir('www/media/Editor');\"",
-            "php -r \"mkdir('www/media/Editor');\"",
             "php -r \"mkdir('app/runtime');\"",
             "php -r \"mkdir('app/Modules');\"",
             "php -r \"copy('app/config/_local_settings.php', 'app/config/local_settings.php');\""
