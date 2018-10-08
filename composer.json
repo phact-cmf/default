@@ -1,5 +1,5 @@
 {
-    "name": "phact/default",
+    "name": "phact-cmf/default",
     "type": "library",
     "license": "MIT",
     "autoload": {
