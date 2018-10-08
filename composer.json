@@ -19,7 +19,7 @@
         "phact-cmf-modules/base": "~2.0.2",
         "phact-cmf-modules/editor": "~2.0.1",
         "phact-cmf-modules/files": "~2.0.1",
-        "phact-cmf-modules/mail": "~2.0.0",
+        "phact-cmf-modules/mail": "~2.0.1",
         "phact-cmf-modules/text": "~2.0.0",
         "phact-cmf-modules/user": "~2.0.0",
         "phact-cmf-modules/meta": "~2.0.0",
