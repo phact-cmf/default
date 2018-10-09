@@ -1,28 +1,25 @@
-$(() => {
-  $(document).on('click', '[data-scroll-link], .scroll-link', function scrollLink(e) {
-    e.preventDefault();
-    const $link = $(this);
-    let $target = null;
-    if ($link.data('selector')) {
-      $target = $($link.data('selector'));
-    } else {
-      const id = $link.attr('href');
-      $target = $(id);
-    }
-    let offset = $link.data('offset');
-    offset = offset || 0;
-    if ($target.length) {
-      $('body, html').animate({
-        scrollTop: $target.offset().top - offset,
-      }, 500);
-    }
-    return false;
-  });
+import LiveEvent from "../../components/live/live";
+import zenscroll from "zenscroll";
+zenscroll.setup(null, 0);
 
-  $(document).on('click', '[data-toggle-link], .toggle-link', function toggleLink(e) {
-    e.preventDefault();
-    const $this = $(this);
-    $($this.data('selector')).toggleClass($this.data('toggle'));
-    return false;
-  });
+new LiveEvent('click', '[data-scroll-link], .scroll-link', function scrollLink(e) {
+  e.preventDefault();
+  let target = null;
+  if (this.dataset.selector) {
+    target = document.querySelector(this.dataset.selector);
+  } else {
+    target = document.querySelector(this.getAttribute('href'));
+  }
+  let offset = this.dataset.offset || 0;
+  if (target) {
+    let viewportOffset = target.getBoundingClientRect();
+    let top = (window.pageYOffset || document.documentElement.scrollTop)  - (document.documentElement.clientTop || 0);
+    zenscroll.toY(top + viewportOffset.top + offset, 500);
+  }
+});
+
+new LiveEvent('click', '[data-toggle-link], .toggle-link', function toggleLink(e) {
+  e.preventDefault();
+  let target = document.querySelector(this.dataset.selector);
+  target.classList.toggle(this.dataset.toggle);
 });

@@ -1,13 +1,14 @@
-require('../../components/modal/modal.js');
+import LiveEvent from "../../components/live/live";
+import Modal from "../../components/modal/modal";
 
-$(document).on('click', '[data-modal]', function openModal(e) {
+new LiveEvent('click', '[data-modal]', function openModal(e) {
   e.preventDefault();
-  let $link = $(this);
-  $link.modal({
+  let link = this;
+  let modal = new Modal(this, {
     closerText: '',
     onFormSuccess: function () {
-      if ($link.data('goal')) {
-        window.goal($link.data('goal'));
+      if (link.dataset.goal) {
+        window.goal(link.dataset.goal);
       }
     }
   });

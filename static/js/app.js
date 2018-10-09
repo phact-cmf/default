@@ -1,10 +1,10 @@
 require('../scss/app.scss');
 
-require('@fancyapps/fancybox');
-require('@fancyapps/fancybox/dist/jquery.fancybox.css');
+window.noZensmooth = true;
 
 require('./common/goal.js');
 require('./common/js_validation.js');
 require('./common/links.js');
-require('./common/respond.js');
 require('./common/main.js');
+require('./common/pagination.js');
+require('./common/respond.js');

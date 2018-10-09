@@ -1,5 +1,8 @@
-function validatorCleanErrors(formname) {
-  $(`.errors[id^='${formname}'], .errors[id*='_${formname}_']`).html('').css({ display: 'none' });
+function validatorCleanErrors(form, formname) {
+  form.querySelectorAll(`.errors[id^='${formname}'], .errors[id*='_${formname}_']`).forEach((element) => {
+    element.innerHTML = "";
+    element.style.display = "none";
+  });
 }
 
 function validatorCollectErrors(namespace, errors) {
@@ -18,16 +21,18 @@ function validatorCollectErrors(namespace, errors) {
   return result;
 }
 
-function validatorValidateForm(formname, errors) {
-  validatorCleanErrors(formname);
+function validatorValidateForm(form, formname, errors) {
+  validatorCleanErrors(form, formname);
   const errorsList = validatorCollectErrors(formname, errors);
   Object.keys(errorsList).forEach((name) => {
     const errorsName = name.replace(/\[/g, '_').replace(/\]/g, '');
-    const $errors = $(`[id$='${errorsName}_errors']`);
+    const errors = form.querySelector(`[id$='${errorsName}_errors']`);
     const errorsItems = errorsList[name];
     errorsItems.forEach((error) => {
-      $errors.css({ display: '' });
-      $errors.append($('<li/>').text(error));
+      errors.style.display = '';
+      let listItem = document.createElement('li');
+      listItem.innerText = error;
+      errors.appendChild(listItem)
     });
   });
 }

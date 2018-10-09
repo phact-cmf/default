@@ -4,15 +4,9 @@
 ## Развернуть проект:
 
 ```bash
-./init.sh
+composer create-project phact-cmf/default def --remove-vcs --prefer-dist
+yarn
 ```
-
-Скрипт:
-1. Создает папки www/media, app/runtime, app/Modules
-2. Устанавливает composer.phar
-3. Устанавливает зависимости с помощью composer.phar
-4. Устанавливает модули по-умолчанию
-5. Устанавливает зависимости npm
 
 ## Поехали!
 
@@ -43,6 +37,10 @@ yarn run server
 до backend-сервера (который ожидается на 8000 порту) и мы видим страницы
 и медиа-файлы. Единственное, что пишется на диск - это manifest.json,
 по которому phact создает пути до статических файлов.
+
+### Procfile
+
+Чтобы не запускать всё это руками (php + webpack dev-server), есть Procfile. Юзаем goreman, foreman или любую другую альтернативу.
 
 ### Статика модулей
 

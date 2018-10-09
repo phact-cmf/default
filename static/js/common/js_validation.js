@@ -10,53 +10,45 @@
  */
 
 import { validatorValidateForm, validatorCleanErrors } from '../../components/forms/validation';
+import LiveEvent from "../../components/live/live";
+import Jax from "../../components/jax/jax";
 
-$(() => {
-  $(document).on('submit', '[data-ajax-form]', function submitAjax(e) {
-    e.preventDefault();
-    const $form = $(this);
-    const classes = $form.data('ajax-form').split(',');
-    const successSelector = $form.data('success-selector');
-    const $success = successSelector ? $(successSelector) : $form;
-    const successTrigger = $form.data('success-trigger');
+new LiveEvent('submit', '[data-ajax-form]', function submitAjax(e) {
+  e.preventDefault();
+  const classes = this.dataset.ajaxForm.split(',');
+  const successSelector = this.dataset.successSelector;
+  const success = successSelector ? document.querySelector(successSelector) : this;
+  const successTrigger = this.dataset.successTrigger;
 
-    $.ajax({
-      url: $form.attr('action'),
-      data: $form.serialize(),
-      type: $form.attr('method'),
-      dataType: 'json',
-      success(data) {
-        let errorsList = {};
-        if (data.errors) {
-          errorsList = data.errors;
-        }
-        Object.keys(classes).forEach((i) => {
-          const cls = classes[i];
-          if (errorsList[cls]) {
-            validatorValidateForm(cls, errorsList[cls]);
-          } else {
-            validatorCleanErrors(cls);
-          }
-        });
-        if (data.state === 'success') {
-          $success.addClass('success');
-          if (successTrigger) {
-            $(document).trigger('success');
-          }
-          if ($form.data('goal')) {
-            window.goal($form.data('goal'));
-          }
-          setTimeout(function () {
-            $form[0].reset();
-            $form.trigger('reset');
-            $success.removeClass('success');
-          }, 3000);
-        }
-      },
+  const jax = new Jax(this.getAttribute('action'), this.getAttribute('method'), true);
+  jax.send(new FormData(this)).then((data, xhr) => {
+    let errorsList = {};
+    if (data.errors) {
+      errorsList = data.errors;
+    }
+    Object.keys(classes).forEach((i) => {
+      const cls = classes[i];
+      if (errorsList[cls]) {
+        validatorValidateForm(this, cls, errorsList[cls]);
+      } else {
+        validatorCleanErrors(this, cls);
+      }
     });
-
-    return false;
-  });
+    if (data.state === 'success') {
+      success.classList.add('success');
+      if (successTrigger) {
+        document.dispatchEvent(new CustomEvent('ajax-form-success', {'detail': {'form': this}}));
+      }
+      if (this.dataset.goal) {
+        window.goal(this.dataset.goal);
+      }
+      setTimeout(() => {
+        this.reset();
+        document.dispatchEvent(new CustomEvent('success', {'detail': {'form': this}}));
+        success.classList.remove('success');
+      }, 3000);
+    }
+  })
 });
 
 /**
@@ -81,4 +73,5 @@ $(() => {
         }
         echo json_encode($data);
  }
-*/
+
+ */
