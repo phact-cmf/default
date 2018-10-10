@@ -3,19 +3,18 @@
 $config = include (__DIR__) . '/settings.php';
 $config['components']['db'] = [
     'class' => \Phact\Orm\ConnectionManager::class,
-    'connections' => [
-        'default' => [
-            'driver' => 'mysql',
-            'config' => [
+    'properties' => [
+        'connections' => [
+            'default' => [
                 'host' => '127.0.0.1',
-                'database' => 'database',
-                'username' => 'username',
-                'password' => 'password',
-                'charset' => 'utf8', // Optional
-                'collation' => 'utf8_unicode_ci', // Optional
+                'dbname' => 'database',
+                'user' => 'user',
+                'password' => '',
+                'charset' => 'utf8',
+                'driver' => 'pdo_mysql',
             ]
         ]
-    ]
+    ],
 ];
 
 return $config;
