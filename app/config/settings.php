@@ -56,7 +56,7 @@ return [
         'errorHandler' => [
             'class' => \Phact\Main\ErrorHandler::class,
             'arguments' => [
-                'debug' => false
+                'debug' => PHACT_DEBUG
             ]
         ],
         'logger.default' => [
