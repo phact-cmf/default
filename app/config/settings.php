@@ -55,8 +55,8 @@ return [
         ],
         'errorHandler' => [
             'class' => \Phact\Main\ErrorHandler::class,
-            'properties' => [
-                'debug' => PHACT_DEBUG
+            'arguments' => [
+                'debug' => false
             ]
         ],
         'logger.default' => [
@@ -127,15 +127,8 @@ return [
         'settings' => [
             'class' => \Phact\Components\Settings::class
         ],
-        'cache' => [
-            'class' => \Phact\Cache\Cache::class,
-            'calls' => [
-                'setDrivers' => [[
-                    'default' =>  [
-                        'class' => \Phact\Cache\Drivers\File::class
-                    ]
-                ]]
-            ]
+        'cache.default' => [
+            'class' => \Phact\Cache\Drivers\File::class
         ],
         'mail' => [
             'class' => \Modules\Mail\Components\Mailer::class,

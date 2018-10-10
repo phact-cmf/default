@@ -11,7 +11,7 @@
         "cache-files-ttl": 0
     },
     "require": {
-        "phact-cmf/phact": "^2.0.0",
+        "phact-cmf/phact": "^2.1.0",
         "monolog/monolog": "~1.23",
         "phpmailer/phpmailer": "~5.2",
         "phact-cmf-modules/admin": "~2.0.1",
