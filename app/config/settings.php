@@ -133,12 +133,12 @@ return [
         'mail' => [
             'class' => \Modules\Mail\Components\Mailer::class,
             'properties' => [
-                'defaultFrom' => 'order@rclass.pro',
+                'defaultFrom' => 'EMAIL',
                 'mode' => 'smtp',
                 'config' => [
                     'host' => 'smtp.yandex.ru',
-                    'username' => 'order@rclass.pro',
-                    'password' => 'hZairr9APo',
+                    'username' => 'USERNAME',
+                    'password' => 'PASSWORD',
                     'port' => '465',
                     'security' => 'ssl'
                 ]
