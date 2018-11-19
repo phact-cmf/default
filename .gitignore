@@ -8,18 +8,6 @@
 /www/static_modules/*
 /www/media
 
-/app/Modules/Admin
-/app/Modules/Assets
-/app/Modules/Base
-/app/Modules/Editor
-/app/Modules/Files
-/app/Modules/Mail
-/app/Modules/Text
-/app/Modules/User
-/app/Modules/Meta
-/app/Modules/Sitemap
-/app/Modules/Projector
-
 .idea
 .DS_Store
 yarn.lock

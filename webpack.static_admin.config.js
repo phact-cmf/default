@@ -27,7 +27,7 @@ module.exports = {
     ],
     alias: {
       jquery: 'jquery/src/jquery',
-      phact_modules: path.resolve(__dirname, 'app/Modules')
+      phact_modules: path.resolve(__dirname, 'www/static_modules')
     },
   },
   module: {

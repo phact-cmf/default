@@ -22,6 +22,6 @@ require('../components/ui-custom/jquery-ui.min.js');
 require('../components/ui-custom/jquery-ui.min.css');
 
 /* Files module */
-require('phact_modules/Files/static/filesfield/filesfield');
+require('phact_modules/Files/filesfield/filesfield');
 /* Editor module */
-require('phact_modules/Editor/static/fileman/fileman');
+require('phact_modules/Editor/fileman/fileman');
