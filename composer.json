@@ -11,27 +11,22 @@
         "cache-files-ttl": 0
     },
     "require": {
-        "phact-cmf/phact": "^2.1.0",
+        "phact-cmf/phact": "^3.0.0",
         "monolog/monolog": "~1.23",
         "phpmailer/phpmailer": "~5.2",
-        "phact-cmf-modules/admin": "~2.0.1",
-        "phact-cmf-modules/assets": "~2.0.1",
-        "phact-cmf-modules/base": "~2.0.2",
-        "phact-cmf-modules/editor": "~2.0.1",
-        "phact-cmf-modules/files": "~2.0.1",
-        "phact-cmf-modules/mail": "~2.0.1",
-        "phact-cmf-modules/text": "~2.0.0",
-        "phact-cmf-modules/user": "~2.0.0",
-        "phact-cmf-modules/meta": "~2.0.0",
-        "phact-cmf-modules/sitemap": "~2.0.0"
+        "phact-cmf-modules/admin": "~3.0.0",
+        "phact-cmf-modules/assets": "~3.0.0",
+        "phact-cmf-modules/base": "~3.0.0",
+        "phact-cmf-modules/editor": "~3.0.0",
+        "phact-cmf-modules/files": "~3.0.0",
+        "phact-cmf-modules/mail": "~3.0.0",
+        "phact-cmf-modules/text": "~3.0.0",
+        "phact-cmf-modules/user": "~3.0.0",
+        "phact-cmf-modules/meta": "~3.0.0",
+        "phact-cmf-modules/sitemap": "~3.0.0"
     },
     "scripts": {
         "post-create-project-cmd": [
-            "php -r \"mkdir('www/media');\"",
-            "php -r \"mkdir('www/media/Editor');\"",
-            "php -r \"mkdir('www/static_modules');\"",
-            "php -r \"mkdir('app/runtime');\"",
-            "php -r \"mkdir('app/Modules');\"",
             "php -r \"copy('app/config/_local_settings.php', 'app/config/local_settings.php');\"",
             "php www/index.php Base StaticModules"
         ]
